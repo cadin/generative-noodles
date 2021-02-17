@@ -8,41 +8,41 @@ class Noodle {
 	
 	PShape head;
 	
-	Noodle(int tileW, PShape h) {
+	Noodle(PVector[] p, int tileW, PShape h) {
 		tileSize = tileW;
 		margin = (tileSize - thickness) / 2;
 		head = h;
 		head.disableStyle();
+		path = p;
 		
-		choosePath();
+		// choosePath();
 	}
 	
-	void choosePath() {
-		int len = int(random(4, 10));
+	// void choosePath() {
+	// 	int len = int(random(4, 10));
 		
-		path = new PVector[len];
-		path[0] = new PVector(1, 1);
+	// 	path = new PVector[len];
+	// 	path[0] = new PVector(1, 1);
 		
-		for(int i=1; i < len; i++){
-			int vh = round(random(0,1));
-			if(vh == 0) {
-				// vertical 
-				path[i] = new PVector(path[i-1].x, path[i-1].y + 1);
-			} else {
-				// horizontal
-				path[i] = new PVector(path[i-1].x + 1, path[i-1].y);
-			}
-		}
-	}
+	// 	for(int i=1; i < len; i++){
+	// 		int vh = round(random(0,1));
+	// 		if(vh == 0) {
+	// 			// vertical 
+	// 			path[i] = new PVector(path[i-1].x, path[i-1].y + 1);
+	// 		} else {
+	// 			// horizontal
+	// 			path[i] = new PVector(path[i-1].x + 1, path[i-1].y);
+	// 		}
+	// 	}
+	// }
 	
-	void drawPath() {
-		fill(255, 200,200);
-		stroke(255, 150, 150);
-		for(int i = 0; i < path.length; i++){
-			rect(path[i].x * tileSize, path[i].y * tileSize, tileSize, tileSize);
-			println(path[i].x, path[i].y);
-		}
-	}
+	// void drawPath() {
+	// 	fill(255, 200,200);
+	// 	stroke(255, 150, 150);
+	// 	for(int i = 0; i < path.length; i++){
+	// 		rect(path[i].x * tileSize, path[i].y * tileSize, tileSize, tileSize);
+	// 	}
+	// }
 	
 	void drawHead(PVector pos, PVector neighbor) {
 		pushMatrix();
@@ -59,6 +59,7 @@ class Noodle {
 	}
 	
 	void drawNoodle() {
+	
 		for(int i = 0; i < path.length; i++){
 			PVector p = path[i];
 			
@@ -103,9 +104,7 @@ class Noodle {
 	
 	void draw(boolean showGrid) {
 		
-		if(showGrid){
-			drawPath();
-		}
+
 		
 		pushMatrix();
 		stroke(0);
