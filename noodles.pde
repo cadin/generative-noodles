@@ -47,9 +47,10 @@ void draw() {
 }
 
 void reset() {
-	// paths = new PVector[2][];
+	paths = new PVector[2][];
 	PVector[] p1 = createNoodlePath(GRID_W, GRID_H, null);
 	PVector[] p2 = createNoodlePath(GRID_W, GRID_H, null);
+	paths[0] = p1;
 	
 	noodle = new Noodle(p1,TILE_SIZE, head);
 	noodle2 = new Noodle(p2,TILE_SIZE, head);
