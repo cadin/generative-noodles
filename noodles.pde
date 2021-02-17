@@ -12,6 +12,8 @@ PShape head ;
 Noodle noodle; 
 Noodle noodle2;
 
+PVector[][] paths;
+
 
 
 void settings() {
@@ -45,8 +47,12 @@ void draw() {
 }
 
 void reset() {
-	noodle = new Noodle(TILE_SIZE, head);
-	noodle2 = new Noodle(TILE_SIZE, head);
+	// paths = new PVector[2][];
+	PVector[] p1 = createNoodlePath(GRID_W, GRID_H, null);
+	PVector[] p2 = createNoodlePath(GRID_W, GRID_H, null);
+	
+	noodle = new Noodle(p1,TILE_SIZE, head);
+	noodle2 = new Noodle(p2,TILE_SIZE, head);
 }
 
 void keyPressed() {
