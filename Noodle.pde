@@ -1,11 +1,13 @@
 class Noodle {
 	
 	int margin = 0;
-	int thickness = 50;
+	int thickness = 20;
 	int tileSize = 0;
 	
-	int headWidth = 80;
+	int headWidth = 100;
 	int strokeSize = 3;
+	
+	
 	
 	Point[] path;
 	
@@ -34,12 +36,13 @@ class Noodle {
 			rotate(PI);
 		}
 		
-		float s = (float)thickness / (float)headWidth;
-		println(s);
-		scale(s);
-		strokeWeight(strokeSize / s);
-		shape(head, tileSize/-2 , tileSize/-2);
+		float scale = (float)thickness / (float)headWidth;
+		translate(0, (tileSize - headWidth * scale) / 2);
+		scale(scale);
+		strokeWeight(strokeSize / scale);
+		shape(head, headWidth/-2 , headWidth/-2);
 		strokeWeight(strokeSize);
+		stroke(0);
 		popMatrix();
 	}
 	
