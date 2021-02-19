@@ -1,9 +1,9 @@
 import processing.svg.*;
 
 
-int TILE_SIZE = 100;
-int GRID_W = 19;
-int GRID_H = 11;
+int TILE_SIZE = 40;
+int GRID_W = 36;
+int GRID_H = 24;
 
 boolean showGrid = true;
 boolean saveFile = false;
@@ -12,7 +12,7 @@ PShape head;
 Noodle noodle; 
 Noodle noodle2;
 
-int numNoodles = 20;
+int numNoodles = 50;
 Noodle[] noodles;
 
 Point[][] paths;
