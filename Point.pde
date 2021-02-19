@@ -2,8 +2,8 @@ class Point {
 	int x = 0;
 	int y = 0;
 	
-	Point(int x, int y) {
-		x = x; 
-		y = y;
+	Point(int _x, int _y) {
+		x = _x; 
+		y = _y;
 	}
 }

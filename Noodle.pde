@@ -4,11 +4,11 @@ class Noodle {
 	int thickness = 80;
 	int tileSize = 0;
 	
-	PVector path[];
+	Point[] path;
 	
 	PShape head;
 	
-	Noodle(PVector[] p, int tileW, PShape h) {
+	Noodle(Point[] p, int tileW, PShape h) {
 		tileSize = tileW;
 		margin = (tileSize - thickness) / 2;
 		head = h;
@@ -17,7 +17,7 @@ class Noodle {
 	}
 
 	
-	void drawHead(PVector pos, PVector neighbor) {
+	void drawHead(Point pos, Point neighbor) {
 		pushMatrix();
 		translate(tileSize / 2, tileSize/2);
 		if(neighbor.x < pos.x){
@@ -34,7 +34,7 @@ class Noodle {
 	void drawNoodle() {
 	
 		for(int i = 0; i < path.length; i++){
-			PVector p = path[i];
+			Point p = path[i];
 			
 			pushMatrix();
 			translate(p.x * tileSize, p.y * tileSize);
@@ -44,8 +44,8 @@ class Noodle {
 				drawHead(path[i], path[i - 1]);
 			} else {
 				
-				PVector prev = path[i-1];
-				PVector next = path[i+1];
+				Point prev = path[i-1];
+				Point next = path[i+1];
 				
 				boolean top = prev.y < p.y || next.y < p.y;
 				boolean right = prev.x > p.x || next.x > p.x;
