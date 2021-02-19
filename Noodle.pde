@@ -4,6 +4,9 @@ class Noodle {
 	int thickness = 50;
 	int tileSize = 0;
 	
+	int headWidth = 80;
+	int strokeSize = 3;
+	
 	Point[] path;
 	
 	PShape head;
@@ -12,7 +15,9 @@ class Noodle {
 		tileSize = tileW;
 		margin = (tileSize - thickness) / 2;
 		head = h;
+		
 		head.disableStyle();
+
 		path = p;
 	}
 
@@ -20,6 +25,7 @@ class Noodle {
 	void drawHead(Point pos, Point neighbor) {
 		pushMatrix();
 		translate(tileSize / 2, tileSize/2);
+		
 		if(neighbor.x < pos.x){
 			rotate(HALF_PI);
 		} else if(neighbor.x > pos.x){
@@ -27,7 +33,13 @@ class Noodle {
 		} else if(neighbor.y < pos.y){
 			rotate(PI);
 		}
+		
+		float s = (float)thickness / (float)headWidth;
+		println(s);
+		scale(s);
+		strokeWeight(strokeSize / s);
 		shape(head, tileSize/-2 , tileSize/-2);
+		strokeWeight(strokeSize);
 		popMatrix();
 	}
 	
@@ -76,7 +88,7 @@ class Noodle {
 		pushMatrix();
 		stroke(0);
 		noFill();
-		strokeWeight(3);
+		strokeWeight(strokeSize);
 		
 		drawNoodle();
 		popMatrix();

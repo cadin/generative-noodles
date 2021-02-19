@@ -12,7 +12,7 @@ Point[] createNoodlePath(int[][] cells){
 	} while (cells[posX][posY] > 0);
 	
 	path[0] = new Point(posX, posY);
-	println(path[0].x, path[0].y);
+
 	cells[posX][posY] = 1;
 	
 	int count = 1;
