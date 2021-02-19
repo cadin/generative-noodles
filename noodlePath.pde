@@ -1,27 +1,3 @@
-// Point[] createNoodlePath(int cols, int rows, Point[] occupied){
-// 	int len = int(random(4, 10));
-		
-// 	Point[] path = new Point[len];
-// 	path[0] = new Point(round(random(0, cols)), round(random(0, rows)));
-	
-// 	for(int i=1; i < len; i++){
-// 		int vh = round(random(0,1));
-// 		if(vh == 0) {
-// 			// vertical 
-// 			int ud = round(random(0,1));
-// 			if(ud == 0){ud = -1;}
-// 			path[i] = new Point(path[i-1].x, path[i-1].y + ud);
-// 		} else {
-// 			// horizontal
-// 			int lr = round(random(0,1));
-// 			if(lr == 0){lr = -1;}
-// 			path[i] = new Point(path[i-1].x + lr, path[i-1].y);
-// 		}
-// 	}
-	
-// 	return path;
-// }
-
 Point[] createNoodlePath(int[][] cells){
 	int len = int(random(4, 10));
 	int cols = cells.length;

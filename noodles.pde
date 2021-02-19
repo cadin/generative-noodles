@@ -2,19 +2,21 @@ import processing.svg.*;
 
 
 int TILE_SIZE = 100;
-int GRID_W = 8;
-int GRID_H = 8;
+int GRID_W = 19;
+int GRID_H = 11;
 
 boolean showGrid = true;
 boolean saveFile = false;
 
-PShape head ;
+PShape head;
 Noodle noodle; 
 Noodle noodle2;
 
-Point[][] paths;
+int numNoodles = 20;
+Noodle[] noodles;
 
-int[][] cells = new int[GRID_W][GRID_H];
+Point[][] paths;
+int[][] cells;
 
 
 
@@ -37,9 +39,11 @@ void draw() {
 	if(saveFile){
 		beginRecord(SVG, "output/" + getFileName() + ".svg");
 	}
-	
-	noodle.draw(showGrid);
-	noodle2.draw(showGrid);
+
+	for(int i=0; i < numNoodles; i++){
+		noodles[i].draw();
+	}	
+
 	
 	if(saveFile){
 		endRecord();
@@ -49,15 +53,15 @@ void draw() {
 }
 
 void reset() {
-	paths = new Point[2][];
+
 	cells = new int[GRID_W][GRID_H];
-	Point[] p1 = createNoodlePath(cells);
-	Point[] p2 = createNoodlePath(cells);
-	paths[0] = p1;
+	noodles = new Noodle[numNoodles];
 	
 	
-	noodle = new Noodle(p1,TILE_SIZE, head);
-	noodle2 = new Noodle(p2,TILE_SIZE, head);
+	for(int i=0; i < numNoodles; i++){
+		Point[] p = createNoodlePath(cells);
+		noodles[i] = new Noodle(p, TILE_SIZE, head);
+	}
 }
 
 void keyPressed() {

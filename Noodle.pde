@@ -1,7 +1,7 @@
 class Noodle {
 	
 	int margin = 0;
-	int thickness = 80;
+	int thickness = 50;
 	int tileSize = 0;
 	
 	Point[] path;
@@ -72,7 +72,7 @@ class Noodle {
 		}
 	}
 	
-	void draw(boolean showGrid) {
+	void draw() {
 		pushMatrix();
 		stroke(0);
 		noFill();
