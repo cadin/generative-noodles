@@ -1,22 +1,23 @@
 import processing.svg.*;
 
 
-int TILE_SIZE = 40;
-int GRID_W = 36;
-int GRID_H = 24;
+int TILE_SIZE = 50;
+int GRID_W = 32;
+int GRID_H = 16;
 
 boolean showGrid = true;
 boolean saveFile = false;
 
-PShape head;
 Noodle noodle; 
 Noodle noodle2;
 
-int numNoodles = 50;
+int numNoodles = 20;
 Noodle[] noodles;
 
 Point[][] paths;
 int[][] cells;
+
+PShape[] ends;
 
 
 
@@ -26,7 +27,11 @@ void settings() {
 }
 
 void setup() {
-	head = loadShape("test.svg");
+
+	ends = new PShape[2];
+	ends[0] = loadShape("hand.svg");
+	ends[1] = loadShape("hand2.svg");
+	
 	reset();
 }
 
@@ -60,7 +65,10 @@ void reset() {
 	
 	for(int i=0; i < numNoodles; i++){
 		Point[] p = createNoodlePath(cells);
-		noodles[i] = new Noodle(p, TILE_SIZE, head);
+		int endIndex = floor(random(0, ends.length));
+		PShape end = ends[endIndex];
+		
+		noodles[i] = new Noodle(p, TILE_SIZE, end);
 	}
 }
 
@@ -74,6 +82,9 @@ void keyPressed() {
 		break;
 		case 'r':
 			reset();
+		break;
+		case 't':
+			TILE_SIZE++;
 		break;
 	}
 }

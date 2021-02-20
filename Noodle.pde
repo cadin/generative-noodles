@@ -1,7 +1,7 @@
 class Noodle {
 	
 	int margin = 0;
-	int thickness = 20;
+	int thickness = 26;
 	int tileSize = 0;
 	
 	int headWidth = 100;
@@ -24,7 +24,7 @@ class Noodle {
 	}
 
 	
-	void drawHead(Point pos, Point neighbor) {
+	void drawHead(Point pos, Point neighbor, int flip) {
 		pushMatrix();
 		translate(tileSize / 2, tileSize/2);
 		
@@ -38,6 +38,7 @@ class Noodle {
 		
 		float scale = (float)thickness / (float)headWidth;
 		translate(0, (tileSize - headWidth * scale) / 2);
+		scale(flip, 1);
 		scale(scale);
 		strokeWeight(strokeSize / scale);
 		shape(head, headWidth/-2 , headWidth/-2);
@@ -54,9 +55,9 @@ class Noodle {
 			pushMatrix();
 			translate(p.x * tileSize, p.y * tileSize);
 			if(i == 0){
-				drawHead(path[i], path[i + 1]);
+				drawHead(path[i], path[i + 1], 1);
 			}else if( i == path.length -1){
-				drawHead(path[i], path[i - 1]);
+				drawHead(path[i], path[i - 1], -1);
 			} else {
 				
 				Point prev = path[i-1];
