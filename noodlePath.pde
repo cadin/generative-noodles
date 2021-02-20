@@ -45,6 +45,7 @@ Point[] createNoodlePath(int[][] cells){
 			if(dir == "left") p = ( new Point(prev.x -1, prev.y));
 			
 			if(p != null){
+				p.type = floor(random(0, 5));
 				cells[p.x][p.y] = 1;
 				path[count] = p;
 				count++;

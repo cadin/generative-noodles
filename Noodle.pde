@@ -50,7 +50,7 @@ class Noodle {
 		popMatrix();
 	}
 	
-	void drawNoodle() {
+	void drawNoodle(boolean useTwists) {
 	
 		for(int i = 0; i < path.length; i++){
 			Point p = path[i];
@@ -72,9 +72,17 @@ class Noodle {
 				boolean bottom = prev.y > p.y || next.y > p.y;
 				
 				if(top && bottom ){
-					vertical();
+					if(useTwists && p.type == 0){
+						verticalTwist();
+					} else {
+						vertical();
+					}
 				} else if(left && right){
-					horizontal(1);
+					if(useTwists && p.type == 0){
+						horizontalTwist();
+					} else {
+						horizontal();
+					}
 				} else if(left && bottom){
 					cornerTR();
 				} else if(top && left){
@@ -91,13 +99,13 @@ class Noodle {
 		}
 	}
 	
-	void draw() {
+	void draw(boolean useTwists) {
 		pushMatrix();
 		stroke(0);
 		noFill();
 		strokeWeight(strokeSize);
 		
-		drawNoodle();
+		drawNoodle(useTwists);
 		popMatrix();
 	}
 	
@@ -128,10 +136,22 @@ class Noodle {
 		
 	}
 	
-	void horizontal( int len ) {
-		int length = len * tileSize;
-		
-		line(0, margin, length, margin);
-		line(0, tileSize - margin, length, tileSize - margin);
+	void verticalTwist() {
+		float twistDepth = tileSize / 2;
+		bezier(margin, 0, margin,   twistDepth, tileSize - margin,   tileSize - twistDepth, tileSize-margin, tileSize);
+		bezier( tileSize - margin, 0,    tileSize - margin, twistDepth,     margin, tileSize - twistDepth,    margin, tileSize);
+	}
+	
+	
+	
+	void horizontal() {
+		line(0, margin, tileSize, margin);
+		line(0, tileSize - margin, tileSize, tileSize - margin);
+	}
+	
+	void horizontalTwist() {
+		float twistDepth = tileSize / 2;
+		bezier( 0, margin, twistDepth,margin, tileSize - (twistDepth),   tileSize-margin,   tileSize , tileSize - margin);
+		bezier( 0, tileSize - margin, twistDepth, tileSize-margin, tileSize -twistDepth, margin,      tileSize, margin);
 	}
 }

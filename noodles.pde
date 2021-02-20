@@ -9,8 +9,8 @@ int PRINT_RESOLUTION = 600;
 float MARGIN_INCHES = 0.5;
 
 int TILE_SIZE = 50;
-int GRID_W = 18;
-int GRID_H = 18;
+int GRID_W = 6;
+int GRID_H = 6;
 
 int PRINT_X = 0;
 int PRINT_Y = 0;
@@ -21,19 +21,24 @@ int canvasH = int(PRINT_H_INCHES * PRINT_RESOLUTION * SCREEN_SCALE);
 int canvasX = 0;
 int canvasY = 0;
 
-boolean showGrid = true;
+
 boolean saveFile = false;
 
 Noodle noodle; 
 Noodle noodle2;
 
-int numNoodles = 20;
+int numNoodles = 1;
 Noodle[] noodles;
 
 Point[][] paths;
 int[][] cells;
 
 PShape[] ends;
+
+// SETTINGS
+boolean showGrid = false;
+boolean useTwists = false;
+
 
 
 
@@ -119,7 +124,7 @@ void draw() {
 	}
 
 	for(int i=0; i < noodles.length; i++){
-		noodles[i].draw();
+		noodles[i].draw(useTwists);
 	}	
 
 	
