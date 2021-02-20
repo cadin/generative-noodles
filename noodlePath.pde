@@ -52,12 +52,22 @@ Point[] createNoodlePath(int[][] cells){
 		}
 	}
 	
-	if(count > 1){
+	if(count > 2){
 		return (Point[]) subset(path, 0, count);
 	} else {
-		return createNoodlePath(cells);
+		clearCells(cells, (Point[]) subset(path, 0, count));
+		// return createNoodlePath(cells);
+		
+		return null;
 	}
 
+}
+
+void clearCells(int[][] cells, Point[] path){
+	for(int i=0; i< path.length; i++){
+		Point p = path[i];
+		cells[p.x][p.y] = 0;
+	}
 }
 
 void drawPath(Point[] path, int tileSize){
