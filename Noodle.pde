@@ -1,7 +1,8 @@
 class Noodle {
 	
 	int margin = 0;
-	int thickness = 26;
+	int thickness = 10;
+	float thicknessPct = 0.5;
 	int tileSize = 0;
 	
 	int headWidth = 100;
@@ -15,6 +16,8 @@ class Noodle {
 	
 	Noodle(Point[] p, int tileW, PShape h) {
 		tileSize = tileW;
+		thickness = int(tileSize * thicknessPct);
+		thickness = (thickness / 2) * 2;
 		margin = (tileSize - thickness) / 2;
 		head = h;
 		
