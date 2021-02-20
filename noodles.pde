@@ -39,7 +39,8 @@ PShape[] ends;
 boolean showGrid = false;
 boolean useTwists = false;
 
-
+ImageSaver imgSaver = new ImageSaver();
+String fileNameToSave = "";
 
 
 void settings() {
@@ -47,6 +48,7 @@ void settings() {
 	size(displayWidth, displayHeight - 45);
 	// fullScreen();
 	pixelDensity(displayDensity());
+	
 }
 
 void setup() {
@@ -54,12 +56,12 @@ void setup() {
 	ends = new PShape[2];
 	ends[0] = loadShape("hand.svg");
 	ends[1] = loadShape("hand2.svg");
+	frameRate(12);
 	
 	reset();
 }
 
 void calculateScreenScale() {
-	
 	float maxW = width - 100;
 	float maxH = height - 100;
 	
@@ -95,8 +97,8 @@ void calculateTileSize() {
 	// tile size must be even
 	TILE_SIZE = (TILE_SIZE / 2) * 2;
 	
-	PRINT_X = canvasX + (canvasW - (TILE_SIZE * GRID_W)) / 2;
-	PRINT_Y = canvasY + (canvasH - (TILE_SIZE * GRID_H)) / 2;
+	PRINT_X =  (canvasW - (TILE_SIZE * GRID_W)) / 2;
+	PRINT_Y = (canvasH - (TILE_SIZE * GRID_H)) / 2;
 		
 }
 
@@ -107,36 +109,31 @@ void drawPaperBG() {
 	rect(canvasX, canvasY, canvasW, canvasH);
 }
 
-void draw() {
+void drawBG() {
 	background(100);
-	
+	if(imgSaver.isBusy()){ drawSaveIndicator();}
 	drawPaperBG();
-	
-	translate(PRINT_X, PRINT_Y);
-	
-	if(showGrid){
-		drawGrid();
-	}
-	
-	if(saveFile){
-		beginRecord(SVG, "output/" + getFileName() + ".svg");
-		translate(PRINT_X - canvasX, PRINT_Y - canvasY );
-	}
+	translate(canvasX, canvasY);
+}
 
+void draw() {
+	drawBG();
+	if(imgSaver.state == SaveState.SAVING){
+		beginRecord(SVG, "output/" + fileNameToSave + ".svg");
+	}
+	
+	translate(PRINT_X, PRINT_Y );
+	if(showGrid){ drawGrid();}
+	
 	for(int i=0; i < noodles.length; i++){
 		noodles[i].draw(useTwists);
 	}	
-
 	
-	if(saveFile){
-		endRecord();
-		saveFile = false;
-	}
-
+	if(imgSaver.state == SaveState.SAVING) { endRecord(); }
+	imgSaver.update();
 }
 
 void reset() {
-
 	calculateScreenScale();
 	calculateTileSize();
 	cells = new int[GRID_W][GRID_H];
@@ -149,7 +146,6 @@ void reset() {
 		if(p != null){
 		int endIndex = floor(random(0, ends.length));
 			PShape end = ends[endIndex];
-			
 			noodles[noodleCount] = new Noodle(p, TILE_SIZE, end);
 			noodleCount++;
 		}
@@ -161,7 +157,8 @@ void reset() {
 void keyPressed() {
 	switch(key) {
 		case 's' :
-			saveFile = true;
+			fileNameToSave = getFileName();
+			imgSaver.begin(fileNameToSave);
 		break;
 		case 'g':
 			showGrid = !showGrid;
@@ -175,7 +172,13 @@ void keyPressed() {
 	}
 }
 
-
+void drawSaveIndicator() {
+	pushMatrix();
+		fill(color(200, 0, 0));
+		noStroke();
+		rect(0,0,width, 4);
+	popMatrix();
+}
 
 void drawGrid() {
 	pushMatrix();

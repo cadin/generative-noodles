@@ -8,8 +8,6 @@ class Noodle {
 	int headWidth = 100;
 	int strokeSize = 3;
 	
-	
-	
 	Point[] path;
 	
 	PShape head;
