@@ -1,3 +1,4 @@
+import controlP5.*;
 import processing.svg.*;
 
 
@@ -21,6 +22,7 @@ int canvasH = int(PRINT_H_INCHES * PRINT_RESOLUTION * SCREEN_SCALE);
 int canvasX = 0;
 int canvasY = 0;
 
+boolean EDIT_MODE = false;
 
 boolean saveFile = false;
 
@@ -42,6 +44,8 @@ boolean useTwists = false;
 ImageSaver imgSaver = new ImageSaver();
 String fileNameToSave = "";
 
+Editor editor;
+
 
 void settings() {
 	
@@ -52,7 +56,7 @@ void settings() {
 }
 
 void setup() {
-
+	editor = new Editor(this);
 	ends = new PShape[2];
 	ends[0] = loadShape("hand.svg");
 	ends[1] = loadShape("hand2.svg");
@@ -117,20 +121,24 @@ void drawBG() {
 }
 
 void draw() {
-	drawBG();
-	if(imgSaver.state == SaveState.SAVING){
-		beginRecord(SVG, "output/" + fileNameToSave + ".svg");
+	if(EDIT_MODE) {
+		editor.draw();
+	} else {
+		drawBG();
+		if(imgSaver.state == SaveState.SAVING){
+			beginRecord(SVG, "output/" + fileNameToSave + ".svg");
+		}
+		
+		translate(PRINT_X, PRINT_Y );
+		if(showGrid){ drawGrid();}
+		
+		for(int i=0; i < noodles.length; i++){
+			noodles[i].draw(useTwists);
+		}	
+		
+		if(imgSaver.state == SaveState.SAVING) { endRecord(); }
+		imgSaver.update();
 	}
-	
-	translate(PRINT_X, PRINT_Y );
-	if(showGrid){ drawGrid();}
-	
-	for(int i=0; i < noodles.length; i++){
-		noodles[i].draw(useTwists);
-	}	
-	
-	if(imgSaver.state == SaveState.SAVING) { endRecord(); }
-	imgSaver.update();
 }
 
 void reset() {
@@ -168,6 +176,16 @@ void keyPressed() {
 		break;
 		case 't':
 			TILE_SIZE++;
+		break;
+		case 'e':
+			EDIT_MODE = !EDIT_MODE;
+			if(EDIT_MODE){
+				editor.show();
+			} else {
+				editor.hide();
+				calculateScreenScale();
+				calculateTileSize();
+			}
 		break;
 	}
 }
