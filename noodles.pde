@@ -41,7 +41,6 @@ void settings() {
 	
 	size(displayWidth, displayHeight - 45);
 	// fullScreen();
-	// size(TILE_SIZE * GRID_W, TILE_SIZE * GRID_H);
 	pixelDensity(displayDensity());
 }
 
@@ -76,13 +75,6 @@ void calculateScreenScale() {
 	
 	canvasX = (width - canvasW) /2;
 	canvasY = (height - canvasH) /2;
-	
-	Frame canvasFrame = new Frame(canvasX, canvasY, canvasW, canvasH);
-	
-	// imgSaver.setImageResolution(int(printW / pixelDensity), int(printH / pixelDensity));
-	// imgSaver.setCanvasFrame(canvasFrame);
-	
-	println("screen Scale: " + SCREEN_SCALE);
 }
 
 void calculateTileSize() {
