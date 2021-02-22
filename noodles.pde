@@ -10,8 +10,8 @@ int PRINT_RESOLUTION = 600;
 float MARGIN_INCHES = 0.5;
 
 int TILE_SIZE = 50;
-int GRID_W = 6;
-int GRID_H = 6;
+int GRID_W = 8;
+int GRID_H = 8;
 
 int PRINT_X = 0;
 int PRINT_Y = 0;
@@ -36,10 +36,12 @@ Point[][] paths;
 int[][] cells;
 
 PShape[] ends;
+PShape[] joiners;
 
 // SETTINGS
 boolean showGrid = false;
 boolean useTwists = false;
+boolean useJoiners = true;
 
 ImageSaver imgSaver = new ImageSaver();
 String fileNameToSave = "";
@@ -60,8 +62,12 @@ void setup() {
 	ends = new PShape[2];
 	ends[0] = loadShape("hand.svg");
 	ends[1] = loadShape("hand2.svg");
-	frameRate(12);
 	
+	joiners = new PShape[1];
+	joiners[0] = loadShape("join.svg");
+	joiners[0].disableStyle();
+	
+	frameRate(12);
 	reset();
 }
 
@@ -154,7 +160,7 @@ void reset() {
 		if(p != null){
 		int endIndex = floor(random(0, ends.length));
 			PShape end = ends[endIndex];
-			noodles[noodleCount] = new Noodle(p, TILE_SIZE, end);
+			noodles[noodleCount] = new Noodle(p, TILE_SIZE, end, joiners);
 			noodleCount++;
 		}
 	}

@@ -11,8 +11,9 @@ class Noodle {
 	Point[] path;
 	
 	PShape head;
+	PShape[] joiners;
 	
-	Noodle(Point[] p, int tileW, PShape h) {
+	Noodle(Point[] p, int tileW, PShape h, PShape[] j) {
 		tileSize = tileW;
 		thickness = int(tileSize * thicknessPct);
 		thickness = (thickness / 2) * 2;
@@ -20,6 +21,8 @@ class Noodle {
 		head = h;
 		
 		head.disableStyle();
+		
+		joiners = j;
 
 		path = p;
 	}
@@ -44,7 +47,43 @@ class Noodle {
 		strokeWeight(strokeSize / scale);
 		shape(head, headWidth/-2 , headWidth/-2);
 		strokeWeight(strokeSize);
-		stroke(0);
+		popMatrix();
+	}
+	
+	void verticalJoin() {
+		float scale = (float)thickness / (float)headWidth;
+		float distToGfx = (tileSize - headWidth * scale)/2;
+		line(margin, 0, margin, distToGfx);
+		line(tileSize - margin, 0, tileSize - margin, distToGfx);
+		line(margin, tileSize - distToGfx, margin, tileSize);
+		line(tileSize - margin, tileSize - distToGfx, tileSize-margin, tileSize);
+		
+		pushMatrix();
+			translate(tileSize / 2, tileSize/2);
+			scale(scale);
+			strokeWeight(strokeSize / scale);
+			shape(joiners[0], headWidth/-2 , headWidth/-2);
+			strokeWeight(strokeSize);
+			
+		popMatrix();
+	}
+	
+	void horizontalJoin() {
+		float scale = (float)thickness / (float)headWidth;
+		float distToGfx = (tileSize - headWidth * scale)/2;
+		line(0, margin, distToGfx, margin);
+		line( 0,tileSize - margin,  distToGfx, tileSize - margin);
+		line(tileSize - distToGfx, margin,  tileSize, margin );
+		line(tileSize - distToGfx, tileSize - margin,  tileSize, tileSize-margin);
+		
+		pushMatrix();
+			translate(tileSize / 2, tileSize/2);
+			scale(scale);
+			rotate(HALF_PI);
+			strokeWeight(strokeSize / scale);
+			shape(joiners[0], headWidth/-2 , headWidth/-2);
+			strokeWeight(strokeSize);
+			
 		popMatrix();
 	}
 	
@@ -72,12 +111,16 @@ class Noodle {
 				if(top && bottom ){
 					if(useTwists && p.type == 0){
 						verticalTwist();
+					} else if(useJoiners && p.type == 1) {
+						verticalJoin();
 					} else {
 						vertical();
 					}
 				} else if(left && right){
 					if(useTwists && p.type == 0){
 						horizontalTwist();
+					} else if(useJoiners && p.type == 1){
+						horizontalJoin();
 					} else {
 						horizontal();
 					}
