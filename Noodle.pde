@@ -151,13 +151,30 @@ class Noodle {
 	}
 	
 	void cornerTL() {
-		arc(tileSize, tileSize, (thickness + margin)*2, (thickness + margin)*2, PI, PI + HALF_PI);
-		arc(tileSize, tileSize, margin * 2, margin * 2, PI, PI + HALF_PI);
+		if(useCurves){
+			arc(tileSize, tileSize, (thickness + margin)*2, (thickness + margin)*2, PI, PI + HALF_PI);
+			arc(tileSize, tileSize, margin * 2, margin * 2, PI, PI + HALF_PI);
+		} else {
+			line(margin, tileSize, margin, tileSize - margin);
+			line(margin, tileSize - margin, tileSize - margin, margin);
+			line(tileSize - margin, margin, tileSize, margin);
+			
+			line(tileSize - margin, tileSize, tileSize, tileSize - margin);
+			
+		}
 	}
 	
 	void cornerTR() {
-		arc(0, tileSize, (thickness + margin)*2 , (thickness + margin)*2,-HALF_PI, 0);
-		arc(0, tileSize, margin * 2, margin *2, -HALF_PI, 0);
+		if(useCurves){
+			arc(0, tileSize, (thickness + margin)*2 , (thickness + margin)*2,-HALF_PI, 0);
+			arc(0, tileSize, margin * 2, margin *2, -HALF_PI, 0);
+		} else {
+			line(0, margin, margin, margin);
+			line(margin, margin, tileSize - margin, tileSize - margin);
+			line(tileSize - margin, tileSize - margin, tileSize-margin, tileSize);
+			
+			line(0, tileSize - margin, margin, tileSize);
+		}
 	}
 	
 	void cornerBR() {
