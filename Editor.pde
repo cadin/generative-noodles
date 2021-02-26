@@ -7,6 +7,7 @@ class Editor {
 	Numberbox heightControl;
 	Toggle twistControl;
 	Toggle joinControl;
+	Toggle curvesControl;
 	
 	boolean controlsVisible = false;
 		
@@ -66,6 +67,18 @@ class Editor {
 			.align(ControlP5.RIGHT_OUTSIDE, ControlP5.CENTER)
 			.setPaddingX(10)
 			;
+			
+		curvesControl = cp5.addToggle("Use Curves")
+			.setPosition(100,500)
+			.setSize(20,20)
+			.setValue(useCurves)
+			;
+		
+		curvesControl
+			.getCaptionLabel()
+			.align(ControlP5.RIGHT_OUTSIDE, ControlP5.CENTER)
+			.setPaddingX(10)
+			;
 		
 		hide();
 	}
@@ -76,6 +89,7 @@ class Editor {
 		heightControl.setValue(PRINT_H_INCHES);
 		twistControl.setValue(useTwists);
 		joinControl.setValue(useJoiners);
+		curvesControl.setValue(useCurves);
 		
 		controlsVisible = true;
 	}
@@ -85,6 +99,7 @@ class Editor {
 		PRINT_H_INCHES = heightControl.getValue();
 		useTwists = twistControl.getState();
 		useJoiners = joinControl.getState();
+		useCurves = curvesControl.getState();
 
 		controlsVisible = false;
 		cp5.hide();
