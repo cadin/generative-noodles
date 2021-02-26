@@ -42,6 +42,7 @@ PShape[] joiners;
 boolean showGrid = false;
 boolean useTwists = false;
 boolean useJoiners = true;
+boolean useCurves = true;
 
 ImageSaver imgSaver = new ImageSaver();
 String fileNameToSave = "";
