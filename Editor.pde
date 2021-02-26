@@ -5,6 +5,8 @@ class Editor {
 	
 	Numberbox widthControl;
 	Numberbox heightControl;
+	Numberbox colsControl;
+	Numberbox rowsControl;
 	Toggle twistControl;
 	Toggle joinControl;
 	Toggle curvesControl;
@@ -42,6 +44,28 @@ class Editor {
 			.setValue(PRINT_H_INCHES)
 			.setDecimalPrecision(3)
 			.setId(2)
+			;
+
+		colsControl = cp5.addNumberbox("Columns")
+			.setPosition(400,220)
+			.setSize(100,20)
+			.setRange(1,60)
+			.setMultiplier(1) // set the sensitifity of the numberbox
+			.setDirection(Controller.HORIZONTAL) // change the control direction to left/right
+			.setValue(GRID_W)
+			.setDecimalPrecision(0)
+			.setId(3)
+			;
+			
+		rowsControl = cp5.addNumberbox("Rows")
+			.setPosition(400,280)
+			.setSize(100,20)
+			.setRange(1,60)
+			.setMultiplier(1) // set the sensitifity of the numberbox
+			.setDirection(Controller.HORIZONTAL) // change the control direction to left/right
+			.setValue(GRID_H)
+			.setDecimalPrecision(0)
+			.setId(4)
 			;
 		
 		twistControl = cp5.addToggle("Use Twists")
@@ -87,6 +111,8 @@ class Editor {
 	void show() {
 		widthControl.setValue(PRINT_W_INCHES);
 		heightControl.setValue(PRINT_H_INCHES);
+		colsControl.setValue(GRID_W);
+		rowsControl.setValue(GRID_H);
 		twistControl.setValue(useTwists);
 		joinControl.setValue(useJoiners);
 		curvesControl.setValue(useCurves);
@@ -97,6 +123,8 @@ class Editor {
 	void hide() {
 		PRINT_W_INCHES = widthControl.getValue();
 		PRINT_H_INCHES = heightControl.getValue();
+		GRID_W = int(colsControl.getValue());
+		GRID_H = int(rowsControl.getValue());
 		useTwists = twistControl.getState();
 		useJoiners = joinControl.getState();
 		useCurves = curvesControl.getState();

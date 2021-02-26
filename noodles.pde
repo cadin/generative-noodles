@@ -54,7 +54,7 @@ void settings() {
 	
 	size(displayWidth, displayHeight - 45);
 	// fullScreen();
-	pixelDensity(displayDensity());
+	// pixelDensity(displayDensity());
 	
 }
 
