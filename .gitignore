@@ -1,2 +1,4 @@
 build-tmp
 /output
+/.vscode
+/out
