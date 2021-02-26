@@ -6,6 +6,9 @@ class Editor {
 	Numberbox widthControl;
 	Numberbox heightControl;
 	Toggle twistControl;
+	Toggle joinControl;
+	
+	boolean controlsVisible = false;
 		
 	float printW;
 	float printH;
@@ -52,6 +55,18 @@ class Editor {
 			.setPaddingX(10)
 			;
 		
+		joinControl = cp5.addToggle("Use Joins")
+			.setPosition(100,450)
+			.setSize(20,20)
+			.setValue(useJoiners)
+			;
+		
+		joinControl
+			.getCaptionLabel()
+			.align(ControlP5.RIGHT_OUTSIDE, ControlP5.CENTER)
+			.setPaddingX(10)
+			;
+		
 		hide();
 	}
 	
@@ -60,20 +75,28 @@ class Editor {
 		widthControl.setValue(PRINT_W_INCHES);
 		heightControl.setValue(PRINT_H_INCHES);
 		twistControl.setValue(useTwists);
+		joinControl.setValue(useJoiners);
 		
-		cp5.show();
+		controlsVisible = true;
 	}
 	
 	void hide() {
 		PRINT_W_INCHES = widthControl.getValue();
 		PRINT_H_INCHES = heightControl.getValue();
 		useTwists = twistControl.getState();
+		useJoiners = joinControl.getState();
 
+		controlsVisible = false;
 		cp5.hide();
+		
 	}
 	
 	void draw() {
 		background(bgColor);
+		
+		if(controlsVisible && !cp5.isVisible()){
+			cp5.show();
+		} 
 	}
 	
 	void controlEvent(ControlEvent e) {
