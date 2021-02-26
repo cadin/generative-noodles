@@ -159,7 +159,11 @@ class Noodle {
 			line(margin, tileSize - margin, tileSize - margin, margin);
 			line(tileSize - margin, margin, tileSize, margin);
 			
-			line(tileSize - margin, tileSize, tileSize, tileSize - margin);
+			line(tileSize - margin, tileSize, tileSize - margin, tileSize - margin /2);
+			line(tileSize - margin, tileSize - margin/2, tileSize - margin/2, tileSize - margin);
+			line(tileSize - margin/2, tileSize - margin, tileSize, tileSize - margin);
+			
+			// line(tileSize - margin, tileSize, tileSize, tileSize - margin);
 			
 		}
 	}
@@ -173,7 +177,9 @@ class Noodle {
 			line(margin, margin, tileSize - margin, tileSize - margin);
 			line(tileSize - margin, tileSize - margin, tileSize-margin, tileSize);
 			
-			line(0, tileSize - margin, margin, tileSize);
+			line(0, tileSize - margin, margin/2, tileSize - margin);
+			line(margin/2, tileSize - margin, margin, tileSize - margin/2);
+			line(margin, tileSize - margin/2, margin, tileSize);
 		}
 	}
 	
