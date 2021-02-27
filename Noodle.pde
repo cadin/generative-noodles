@@ -20,7 +20,6 @@ class Noodle {
 		head = h;
 		
 		head.disableStyle();
-		
 		joiners = j;
 
 		path = p;

@@ -1,0 +1,12 @@
+{
+    "printResolution": 300,
+    "printHeightInches": 11,
+    "printWidthInches": 11,
+    "gridWidth": 11,
+    "gridHeight": 11,
+    "marginInches": 0.5,
+    "useTwists": false,
+    "useJoiners": false,
+    "useCurves": true,
+    "penSizeMM": 0.35
+}

@@ -57,6 +57,7 @@ class ImageSaver {
 		obj.setInt("gridHeight", GRID_H);
 		obj.setFloat("marginInches", MARGIN_INCHES);
 		obj.setBoolean("useTwists", useTwists);
+		obj.setBoolean("useJoiners", useJoiners);
 		
 		saveJSONObject(obj, "output/" + filename + ".json");
 		// saveJSONArray(layersArray, "output/" + filename + ".json");

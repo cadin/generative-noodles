@@ -20,8 +20,6 @@ class Editor {
 	
 	Editor(PApplet app) {
 		cp5 = new ControlP5(app);
-
-		
 		PFont font = createFont("DIN", 12 / pixelDensity);
 		cp5.setFont(font);
 		
