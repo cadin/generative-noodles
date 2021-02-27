@@ -7,6 +7,7 @@ class Editor {
 	Numberbox heightControl;
 	Numberbox colsControl;
 	Numberbox rowsControl;
+	Numberbox penSizeControl;
 	Toggle twistControl;
 	Toggle joinControl;
 	Toggle curvesControl;
@@ -27,7 +28,7 @@ class Editor {
 		widthControl = cp5.addNumberbox("Width")
 			.setPosition(100,220)
 			.setSize(100,20)
-			.setRange(1.0,60.0)
+			.setRange(5.0,24.0)
 			.setMultiplier(0.25) // set the sensitifity of the numberbox
 			.setDirection(Controller.HORIZONTAL) // change the control direction to left/right
 			.setValue(PRINT_W_INCHES)
@@ -38,7 +39,7 @@ class Editor {
 		heightControl = cp5.addNumberbox("Height")
 			.setPosition(100,280)
 			.setSize(100,20)
-			.setRange(1.0,60.0)
+			.setRange(5.0,24.0)
 			.setMultiplier(0.25) // set the sensitifity of the numberbox
 			.setDirection(Controller.HORIZONTAL) // change the control direction to left/right
 			.setValue(PRINT_H_INCHES)
@@ -66,6 +67,17 @@ class Editor {
 			.setValue(GRID_H)
 			.setDecimalPrecision(0)
 			.setId(4)
+			;
+
+		penSizeControl = cp5.addNumberbox("Pen Size")
+			.setPosition(400,340)
+			.setSize(100,20)
+			.setRange(0.10,2)
+			.setMultiplier(0.05) // set the sensitifity of the numberbox
+			.setDirection(Controller.HORIZONTAL) // change the control direction to left/right
+			.setValue(penSizeMM)
+			.setDecimalPrecision(2)
+			.setId(5)
 			;
 		
 		twistControl = cp5.addToggle("Use Twists")
@@ -113,6 +125,7 @@ class Editor {
 		heightControl.setValue(PRINT_H_INCHES);
 		colsControl.setValue(GRID_W);
 		rowsControl.setValue(GRID_H);
+		penSizeControl.setValue(penSizeMM);
 		twistControl.setValue(useTwists);
 		joinControl.setValue(useJoiners);
 		curvesControl.setValue(useCurves);
@@ -125,6 +138,9 @@ class Editor {
 		PRINT_H_INCHES = heightControl.getValue();
 		GRID_W = int(colsControl.getValue());
 		GRID_H = int(rowsControl.getValue());
+		penSizeMM = penSizeControl.getValue();
+		strokeSize = calculateStrokeSize();
+
 		useTwists = twistControl.getState();
 		useJoiners = joinControl.getState();
 		useCurves = curvesControl.getState();

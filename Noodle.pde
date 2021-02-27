@@ -6,7 +6,6 @@ class Noodle {
 	int tileSize = 0;
 	
 	int headWidth = 100;
-	int strokeSize = 3;
 	
 	Point[] path;
 	

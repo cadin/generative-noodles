@@ -2,16 +2,16 @@ import controlP5.*;
 import processing.svg.*;
 
 
-float MAX_SCREEN_SCALE = 0.245; // % - (0.2456 == macbook 1:1)
-float SCREEN_SCALE = 0.245; 
-float PRINT_W_INCHES = 8;
-float PRINT_H_INCHES = 8;
+float MAX_SCREEN_SCALE = 0.182; // % - (0.2456 == macbook 1:1) (0.182 == LG Screen)
+float SCREEN_SCALE = 0.182; 
+float PRINT_W_INCHES = 11;
+float PRINT_H_INCHES = 11;
 int PRINT_RESOLUTION = 600;
 float MARGIN_INCHES = 0.5;
 
 int TILE_SIZE = 50;
-int GRID_W = 8;
-int GRID_H = 8;
+int GRID_W = 11;
+int GRID_H = 11;
 
 int PRINT_X = 0;
 int PRINT_Y = 0;
@@ -43,6 +43,9 @@ boolean showGrid = false;
 boolean useTwists = false;
 boolean useJoiners = true;
 boolean useCurves = true;
+float penSizeMM = 0.35;
+float strokeSize = calculateStrokeSize();
+
 
 ImageSaver imgSaver = new ImageSaver();
 String fileNameToSave = "";
@@ -70,6 +73,10 @@ void setup() {
 	
 	frameRate(12);
 	reset();
+}
+
+float calculateStrokeSize() {
+	return (penSizeMM * 0.03937008) * PRINT_RESOLUTION * SCREEN_SCALE;
 }
 
 void calculateScreenScale() {
