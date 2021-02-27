@@ -26,6 +26,8 @@ int canvasX = 0;
 int canvasY = 0;
 
 boolean EDIT_MODE = false;
+boolean BLACKOUT_MODE = false;
+int[][] blackoutCells;
 
 boolean saveFile = false;
 
@@ -65,8 +67,6 @@ void settings() {
 }
 
 void setup() {
-	
-
 	editor = new Editor(this);
 	ends = new PShape[2];
 	ends[0] = loadShape("hand.svg");
@@ -163,10 +163,27 @@ void draw() {
 	}
 }
 
+int[][] copyBlackoutCells() {
+	int[][] cells = new int[GRID_W][GRID_H];
+	for(int col = 0; col < GRID_W; col++){
+		cells[col] = new int[GRID_H];
+		for(int row = 0; row < GRID_H; row++){
+			if(blackoutCells[col][row] > 0){
+				cells[col][row] = blackoutCells[col][row];
+			}
+		}
+	}
+	return cells;
+}
+
 void reset() {
+	if(blackoutCells == null || GRID_W != blackoutCells.length || GRID_H != blackoutCells[0].length){
+		blackoutCells = new int[GRID_W][GRID_H];
+	}
 	calculateScreenScale();
 	calculateTileSize();
-	cells = new int[GRID_W][GRID_H];
+	
+	cells = copyBlackoutCells();
 	noodles = new Noodle[numNoodles];
 	
 	int noodleCount = 0;
@@ -192,6 +209,9 @@ void keyPressed() {
 		break;
 		case 'g':
 			showGrid = !showGrid;
+			if(!showGrid){
+				BLACKOUT_MODE = false;
+			}
 		break;
 		case 'r':
 			reset();
@@ -207,9 +227,31 @@ void keyPressed() {
 				editor.hide();
 				calculateScreenScale();
 				calculateTileSize();
+				reset();
+			}
+		break;
+		case 'x':
+			BLACKOUT_MODE = !BLACKOUT_MODE;
+			if(BLACKOUT_MODE){
+				showGrid = true;
 			}
 		break;
 	}
+}
+
+void mousePressed() {
+	if(BLACKOUT_MODE){
+		int cellX = (mouseX - canvasX - PRINT_X) / TILE_SIZE;
+		int cellY = (mouseY - canvasY - PRINT_Y) / TILE_SIZE;
+
+		if(cellX >= 0 && cellY >= 0){
+			if(blackoutCells[cellX][cellY] > 0){
+				blackoutCells[cellX][cellY] = 0;
+			} else {
+				blackoutCells[cellX][cellY] = 1;
+			}
+		}
+	}	
 }
 
 void drawSaveIndicator() {
@@ -227,6 +269,11 @@ void drawGrid() {
 	strokeWeight(1);
 	for(int row = 0; row < GRID_H; row++){
 		for(int col = 0; col < GRID_W; col++){
+			if(BLACKOUT_MODE && blackoutCells[col][row] > 0){
+				fill(0,25);
+			} else {
+				noFill();
+			}
 			rect(col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE);
 		}
 	}
