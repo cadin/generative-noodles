@@ -2,11 +2,11 @@ import controlP5.*;
 import processing.svg.*;
 
 
-float MAX_SCREEN_SCALE = 0.182; // % - (0.2456 == macbook 1:1) (0.182 == LG Screen)
-float SCREEN_SCALE = 0.182; 
+float MAX_SCREEN_SCALE = 0.182 * 2; // % - (0.2456 == macbook 1:1) (0.182 == LG Screen)
+float SCREEN_SCALE = 0.182 * 2; 
 float PRINT_W_INCHES = 11;
 float PRINT_H_INCHES = 11;
-int PRINT_RESOLUTION = 600;
+int PRINT_RESOLUTION = 300;
 float MARGIN_INCHES = 0.5;
 
 int TILE_SIZE = 50;
@@ -29,7 +29,7 @@ boolean saveFile = false;
 Noodle noodle; 
 Noodle noodle2;
 
-int numNoodles = 1;
+int numNoodles = 30;
 Noodle[] noodles;
 
 Point[][] paths;
