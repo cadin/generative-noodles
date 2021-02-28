@@ -45,11 +45,19 @@ class ImageSaver {
 	void saveImageData(String filename) {
 		print("writing data file... ");
 		
-		// JSONArray paths = new JSONArray();
+		JSONArray cellArray = new JSONArray();
+		for(int col = 0; col < blackoutCells.length; col++){
+			JSONArray rowArray = new JSONArray();
+			for(int row = 0; row < blackoutCells[0].length; row++){
+				rowArray.append(blackoutCells[col][row]);
+			}
+			cellArray.append(rowArray);
+		}
+		
 		
 		
 		JSONObject obj = new JSONObject();
-
+		obj.setJSONArray("blackoutCells", cellArray);
 		obj.setFloat("printWidthInches", PRINT_W_INCHES);
 		obj.setFloat("printHeightInches", PRINT_H_INCHES);
 		obj.setInt("printResolution", PRINT_RESOLUTION);
