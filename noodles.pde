@@ -53,6 +53,7 @@ boolean useJoiners = true;
 boolean useCurves = true;
 float penSizeMM = 0.35;
 float strokeSize = calculateStrokeSize();
+float noodleThicknessPct = 0.5;
 
 
 ImageSaver imgSaver = new ImageSaver();
@@ -161,7 +162,7 @@ void draw() {
 		if(showGrid){ drawGrid();}
 		
 		for(int i=0; i < noodles.length; i++){
-			noodles[i].draw(TILE_SIZE, useTwists);
+			noodles[i].draw(TILE_SIZE, noodleThicknessPct, useTwists);
 		}	
 		
 		if(imgSaver.state == SaveState.SAVING) { endRecord(); }
@@ -260,7 +261,7 @@ void mousePressed() {
 		int cellX = (mouseX - canvasX - PRINT_X) / TILE_SIZE;
 		int cellY = (mouseY - canvasY - PRINT_Y) / TILE_SIZE;
 
-		if(cellX >= 0 && cellY >= 0){
+		if(cellX >= 0 && cellY >= 0 && cellX < blackoutCells.length && cellY < blackoutCells[0].length){
 			if(blackoutCells[cellX][cellY] > 0){
 				blackoutCells[cellX][cellY] = 0;
 			} else {
@@ -308,4 +309,3 @@ String getFileName() {
  	String n = date;
  	return n;
 }
-

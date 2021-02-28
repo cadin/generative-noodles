@@ -3,14 +3,17 @@ class Editor {
 	ControlP5 cp5;
 	color bgColor = color(25);
 	
-	Numberbox widthControl;
-	Numberbox heightControl;
-	Numberbox colsControl;
-	Numberbox rowsControl;
-	Numberbox penSizeControl;
-	Toggle twistControl;
-	Toggle joinControl;
-	Toggle curvesControl;
+	Numberbox widthControl, 
+	          heightControl,
+	          colsControl,
+	          rowsControl,
+	          penSizeControl,
+	          numNoodlesControl,
+	          thicknessControl;
+
+	Toggle twistControl,
+	       joinControl,
+	       curvesControl;
 	
 	boolean controlsVisible = false;
 		
@@ -77,6 +80,26 @@ class Editor {
 			.setDecimalPrecision(2)
 			.setId(5)
 			;
+		numNoodlesControl = cp5.addNumberbox("Noodles")
+			.setPosition(300,250)
+			.setSize(100,20)
+			.setRange(1,100)
+			.setMultiplier(1) // set the sensitifity of the numberbox
+			.setDirection(Controller.HORIZONTAL) // change the control direction to left/right
+			.setValue(penSizeMM)
+			.setDecimalPrecision(0)
+			.setId(6)
+			;
+		thicknessControl = cp5.addNumberbox("Thickness %")
+			.setPosition(300,300)
+			.setSize(100,20)
+			.setRange(0.1,1.0)
+			.setMultiplier(0.01) // set the sensitifity of the numberbox
+			.setDirection(Controller.HORIZONTAL) // change the control direction to left/right
+			.setValue(penSizeMM)
+			.setDecimalPrecision(2)
+			.setId(7)
+			;
 		
 		twistControl = cp5.addToggle("Use Twists")
 			.setPosition(100,300)
@@ -128,6 +151,8 @@ class Editor {
 		twistControl.setValue(useTwists);
 		joinControl.setValue(useJoiners);
 		curvesControl.setValue(useCurves);
+		numNoodlesControl.setValue(numNoodles);
+		thicknessControl.setValue(noodleThicknessPct);
 		
 		controlsVisible = true;
 	}
@@ -166,7 +191,7 @@ class Editor {
 			PRINT_W_INCHES != widthControl.getValue() || 
 			PRINT_H_INCHES != heightControl.getValue() ||
 			GRID_W != int(colsControl.getValue())||
-			GRID_H != int(rowsControl.getValue())
+			GRID_H != int(rowsControl.getValue()) 
 		);
 	}
 	
@@ -184,6 +209,8 @@ class Editor {
 			useTwists = twistControl.getState();
 			useJoiners = joinControl.getState();
 			useCurves = curvesControl.getState();
+			numNoodles = int(numNoodlesControl.getValue());
+			noodleThicknessPct = thicknessControl.getValue();
 
 			if(updateSizes){
 				updateKeyDimensions();
