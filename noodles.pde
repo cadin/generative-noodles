@@ -199,7 +199,7 @@ void updateKeyDimensions() {
 
 void reset() {
 	updateKeyDimensions();
-		
+
 	cells = copyBlackoutCells();
 	noodles = new Noodle[numNoodles];
 	
@@ -367,6 +367,17 @@ void parseConfigObject(JSONObject obj) {
 	if(!obj.isNull("penSizeMM")){
 		penSizeMM = obj.getFloat("penSizeMM");
 		strokeSize = calculateStrokeSize();
+	}
+	if(!obj.isNull("blackoutCells")){
+		blackoutCells = new int[GRID_W][GRID_H];
+		JSONArray cellsArray = obj.getJSONArray("blackoutCells");
+		for(int col = 0; col < GRID_W; col++){
+			JSONArray rowArray = cellsArray.getJSONArray(col);
+			for(int row = 0; row < GRID_H; row++){
+				blackoutCells[col][row] = rowArray.getInt(row);
+			}
+		}
+
 	}
 
 }
