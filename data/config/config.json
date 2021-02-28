@@ -1,9 +1,9 @@
 {
     "printResolution": 300,
-    "printHeightInches": 11,
     "printWidthInches": 11,
+    "printHeightInches": 14,
     "gridWidth": 11,
-    "gridHeight": 11,
+    "gridHeight": 14,
     "marginInches": 0.5,
     "useTwists": false,
     "useJoiners": false,

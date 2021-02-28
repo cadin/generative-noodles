@@ -12,11 +12,15 @@ class Noodle {
 	PShape head;
 	PShape[] joiners;
 	
-	Noodle(Point[] p, int tileW, PShape h, PShape[] j) {
+	void calculateSizes(int tileW) {
 		tileSize = tileW;
 		thickness = int(tileSize * thicknessPct);
 		thickness = (thickness / 2) * 2;
 		margin = (tileSize - thickness) / 2;
+	}
+
+	Noodle(Point[] p, int tileW, PShape h, PShape[] j) {
+		calculateSizes(tileW);
 		head = h;
 		
 		head.disableStyle();
@@ -138,7 +142,10 @@ class Noodle {
 		}
 	}
 	
-	void draw(boolean useTwists) {
+	void draw(int size, boolean useTwists) {
+		if(tileSize != size){
+			calculateSizes(size);
+		}
 		pushMatrix();
 		stroke(0);
 		noFill();
@@ -147,6 +154,7 @@ class Noodle {
 		drawNoodle(useTwists);
 		popMatrix();
 	}
+
 	
 	void cornerTL() {
 		if(useCurves){

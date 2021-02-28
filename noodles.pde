@@ -12,6 +12,9 @@ float PRINT_H_INCHES = 14;
 int PRINT_RESOLUTION = 300;
 float MARGIN_INCHES = 0.5;
 
+float MAT_W_INCHES = 10.75;
+float MAT_H_INCHES = 13.75;
+
 int TILE_SIZE = 50;
 int GRID_W = 11;
 int GRID_H = 11;
@@ -143,24 +146,30 @@ void drawBG() {
 }
 
 void draw() {
-	if(EDIT_MODE) {
-		editor.draw();
-	} else {
+	
+	pushMatrix();
 		drawBG();
 		if(imgSaver.state == SaveState.SAVING){
 			beginRecord(SVG, "output/" + fileNameToSave + ".svg");
+			rect(0, 0, canvasW, canvasH);
 		}
-		
-		translate(PRINT_X, PRINT_Y );
+
+		// float matW = MAT_W_INCHES * PRINT_RESOLUTION * SCREEN_SCALE;
+		// float matH = MAT_H_INCHES * PRINT_RESOLUTION * SCREEN_SCALE;
+		// rect((canvasW - matW) / 2, (canvasH - matH) / 2, matW, matH);
+		translate(PRINT_X, PRINT_Y);
 		if(showGrid){ drawGrid();}
 		
 		for(int i=0; i < noodles.length; i++){
-			noodles[i].draw(useTwists);
+			noodles[i].draw(TILE_SIZE, useTwists);
 		}	
 		
 		if(imgSaver.state == SaveState.SAVING) { endRecord(); }
 		imgSaver.update();
-	}
+	popMatrix();
+	if(EDIT_MODE) {
+		editor.draw();
+	} 
 }
 
 int[][] copyBlackoutCells() {
@@ -176,13 +185,21 @@ int[][] copyBlackoutCells() {
 	return cells;
 }
 
-void reset() {
+void updateBlackoutCells() {
 	if(blackoutCells == null || GRID_W != blackoutCells.length || GRID_H != blackoutCells[0].length){
 		blackoutCells = new int[GRID_W][GRID_H];
 	}
+}
+
+void updateKeyDimensions() {
+	updateBlackoutCells();
 	calculateScreenScale();
 	calculateTileSize();
-	
+}
+
+void reset() {
+	updateKeyDimensions();
+		
 	cells = copyBlackoutCells();
 	noodles = new Noodle[numNoodles];
 	
@@ -225,9 +242,8 @@ void keyPressed() {
 				editor.show();
 			} else {
 				editor.hide();
-				calculateScreenScale();
-				calculateTileSize();
-				reset();
+				
+				// reset();
 			}
 		break;
 		case 'x':
@@ -334,7 +350,7 @@ void parseConfigObject(JSONObject obj) {
 		GRID_W = obj.getInt("gridWidth");
 	}
 	if(!obj.isNull("gridHeight")){
-		GRID_W = obj.getInt("gridHeight");
+		GRID_H = obj.getInt("gridHeight");
 	}
 	if(!obj.isNull("marginInches")){
 		MARGIN_INCHES = obj.getFloat("marginInches");

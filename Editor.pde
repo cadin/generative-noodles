@@ -24,7 +24,7 @@ class Editor {
 		cp5.setFont(font);
 		
 		widthControl = cp5.addNumberbox("Width")
-			.setPosition(100,220)
+			.setPosition(100,100)
 			.setSize(100,20)
 			.setRange(5.0,24.0)
 			.setMultiplier(0.25) // set the sensitifity of the numberbox
@@ -35,7 +35,7 @@ class Editor {
 			;
 			
 		heightControl = cp5.addNumberbox("Height")
-			.setPosition(100,280)
+			.setPosition(100,150)
 			.setSize(100,20)
 			.setRange(5.0,24.0)
 			.setMultiplier(0.25) // set the sensitifity of the numberbox
@@ -46,7 +46,7 @@ class Editor {
 			;
 
 		colsControl = cp5.addNumberbox("Columns")
-			.setPosition(400,220)
+			.setPosition(300,100)
 			.setSize(100,20)
 			.setRange(1,60)
 			.setMultiplier(1) // set the sensitifity of the numberbox
@@ -57,7 +57,7 @@ class Editor {
 			;
 			
 		rowsControl = cp5.addNumberbox("Rows")
-			.setPosition(400,280)
+			.setPosition(300,150)
 			.setSize(100,20)
 			.setRange(1,60)
 			.setMultiplier(1) // set the sensitifity of the numberbox
@@ -68,7 +68,7 @@ class Editor {
 			;
 
 		penSizeControl = cp5.addNumberbox("Pen Size")
-			.setPosition(400,340)
+			.setPosition(300,200)
 			.setSize(100,20)
 			.setRange(0.10,2)
 			.setMultiplier(0.05) // set the sensitifity of the numberbox
@@ -79,7 +79,7 @@ class Editor {
 			;
 		
 		twistControl = cp5.addToggle("Use Twists")
-			.setPosition(100,400)
+			.setPosition(100,300)
 			.setSize(20,20)
 			.setValue(useTwists)
 			;
@@ -91,7 +91,7 @@ class Editor {
 			;
 		
 		joinControl = cp5.addToggle("Use Joins")
-			.setPosition(100,450)
+			.setPosition(100,350)
 			.setSize(20,20)
 			.setValue(useJoiners)
 			;
@@ -103,7 +103,7 @@ class Editor {
 			;
 			
 		curvesControl = cp5.addToggle("Use Curves")
-			.setPosition(100,500)
+			.setPosition(100,400)
 			.setSize(20,20)
 			.setValue(useCurves)
 			;
@@ -119,6 +119,7 @@ class Editor {
 	
 	
 	void show() {
+		println("show");
 		widthControl.setValue(PRINT_W_INCHES);
 		heightControl.setValue(PRINT_H_INCHES);
 		colsControl.setValue(GRID_W);
@@ -132,6 +133,7 @@ class Editor {
 	}
 	
 	void hide() {
+		println("hide");
 		PRINT_W_INCHES = widthControl.getValue();
 		PRINT_H_INCHES = heightControl.getValue();
 		GRID_W = int(colsControl.getValue());
@@ -149,14 +151,44 @@ class Editor {
 	}
 	
 	void draw() {
-		background(bgColor);
+		fill(0, 50);
+		noStroke();
+		rect(50, 50, 500, 500, 8);
 		
 		if(controlsVisible && !cp5.isVisible()){
 			cp5.show();
 		} 
+
+	}
+
+	boolean printSizeDidChange() {
+		return (
+			PRINT_W_INCHES != widthControl.getValue() || 
+			PRINT_H_INCHES != heightControl.getValue() ||
+			GRID_W != int(colsControl.getValue())||
+			GRID_H != int(rowsControl.getValue())
+		);
 	}
 	
 	void controlEvent(ControlEvent e) {
+		if(controlsVisible){
+			boolean updateSizes = printSizeDidChange();
+
+			PRINT_W_INCHES = widthControl.getValue();
+			PRINT_H_INCHES = heightControl.getValue();
+			GRID_W = int(colsControl.getValue());
+			GRID_H = int(rowsControl.getValue());
+			penSizeMM = penSizeControl.getValue();
+			strokeSize = calculateStrokeSize();
+
+			useTwists = twistControl.getState();
+			useJoiners = joinControl.getState();
+			useCurves = curvesControl.getState();
+
+			if(updateSizes){
+				updateKeyDimensions();
+			}
+		}
 		// println(" - got a control event from controller with id " + e.getId());
 		// switch(theEvent.getId()) {
 		// 	case(1): // numberboxA is registered with id 1
