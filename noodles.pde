@@ -209,7 +209,7 @@ void reset() {
 		Point[] p = createNoodlePath(cells);
 		
 		if(p != null){
-		int endIndex = floor(random(0, ends.length));
+			int endIndex = floor(random(0, ends.length));
 			PShape end = ends[endIndex];
 			noodles[noodleCount] = new Noodle(p, TILE_SIZE, end, joiners);
 			noodleCount++;

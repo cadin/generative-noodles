@@ -9,13 +9,18 @@ Point[] createNoodlePath(int[][] cells){
 	Point[] path = new Point[len];
 	
 	int posX, posY;
+	int numTries = 0;
 	do {
 		posX = floor(random(0, cells.length));
 		posY = floor(random(0, cells[0].length));
-	} while (cells[posX][posY] > 0);
-	
-	path[0] = new Point(posX, posY);
+		numTries++;
 
+		if(numTries > 200){
+			return null;
+		}
+	} while (cells[posX][posY] > 0);
+
+	path[0] = new Point(posX, posY);
 	cells[posX][posY] = 1;
 	
 	int count = 1;
@@ -35,7 +40,7 @@ Point[] createNoodlePath(int[][] cells){
 		if(right) avail.add("right");
 		
 		if(avail.size() > 0){
-		int index = floor(random(0, avail.size()));
+			int index = floor(random(0, avail.size()));
 			String dir = avail.get(index);
 			
 			Point p = null;
@@ -58,7 +63,6 @@ Point[] createNoodlePath(int[][] cells){
 	} else {
 		clearCells(cells, (Point[]) subset(path, 0, count));
 		// return createNoodlePath(cells);
-		
 		return null;
 	}
 
