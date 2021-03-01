@@ -278,19 +278,106 @@ void keyPressed() {
 	}
 }
 
-void mousePressed() {
-	if(BLACKOUT_MODE){
-		int cellX = (mouseX - canvasX - PRINT_X) / TILE_SIZE;
-		int cellY = (mouseY - canvasY - PRINT_Y) / TILE_SIZE;
+Point getCellForMouse( int mX, int mY){
+	int cellX = (mouseX - canvasX - PRINT_X) / TILE_SIZE;
+	int cellY = (mouseY - canvasY - PRINT_Y) / TILE_SIZE;
 
-		if(cellX >= 0 && cellY >= 0 && cellX < blackoutCells.length && cellY < blackoutCells[0].length){
-			if(blackoutCells[cellX][cellY] > 0){
-				blackoutCells[cellX][cellY] = 0;
-			} else {
-				blackoutCells[cellX][cellY] = 1;
+	return new Point(cellX, cellY);
+}
+
+boolean cellsAreAdjacent(int c1X, int c1Y, int c2X, int c2Y){
+	return (
+		(c1X == c2X && abs(c1Y - c2Y) == 1) || 
+		(c1Y == c2Y && abs(c1X - c2X) == 1)
+	);
+}
+
+Point[] addCellToPath(int cellX, int cellY, Point[] path){
+	println("add: ", cellX, cellY );
+	Point[] newPath = new Point[path.length + 1];
+	Point first = path[0];
+	Point last = path[path.length - 1];
+
+	int fillIndex = 0;
+	if(cellsAreAdjacent(first.x, first.y, cellX, cellY) ){
+		println("first");
+		newPath[0] = new Point(cellX, cellY);
+		fillIndex = 1;
+	} else if(cellsAreAdjacent(last.x, last.y, cellX, cellY)){
+		println("last");
+		newPath[path.length] = new Point(cellX, cellY);
+	} else {
+		println(first.x, first.y);
+		println(last.x, last.y);
+		return path;
+	}
+
+	for(Point p : path){
+		newPath[fillIndex] = p;
+		fillIndex++;
+	}
+
+	println(path);
+	println(newPath);
+	
+
+	return newPath;
+}
+
+Point[] removeCellFromPath(int cellX, int cellY, Point[] path) {
+	Point[] newPath;
+	if(path[0].x == cellX && path[0].y == cellY){
+		newPath = java.util.Arrays.copyOfRange(path, 1, path.length);
+		return newPath;
+	} else if (path[path.length - 1].x == cellX && path[path.length - 1].y == cellY){
+		newPath = java.util.Arrays.copyOfRange(path, 0, path.length-1);
+		return newPath;
+	} else {
+		return path;
+	}
+	
+}
+
+int findNoodleWithCell(int cellX, int cellY) {
+	int index = 0;
+	for(Noodle n : noodles){
+		for(Point p : n.path){
+			if(p.x == cellX && p.y == cellY){
+				return index;
 			}
 		}
-	}	
+		index++;
+	}
+
+	return -1;
+}
+
+void mousePressed() {
+	Point cell = getCellForMouse(mouseX, mouseY);
+
+	if(BLACKOUT_MODE){
+		if(cell.x >= 0 && cell.y >= 0 && cell.x < blackoutCells.length && cell.y < blackoutCells[0].length){
+			if(blackoutCells[cell.x][cell.y] > 0){
+				blackoutCells[cell.x][cell.y] = 0;
+			} else {
+				blackoutCells[cell.x][cell.y] = 1;
+			}
+		}
+	}
+
+	if(PATH_EDIT_MODE){
+		if(shiftIsDown){
+			editingNoodle = findNoodleWithCell(cell.x, cell.y);
+		} else {
+			if(pathContainsCell(noodles[editingNoodle].path, cell.x, cell.y)){
+				Point[] newPath = removeCellFromPath(cell.x, cell.y, noodles[editingNoodle].path);
+				noodles[editingNoodle].path = newPath;
+			} else {
+				Point[] newPath = addCellToPath(cell.x, cell.y, noodles[editingNoodle].path);
+				noodles[editingNoodle].path = newPath;
+			}
+		}
+	}
 }
 
 void drawSaveIndicator() {
@@ -303,7 +390,8 @@ void drawSaveIndicator() {
 
 boolean pathContainsCell(Point[] path, int col, int row) {
 	for(Point p : path){
-		if(p.x == col && p.y == row){
+
+		if(p != null && p.x == col && p.y == row){
 			return true;
 		}
 	}
