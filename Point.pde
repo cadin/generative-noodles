@@ -7,4 +7,9 @@ class Point {
 		x = _x; 
 		y = _y;
 	}
+
+	@Override
+  	public String toString() {
+    	return "{" + x + ", " + y + "}";
+  	}
 }
