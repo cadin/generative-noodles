@@ -72,9 +72,10 @@ void settings() {
 
 void setup() {
 	editor = new Editor(this);
-	ends = new PShape[2];
+	ends = new PShape[3];
 	ends[0] = loadShape("hand.svg");
 	ends[1] = loadShape("hand2.svg");
+	ends[2] = loadShape("ghostHead.svg");
 
 	joiners = new PShape[1];
 	joiners[0] = loadShape("join.svg");
