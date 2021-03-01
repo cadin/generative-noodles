@@ -65,6 +65,7 @@ class ImageSaver {
 		obj.setBoolean("useTwists", useTwists);
 		obj.setBoolean("useJoiners", useJoiners);
 		obj.setFloat("noodleThicknessPct", noodleThicknessPct);
+		obj.setInt("numNoodles", numNoodles);
 		
 		saveJSONObject(obj, "output/" + filename + ".json");
 		// saveJSONArray(layersArray, "output/" + filename + ".json");

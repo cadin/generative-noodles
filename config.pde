@@ -60,6 +60,9 @@ void parseConfigObject(JSONObject obj) {
     if(!obj.isNull("noodleThicknessPct")){
         noodleThicknessPct = obj.getFloat("noodleThicknessPct");
     }
+    if(!obj.isNull("numNoodles")){
+        numNoodles = obj.getInt("numNoodles");
+    }
 	if(!obj.isNull("blackoutCells")){
 		blackoutCells = new int[GRID_W][GRID_H];
 		JSONArray cellsArray = obj.getJSONArray("blackoutCells");
