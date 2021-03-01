@@ -9,7 +9,7 @@ class Noodle {
 	
 	Point[] path;
 	
-	PShape head;
+	PShape head, tail;
 	PShape[] joiners;
 	
 	void calculateSizes(int tileW, float pct) {
@@ -20,18 +20,20 @@ class Noodle {
 		margin = (tileSize - thickness) / 2;
 	}
 
-	Noodle(Point[] p, int tileW, PShape h, PShape[] j) {
+	Noodle(Point[] p, int tileW, PShape h, PShape t, PShape[] j) {
 		calculateSizes(tileW, thicknessPct);
 		head = h;
+		tail = t;
 		
 		head.disableStyle();
+		tail.disableStyle();
 		joiners = j;
 
 		path = p;
 	}
 
 	
-	void drawHead(Point pos, Point neighbor, int flip) {
+	void drawEnd(PShape shape, Point pos, Point neighbor, int flip) {
 		pushMatrix();
 		translate(tileSize / 2, tileSize/2);
 		
@@ -48,7 +50,7 @@ class Noodle {
 		scale(flip, 1);
 		scale(scale);
 		strokeWeight(strokeSize / scale);
-		shape(head, headWidth/-2 , headWidth/-2);
+		shape(shape, headWidth/-2 , headWidth/-2);
 		strokeWeight(strokeSize);
 		popMatrix();
 	}
@@ -98,9 +100,9 @@ class Noodle {
 			pushMatrix();
 			translate(p.x * tileSize, p.y * tileSize);
 			if(i == 0){
-				drawHead(path[i], path[i + 1], 1);
+				drawEnd(head, path[i], path[i + 1], 1);
 			}else if( i == path.length -1){
-				drawHead(path[i], path[i - 1], -1);
+				drawEnd(tail, path[i], path[i - 1], -1);
 			} else {
 				
 				Point prev = path[i-1];

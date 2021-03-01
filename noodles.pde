@@ -72,10 +72,11 @@ void settings() {
 
 void setup() {
 	editor = new Editor(this);
-	ends = new PShape[3];
+	ends = new PShape[4];
 	ends[0] = loadShape("hand.svg");
 	ends[1] = loadShape("hand2.svg");
 	ends[2] = loadShape("ghostHead.svg");
+	ends[3] = loadShape("ghostTail.svg");
 
 	joiners = new PShape[1];
 	joiners[0] = loadShape("join.svg");
@@ -212,7 +213,7 @@ void reset() {
 		if(p != null){
 			int endIndex = floor(random(0, ends.length));
 			PShape end = ends[endIndex];
-			noodles[noodleCount] = new Noodle(p, TILE_SIZE, end, joiners);
+			noodles[noodleCount] = new Noodle(p, TILE_SIZE, ends[2],ends[2], joiners);
 			noodleCount++;
 		}
 	}
