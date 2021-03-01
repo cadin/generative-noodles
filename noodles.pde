@@ -225,6 +225,23 @@ void reset() {
 	noodles = (Noodle[]) subset(noodles, 0, noodleCount);
 }
 
+void deleteNoodle(int indexToDelete) {
+	if(noodles.length <= 1) return; // don't delete all the noodles
+
+	Noodle[] updatedNoodles = new Noodle[noodles.length - 1];
+	// int i = 0;
+	int fillIndex = 0;
+	for(int i = 0; i < noodles.length; i++){
+		if(i != indexToDelete){
+			updatedNoodles[fillIndex] = noodles[i];
+			fillIndex++;
+		}
+	}
+	noodles = updatedNoodles;
+	editingNoodle = min(editingNoodle, noodles.length - 1);
+	
+}
+
 void keyReleased() {
 	if(keyCode == SHIFT){
 		shiftIsDown = false;
@@ -232,8 +249,15 @@ void keyReleased() {
 }
 
 void keyPressed() {
-	if(keyCode == SHIFT){
-		shiftIsDown = true;
+	switch(keyCode){
+		case SHIFT:
+			shiftIsDown = true;
+		break;
+		case BACKSPACE:
+			if(PATH_EDIT_MODE){
+				deleteNoodle(editingNoodle);
+			}
+		break;
 	}
 	switch(key) {
 		case 's' :
