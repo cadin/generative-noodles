@@ -57,6 +57,9 @@ void parseConfigObject(JSONObject obj) {
 		penSizeMM = obj.getFloat("penSizeMM");
 		strokeSize = calculateStrokeSize();
 	}
+    if(!obj.isNull("noodleThicknessPct")){
+        noodleThicknessPct = obj.getFloat("noodleThicknessPct");
+    }
 	if(!obj.isNull("blackoutCells")){
 		blackoutCells = new int[GRID_W][GRID_H];
 		JSONArray cellsArray = obj.getJSONArray("blackoutCells");
@@ -66,8 +69,8 @@ void parseConfigObject(JSONObject obj) {
 				blackoutCells[col][row] = rowArray.getInt(row);
 			}
 		}
-
 	}
+
 
 }
 

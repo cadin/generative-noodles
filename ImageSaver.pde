@@ -54,8 +54,6 @@ class ImageSaver {
 			cellArray.append(rowArray);
 		}
 		
-		
-		
 		JSONObject obj = new JSONObject();
 		obj.setJSONArray("blackoutCells", cellArray);
 		obj.setFloat("printWidthInches", PRINT_W_INCHES);
@@ -66,6 +64,7 @@ class ImageSaver {
 		obj.setFloat("marginInches", MARGIN_INCHES);
 		obj.setBoolean("useTwists", useTwists);
 		obj.setBoolean("useJoiners", useJoiners);
+		obj.setFloat("noodleThicknessPct", noodleThicknessPct);
 		
 		saveJSONObject(obj, "output/" + filename + ".json");
 		// saveJSONArray(layersArray, "output/" + filename + ".json");

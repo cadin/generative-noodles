@@ -1,12 +1,14 @@
 {
     "printResolution": 300,
-    "printWidthInches": 11,
-    "printHeightInches": 14,
-    "gridWidth": 11,
-    "gridHeight": 14,
+    "printWidthInches": 8,
+    "printHeightInches": 8,
+    "gridWidth": 24,
+    "gridHeight": 24,
     "marginInches": 0.5,
     "useTwists": false,
-    "useJoiners": false,
+    "useJoiners": true,
     "useCurves": true,
-    "penSizeMM": 0.35
+    "penSizeMM": 0.35,
+    "noodleThicknessPct" : 0.9,
+    "numNoodles" : 90
 }
