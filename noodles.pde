@@ -63,6 +63,8 @@ String fileNameToSave = "";
 
 Editor editor;
 
+boolean shiftIsDown = false;
+
 
 void settings() {
 	
@@ -223,7 +225,16 @@ void reset() {
 	noodles = (Noodle[]) subset(noodles, 0, noodleCount);
 }
 
+void keyReleased() {
+	if(keyCode == SHIFT){
+		shiftIsDown = false;
+	}
+}
+
 void keyPressed() {
+	if(keyCode == SHIFT){
+		shiftIsDown = true;
+	}
 	switch(key) {
 		case 's' :
 			fileNameToSave = getFileName();
