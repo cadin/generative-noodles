@@ -30,6 +30,8 @@ int canvasY = 0;
 
 boolean EDIT_MODE = false;
 boolean BLACKOUT_MODE = false;
+boolean PATH_EDIT_MODE = false;
+int editingNoodle = 0;
 int[][] blackoutCells;
 
 boolean saveFile = false;
@@ -231,6 +233,7 @@ void keyPressed() {
 			showGrid = !showGrid;
 			if(!showGrid){
 				BLACKOUT_MODE = false;
+				PATH_EDIT_MODE = false;
 			}
 		break;
 		case 'r':
@@ -252,6 +255,12 @@ void keyPressed() {
 		case 'x':
 			BLACKOUT_MODE = !BLACKOUT_MODE;
 			if(BLACKOUT_MODE){
+				showGrid = true;
+			}
+		break;
+		case 'p' :
+			PATH_EDIT_MODE = !PATH_EDIT_MODE;
+			if(PATH_EDIT_MODE){
 				showGrid = true;
 			}
 		break;
@@ -281,6 +290,16 @@ void drawSaveIndicator() {
 	popMatrix();
 }
 
+boolean pathContainsCell(Point[] path, int col, int row) {
+	for(Point p : path){
+		if(p.x == col && p.y == row){
+			return true;
+		}
+	}
+
+	return false;
+}
+
 void drawGrid() {
 	pushMatrix();
 	stroke(200);
@@ -290,6 +309,8 @@ void drawGrid() {
 		for(int col = 0; col < GRID_W; col++){
 			if(BLACKOUT_MODE && blackoutCells[col][row] > 0){
 				fill(0,25);
+			} if(PATH_EDIT_MODE && pathContainsCell(noodles[editingNoodle].path, col, row)) {
+				fill(0, 255, 0, 25);
 			} else {
 				noFill();
 			}
