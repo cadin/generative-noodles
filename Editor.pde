@@ -5,6 +5,7 @@ class Editor {
 	
 	Numberbox widthControl, 
 	          heightControl,
+	          marginControl,
 	          colsControl,
 	          rowsControl,
 	          penSizeControl,
@@ -33,18 +34,29 @@ class Editor {
 			.setMultiplier(0.25) // set the sensitifity of the numberbox
 			.setDirection(Controller.HORIZONTAL) // change the control direction to left/right
 			.setValue(PRINT_W_INCHES)
-			.setDecimalPrecision(3)
+			.setDecimalPrecision(2)
 			.setId(1)
 			;
 			
 		heightControl = cp5.addNumberbox("Height")
 			.setPosition(100,150)
 			.setSize(100,20)
-			.setRange(5.0,24.0)
+			.setRange(5.0, 24.0)
+			.setMultiplier(0.25) // set the sensitifity of the numberbox
+			.setDirection(Controller.HORIZONTAL) // change the control direction to left/right
+			.setValue(MARGIN_INCHES)
+			.setDecimalPrecision(2)
+			.setId(2)
+			;
+		
+		marginControl = cp5.addNumberbox("Margin")
+			.setPosition(100,200)
+			.setSize(100,20)
+			.setRange(0.0,5.0)
 			.setMultiplier(0.25) // set the sensitifity of the numberbox
 			.setDirection(Controller.HORIZONTAL) // change the control direction to left/right
 			.setValue(PRINT_H_INCHES)
-			.setDecimalPrecision(3)
+			.setDecimalPrecision(2)
 			.setId(2)
 			;
 
@@ -145,6 +157,7 @@ class Editor {
 		println("show");
 		widthControl.setValue(PRINT_W_INCHES);
 		heightControl.setValue(PRINT_H_INCHES);
+		marginControl.setValue(MARGIN_INCHES);
 		colsControl.setValue(GRID_W);
 		rowsControl.setValue(GRID_H);
 		penSizeControl.setValue(penSizeMM);
@@ -191,7 +204,8 @@ class Editor {
 			PRINT_W_INCHES != widthControl.getValue() || 
 			PRINT_H_INCHES != heightControl.getValue() ||
 			GRID_W != int(colsControl.getValue())||
-			GRID_H != int(rowsControl.getValue()) 
+			GRID_H != int(rowsControl.getValue()) ||
+			MARGIN_INCHES != marginControl.getValue()
 		);
 	}
 	
@@ -201,6 +215,7 @@ class Editor {
 
 			PRINT_W_INCHES = widthControl.getValue();
 			PRINT_H_INCHES = heightControl.getValue();
+			MARGIN_INCHES = marginControl.getValue();
 			GRID_W = int(colsControl.getValue());
 			GRID_H = int(rowsControl.getValue());
 			penSizeMM = penSizeControl.getValue();
