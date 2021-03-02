@@ -61,7 +61,7 @@ class Editor {
 			;
 
 		colsControl = cp5.addNumberbox("Columns")
-			.setPosition(100,300)
+			.setPosition(100,275)
 			.setSize(100,20)
 			.setRange(1,60)
 			.setMultiplier(1) // set the sensitifity of the numberbox
@@ -72,7 +72,7 @@ class Editor {
 			;
 			
 		rowsControl = cp5.addNumberbox("Rows")
-			.setPosition(100,350)
+			.setPosition(100,325)
 			.setSize(100,20)
 			.setRange(1,60)
 			.setMultiplier(1) // set the sensitifity of the numberbox
@@ -84,7 +84,7 @@ class Editor {
 
 		
 		numNoodlesControl = cp5.addNumberbox("Noodles")
-			.setPosition(100,450)
+			.setPosition(100,400)
 			.setSize(100,20)
 			.setRange(1,100)
 			.setMultiplier(1) // set the sensitifity of the numberbox
@@ -94,7 +94,7 @@ class Editor {
 			.setId(6)
 			;
 		thicknessControl = cp5.addNumberbox("Thickness %")
-			.setPosition(100,500)
+			.setPosition(100,450)
 			.setSize(100,20)
 			.setRange(0.1,1.0)
 			.setMultiplier(0.01) // set the sensitifity of the numberbox
@@ -105,7 +105,7 @@ class Editor {
 			;
 		
 		penSizeControl = cp5.addNumberbox("Pen Size")
-			.setPosition(100,600)
+			.setPosition(100,525)
 			.setSize(100,20)
 			.setRange(0.10,2)
 			.setMultiplier(0.05) // set the sensitifity of the numberbox
@@ -116,7 +116,7 @@ class Editor {
 			;
 		
 		twistControl = cp5.addToggle("Use Twists")
-			.setPosition(300,100)
+			.setPosition(250,100)
 			.setSize(20,20)
 			.setValue(useTwists)
 			;
@@ -128,7 +128,7 @@ class Editor {
 			;
 		
 		joinControl = cp5.addToggle("Use Joins")
-			.setPosition(300,150)
+			.setPosition(250,150)
 			.setSize(20,20)
 			.setValue(useJoiners)
 			;
@@ -140,7 +140,7 @@ class Editor {
 			;
 			
 		curvesControl = cp5.addToggle("Use Curves")
-			.setPosition(300,200)
+			.setPosition(250,200)
 			.setSize(20,20)
 			.setValue(useCurves)
 			;
@@ -191,9 +191,9 @@ class Editor {
 	}
 	
 	void draw() {
-		fill(0, 50);
+		fill(50, 150);
 		noStroke();
-		rect(50, 50, 450, 700, 8);
+		rect(50, 50, 350, 650, 8);
 		
 		if(controlsVisible && !cp5.isVisible()){
 			cp5.show();
