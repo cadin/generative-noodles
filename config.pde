@@ -63,6 +63,16 @@ void parseConfigObject(JSONObject obj) {
     if(!obj.isNull("numNoodles")){
         numNoodles = obj.getInt("numNoodles");
     }
+	if(!obj.isNull("graphics")){
+		JSONArray gfx = obj.getJSONArray("graphics");
+		graphicSets = new GraphicSet[gfx.size()];
+		for(int i = 0; i < gfx.size(); i++) {
+			GraphicSet set = new GraphicSet(gfx.getJSONObject(i));
+			set.loadShapes();
+			graphicSets[i] = set;
+		}
+		
+	}
 	if(!obj.isNull("blackoutCells")){
 		blackoutCells = new int[GRID_W][GRID_H];
 		JSONArray cellsArray = obj.getJSONArray("blackoutCells");
@@ -97,7 +107,7 @@ void loadConfigFile(String filePath, String fileName) {
 	}
 	
 	// updateCanvas();
-	reset();
+	//reset();
 	
 	// numLayers = layerData.size();
 	// createLayersWithData(layerData, loadImagePositions);

@@ -45,9 +45,6 @@ Noodle[] noodles;
 Point[][] paths;
 int[][] cells;
 
-PShape[] ends;
-PShape[] joiners;
-
 // SETTINGS
 boolean showGrid = false;
 boolean useTwists = false;
@@ -64,6 +61,7 @@ String fileNameToSave = "";
 Editor editor;
 
 boolean shiftIsDown = false;
+GraphicSet[] graphicSets;
 
 
 void settings() {
@@ -76,22 +74,23 @@ void settings() {
 
 void setup() {
 	editor = new Editor(this);
-	ends = new PShape[4];
-	ends[0] = loadShape("hand.svg");
-	ends[1] = loadShape("hand2.svg");
-	ends[2] = loadShape("ghostHead.svg");
-	ends[3] = loadShape("ghostTail.svg");
+	// ends = new PShape[4];
+	// ends[0] = loadShape("hand.svg");
+	// ends[1] = loadShape("hand2.svg");
+	// ends[2] = loadShape("ghostHead.svg");
+	// ends[3] = loadShape("ghostTail.svg");
 
-	joiners = new PShape[1];
-	joiners[0] = loadShape("join.svg");
-	joiners[0].disableStyle();
+	// joiners = new PShape[1];
+	// joiners[0] = loadShape("join.svg");
+	// joiners[0].disableStyle();
 	
 	frameRate(12);
 
 	loadSettings(SETTINGS_PATH);
 	loadConfigFile(configPath, "");
-	// reset();
+	reset();
 }
+
 
 float calculateStrokeSize() {
 	return (penSizeMM * 0.03937008) * PRINT_RESOLUTION * SCREEN_SCALE;
@@ -215,9 +214,9 @@ void reset() {
 		Point[] p = createNoodlePath(cells);
 		
 		if(p != null){
-			int endIndex = floor(random(0, ends.length));
-			PShape end = ends[endIndex];
-			noodles[noodleCount] = new Noodle(p, TILE_SIZE, ends[2],ends[2], joiners);
+			int graphicIndex = floor(random(0, graphicSets.length));
+			GraphicSet gfx = graphicSets[graphicIndex];
+			noodles[noodleCount] = new Noodle(p, TILE_SIZE, gfx.head, gfx.tail, gfx.joiners);
 			noodleCount++;
 		}
 	}
@@ -229,7 +228,6 @@ void deleteNoodle(int indexToDelete) {
 	if(noodles.length <= 1) return; // don't delete all the noodles
 
 	Noodle[] updatedNoodles = new Noodle[noodles.length - 1];
-	// int i = 0;
 	int fillIndex = 0;
 	for(int i = 0; i < noodles.length; i++){
 		if(i != indexToDelete){

@@ -10,5 +10,11 @@
     "useCurves": true,
     "penSizeMM": 0.35,
     "noodleThicknessPct" : 0.9,
-    "numNoodles" : 90
+    "numNoodles" : 90,
+    "graphics" : [
+        { "head" : "hand.svg", "joiners": ["join.svg"] },
+        { "head" : "ghostHead.svg", "tail": "ghostTail.svg"},
+        { "head" : "ghostHead.svg"},
+        { "head" : "hand2.svg", "joiners": ["join.svg"]}
+    ] 
 }
