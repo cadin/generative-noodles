@@ -310,10 +310,8 @@ void mousePressed() {
 			} else {
 				blackoutCells[cell.x][cell.y] = 1;
 			}
-		}
-	}
-
-	if(PATH_EDIT_MODE){
+		} 
+	} else if(PATH_EDIT_MODE){
 		if(shiftIsDown){
 			editingNoodle = findNoodleWithCell(cell.x, cell.y);
 		} else {
@@ -356,7 +354,7 @@ void drawGrid() {
 		for(int col = 0; col < GRID_W; col++){
 			if(BLACKOUT_MODE && blackoutCells[col][row] > 0){
 				fill(0,25);
-			} if(PATH_EDIT_MODE && pathContainsCell(noodles[editingNoodle].path, col, row)) {
+			} else if(PATH_EDIT_MODE && pathContainsCell(noodles[editingNoodle].path, col, row)) {
 				fill(0, 255, 0, 25);
 			} else {
 				noFill();
