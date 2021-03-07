@@ -116,7 +116,7 @@ class Noodle {
 				if(top && bottom ){
 					if(useTwists && p.type == 0){
 						verticalTwist();
-					} else if(useJoiners && joiners!=null && p.type == 1) {
+					} else if(useJoiners && joiners != null && p.type == 1) {
 						verticalJoin();
 					} else {
 						vertical();
@@ -124,7 +124,7 @@ class Noodle {
 				} else if(left && right){
 					if(useTwists && p.type == 0){
 						horizontalTwist();
-					} else if(useJoiners && joiners!=null && p.type == 1){
+					} else if(useJoiners && joiners != null && p.type == 1){
 						horizontalJoin();
 					} else {
 						horizontal();

@@ -16,5 +16,6 @@
         { "head" : "ghostHead.svg", "tail": "ghostTail.svg"},
         { "head" : "ghostHead.svg"},
         { "head" : "hand2.svg", "joiners": ["join.svg"]}
-    ] 
+    ] ,
+    "randomizeEnds" : true
 }
