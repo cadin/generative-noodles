@@ -41,10 +41,8 @@ class ImageSaver {
 		filenameToSave = filename;
 		state = SaveState.BEGAN;
 	}
-	
-	void saveImageData(String filename) {
-		print("writing data file... ");
-		
+
+	JSONArray getBlackoutCellArray() {
 		JSONArray cellArray = new JSONArray();
 		for(int col = 0; col < blackoutCells.length; col++){
 			JSONArray rowArray = new JSONArray();
@@ -53,6 +51,34 @@ class ImageSaver {
 			}
 			cellArray.append(rowArray);
 		}
+		return cellArray;
+	}
+
+	JSONArray getGraphicSetsArray() {
+		JSONArray graphicsArray = new JSONArray();
+		for(int i = 0; i < graphicSets.length; i++){
+			JSONObject set = new JSONObject();
+			set.setString("head", graphicSets[i].headPath);
+			set.setString("tail", graphicSets[i].tailPath);
+
+			if(graphicSets[i].joinerPaths != null){
+				JSONArray joinsArray = new JSONArray();
+				for(int j = 0; j < graphicSets[i].joinerPaths.length; j++){
+					joinsArray.setString(j, graphicSets[i].joinerPaths[j]);
+				}
+				set.setJSONArray("joiners", joinsArray);
+			}
+
+			graphicsArray.setJSONObject(i, set);
+		}
+		return graphicsArray;
+	}
+	
+	void saveImageData(String filename) {
+		print("writing data file... ");
+		
+		JSONArray cellArray = getBlackoutCellArray();
+		JSONArray graphicsArray = getGraphicSetsArray();
 		
 		JSONObject obj = new JSONObject();
 		obj.setJSONArray("blackoutCells", cellArray);
@@ -66,7 +92,8 @@ class ImageSaver {
 		obj.setBoolean("useJoiners", useJoiners);
 		obj.setFloat("noodleThicknessPct", noodleThicknessPct);
 		obj.setInt("numNoodles", numNoodles);
-		
+		obj.setJSONArray("graphics", graphicsArray);
+		obj.setBoolean("randomizeEnds", randomizeEnds);
 		saveJSONObject(obj, "output/" + filename + ".json");
 		// saveJSONArray(layersArray, "output/" + filename + ".json");
 		println("done.");
