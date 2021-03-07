@@ -1,3 +1,5 @@
+int NUM_CELL_TYPES = 5;
+
 Point[] createNoodlePath(int[][] cells){
 	int minLength = 20;
 	int maxLength = 200;
@@ -50,7 +52,7 @@ Point[] createNoodlePath(int[][] cells){
 			if(dir == "left") p = ( new Point(prev.x -1, prev.y));
 			
 			if(p != null){
-				p.type = floor(random(0, 5));
+				p.type = floor(random(0, NUM_CELL_TYPES));
 				cells[p.x][p.y] = 1;
 				path[count] = p;
 				count++;
@@ -96,6 +98,33 @@ boolean cellsAreAdjacent(int c1X, int c1Y, int c2X, int c2Y){
 		(c1Y == c2Y && abs(c1X - c2X) == 1)
 	);
 }
+
+boolean cellIsEndOfPath(int x, int y, Point[] path){
+	Point first = path[0];
+	Point last = path[path.length - 1];
+	
+	return ((first.x == x && first.y == y) || (last.x == x && last.y == y));
+}
+
+int getIndexOfCell(int x, int y, Point[] path){
+	for(int i = 0; i < path.length; i++){
+		if(path[i].x == x && path[i].y == y){
+			return i;
+		}
+	}
+	
+	return -1;
+}
+
+Point[] cycleCellType(int x, int y, Point[] path){
+	int i = getIndexOfCell(x, y, path);
+	path[i].type++;
+	if(path[i].type >= NUM_CELL_TYPES){
+		path[i].type = 0;
+	}
+	
+	return path;
+} 
 
 Point[] addCellToPath(int cellX, int cellY, Point[] path){
 	Point[] newPath = new Point[path.length + 1];
