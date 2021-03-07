@@ -56,6 +56,7 @@ float noodleThicknessPct = 0.5;
 GraphicSet[] graphicSets;
 boolean randomizeEnds = false;
 
+
 ImageSaver imgSaver = new ImageSaver();
 String fileNameToSave = "";
 
@@ -69,7 +70,7 @@ void settings() {
 	
 	size(displayWidth, displayHeight - 45);
 	// fullScreen();
-	// pixelDensity(displayDensity());
+	pixelDensity(displayDensity());
 	
 }
 
@@ -325,8 +326,13 @@ void mousePressed() {
 			editingNoodle = findNoodleWithCell(cell.x, cell.y);
 		} else {
 			if(pathContainsCell(noodles[editingNoodle].path, cell.x, cell.y)){
-				Point[] newPath = removeCellFromPath(cell.x, cell.y, noodles[editingNoodle].path);
-				noodles[editingNoodle].path = newPath;
+				if(cellIsEndOfPath(cell.x, cell.y, noodles[editingNoodle].path)){
+					Point[] newPath = removeCellFromPath(cell.x, cell.y, noodles[editingNoodle].path);
+					noodles[editingNoodle].path = newPath;
+				} else {
+					Point[] newPath = cycleCellType(cell.x, cell.y, noodles[editingNoodle].path);
+					noodles[editingNoodle].path = newPath;
+				}
 			} else {
 				Point[] newPath = addCellToPath(cell.x, cell.y, noodles[editingNoodle].path);
 				noodles[editingNoodle].path = newPath;
