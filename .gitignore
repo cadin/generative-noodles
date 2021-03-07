@@ -2,3 +2,4 @@ build-tmp
 /output
 /.vscode
 /out
+.DS_Store
