@@ -107,9 +107,10 @@ class ImageSaver {
 		String[] lines = loadStrings("output/" + filename + ".svg");
 		String pattern = "width=\"([0-9]+)\" height=\"([0-9]+)\"";
 		
+		int dd = displayDensity();
 		if(USE_RETINA){
-			w *= displayDensity();
-			h *= displayDensity();
+			w *= dd;
+			h *= dd;
 		}
 		
 		for(int i=0; i < lines.length; i++){

@@ -1,7 +1,7 @@
 import controlP5.*;
 import processing.svg.*;
 
-Boolean USE_RETINA = false;
+Boolean USE_RETINA = true;
 String SETTINGS_PATH = "config/settings.json";
 String configPath = "config/config.json";
 
