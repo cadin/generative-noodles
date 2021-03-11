@@ -1,3 +1,6 @@
+import java.util.regex.Pattern; 
+import java.util.regex.Matcher;
+
 class ImageSaver {
 
 	SaveState state = SaveState.NONE;
@@ -18,6 +21,7 @@ class ImageSaver {
 			break;
 			case SAVING:
 				saveImageData(fileNameToSave);
+				resizeSVG(fileNameToSave, canvasW, canvasH);
 				state = SaveState.COMPLETE;
 			break;
 			case RENDERING:
@@ -70,5 +74,31 @@ class ImageSaver {
 		saveJSONObject(obj, "output/" + filename + ".json");
 		// saveJSONArray(layersArray, "output/" + filename + ".json");
 		println("done.");
+	}
+	
+	void resizeSVG(String filename, int w, int h){
+		String[] lines = loadStrings("output/" + filename + ".svg");
+		String pattern = "width=\"([0-9]+)\" height=\"([0-9]+)\"";
+		
+		if(USE_RETINA){
+			w *= displayDensity();
+			h *= displayDensity();
+		}
+		
+		for(int i=0; i < lines.length; i++){
+			String l = lines[i];
+			if(l.length() > 4 && l.substring(0, 4).equals("<svg")){
+				println("found SVG tag");
+				Pattern p = Pattern.compile("width=\"([0-9]+)\"");
+		        Matcher m = p.matcher(l);
+		        l = m.replaceAll("width=\"" + w + "\"");
+		        
+		        Pattern p2 = Pattern.compile("height=\"([0-9]+)\"");
+		        Matcher m2 = p2.matcher(l);
+		        lines[i] = m2.replaceAll("height=\"" + h + "\"");
+			}
+		}
+		
+		saveStrings("output/" + filename + ".svg", lines);
 	}
 }
