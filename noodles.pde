@@ -53,7 +53,8 @@ boolean useCurves = true;
 float penSizeMM = 0.35;
 float strokeSize = calculateStrokeSize();
 float noodleThicknessPct = 0.5;
-
+GraphicSet[] graphicSets;
+boolean randomizeEnds = false;
 
 
 ImageSaver imgSaver = new ImageSaver();
@@ -62,7 +63,7 @@ String fileNameToSave = "";
 Editor editor;
 
 boolean shiftIsDown = false;
-GraphicSet[] graphicSets;
+
 
 
 void settings() {
@@ -219,7 +220,15 @@ void reset() {
 		if(p != null){
 			int graphicIndex = floor(random(0, graphicSets.length));
 			GraphicSet gfx = graphicSets[graphicIndex];
-			noodles[noodleCount] = new Noodle(p, TILE_SIZE, gfx.head, gfx.tail, gfx.joiners);
+			PShape head = gfx.head;
+			PShape tail = gfx.tail;
+
+			if(randomizeEnds){
+				int tailIndex = floor(random(0, graphicSets.length));
+				tail = graphicSets[tailIndex].head;
+			}
+			
+			noodles[noodleCount] = new Noodle(p, TILE_SIZE, head, tail, gfx.joiners);
 			noodleCount++;
 		}
 	}

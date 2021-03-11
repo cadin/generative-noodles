@@ -2,8 +2,8 @@
     "printResolution": 300,
     "printWidthInches": 8,
     "printHeightInches": 8,
-    "gridWidth": 24,
-    "gridHeight": 24,
+    "gridWidth": 8,
+    "gridHeight": 8,
     "marginInches": 0.5,
     "useTwists": false,
     "useJoiners": true,
@@ -12,9 +12,9 @@
     "noodleThicknessPct" : 0.9,
     "numNoodles" : 90,
     "graphics" : [
-        { "head" : "hand.svg", "joiners": ["join.svg"] },
-        { "head" : "ghostHead.svg", "tail": "ghostTail.svg"},
-        { "head" : "ghostHead.svg"},
-        { "head" : "hand2.svg", "joiners": ["join.svg"]}
-    ] 
+        { "head" : "heads/frown.svg", "joiners": ["twistJoin.svg"] },
+        { "head" : "ghostHead.svg", "tail": "ghostTail.svg", "joiners": ["join.svg","twistJoin.svg"]}
+
+    ] ,
+    "randomizeEnds" : true
 }

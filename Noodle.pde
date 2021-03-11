@@ -55,7 +55,7 @@ class Noodle {
 		popMatrix();
 	}
 	
-	void verticalJoin() {
+	void verticalJoin(int type) {
 		float scale = (float)thickness / (float)headWidth;
 		float distToGfx = (tileSize - headWidth * scale)/2;
 		line(margin, 0, margin, distToGfx);
@@ -67,13 +67,13 @@ class Noodle {
 			translate(tileSize / 2, tileSize/2);
 			scale(scale);
 			strokeWeight(strokeSize / scale);
-			shape(joiners[0], headWidth/-2 , headWidth/-2);
+			shape(joiners[type - 1], headWidth/-2 , headWidth/-2);
 			strokeWeight(strokeSize);
 			
 		popMatrix();
 	}
 	
-	void horizontalJoin() {
+	void horizontalJoin(int type) {
 		float scale = (float)thickness / (float)headWidth;
 		float distToGfx = (tileSize - headWidth * scale)/2;
 		line(0, margin, distToGfx, margin);
@@ -86,7 +86,7 @@ class Noodle {
 			scale(scale);
 			rotate(HALF_PI);
 			strokeWeight(strokeSize / scale);
-			shape(joiners[0], headWidth/-2 , headWidth/-2);
+			shape(joiners[type -1], headWidth/-2 , headWidth/-2);
 			strokeWeight(strokeSize);
 			
 		popMatrix();
@@ -116,16 +116,16 @@ class Noodle {
 				if(top && bottom ){
 					if(useTwists && p.type == 0){
 						verticalTwist();
-					} else if(useJoiners && joiners!=null && p.type == 1) {
-						verticalJoin();
+					} else if(useJoiners && joiners != null && p.type > 0 && p.type <= joiners.length) {
+						verticalJoin(p.type);
 					} else {
 						vertical();
 					}
 				} else if(left && right){
 					if(useTwists && p.type == 0){
 						horizontalTwist();
-					} else if(useJoiners && joiners!=null && p.type == 1){
-						horizontalJoin();
+					} else if(useJoiners && joiners != null && p.type > 0 && p.type <= joiners.length){
+						horizontalJoin(p.type);
 					} else {
 						horizontal();
 					}

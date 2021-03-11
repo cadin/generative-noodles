@@ -14,7 +14,8 @@ class Editor {
 
 	Toggle twistControl,
 	       joinControl,
-	       curvesControl;
+	       curvesControl,
+		   randomizeEndsControl;
 	
 	boolean controlsVisible = false;
 		
@@ -150,6 +151,20 @@ class Editor {
 			.align(ControlP5.RIGHT_OUTSIDE, ControlP5.CENTER)
 			.setPaddingX(10)
 			;
+
+		randomizeEndsControl = cp5.addToggle("Randomize Ends")
+			.setPosition(250,250)
+			.setSize(20,20)
+			.setValue(useCurves)
+			;
+		
+		randomizeEndsControl
+			.getCaptionLabel()
+			.align(ControlP5.RIGHT_OUTSIDE, ControlP5.CENTER)
+			.setPaddingX(10)
+			;
+		
+		
 		
 		hide();
 	}
@@ -168,6 +183,7 @@ class Editor {
 		curvesControl.setValue(useCurves);
 		numNoodlesControl.setValue(numNoodles);
 		thicknessControl.setValue(noodleThicknessPct);
+		randomizeEndsControl.setValue(randomizeEnds);
 		
 		controlsVisible = true;
 	}
@@ -228,6 +244,7 @@ class Editor {
 			useCurves = curvesControl.getState();
 			numNoodles = int(numNoodlesControl.getValue());
 			noodleThicknessPct = thicknessControl.getValue();
+			randomizeEnds = randomizeEndsControl.getState();
 
 			if(updateSizes){
 				updateKeyDimensions();
