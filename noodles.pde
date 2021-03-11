@@ -1,7 +1,7 @@
 import controlP5.*;
 import processing.svg.*;
 
-
+Boolean USE_RETINA = false;
 String SETTINGS_PATH = "config/settings.json";
 String configPath = "config/config.json";
 
@@ -69,7 +69,9 @@ void settings() {
 	
 	size(displayWidth, displayHeight - 45);
 	// fullScreen();
-	pixelDensity(displayDensity());
+	if(USE_RETINA){
+		pixelDensity(displayDensity());
+	}
 	
 }
 
