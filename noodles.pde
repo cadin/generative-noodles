@@ -309,6 +309,9 @@ void keyPressed() {
 				showGrid = true;
 			}
 		break;
+		case 'l' :
+			selectConfigFile();
+		break;
 	}
 }
 
