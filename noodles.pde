@@ -315,14 +315,31 @@ void keyPressed() {
 	}
 }
 
+void mouseDragged() {
+	
+	if(BLACKOUT_MODE){
+		Point cell = getCellForMouse(mouseX, mouseY);
+		if(cell.x >= 0 && cell.y >= 0 && cell.x < blackoutCells.length && cell.y < blackoutCells[0].length){
+			if(isDrawing){
+				blackoutCells[cell.x][cell.y] = 1;
+			} else {
+				blackoutCells[cell.x][cell.y] = 0;
+			}
+		} 
+	}
+}
+
+boolean isDrawing = true;
 void mousePressed() {
 	Point cell = getCellForMouse(mouseX, mouseY);
 
 	if(BLACKOUT_MODE){
 		if(cell.x >= 0 && cell.y >= 0 && cell.x < blackoutCells.length && cell.y < blackoutCells[0].length){
 			if(blackoutCells[cell.x][cell.y] > 0){
+				isDrawing = false;
 				blackoutCells[cell.x][cell.y] = 0;
 			} else {
+				isDrawing = true;
 				blackoutCells[cell.x][cell.y] = 1;
 			}
 		} 
