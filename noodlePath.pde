@@ -4,7 +4,7 @@ Point[] createNoodlePath(int[][] cells){
 	int minLength = 20;
 	int maxLength = 200;
 	
-	int len = int(random(minLength, maxLength));
+	int len = maxLength; //int(random(minLength, maxLength));
 	int cols = cells.length;
 	int rows = cells[0].length;
 		
