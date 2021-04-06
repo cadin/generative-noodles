@@ -1,0 +1,23 @@
+{
+    "printResolution": 300,
+    "printWidthInches": 8,
+    "printHeightInches": 8,
+    "gridWidth": 8,
+    "gridHeight": 8,
+    "marginInches": 0.5,
+    "useTwists": false,
+    "useJoiners": true,
+    "useCurves": true,
+    "penSizeMM": 0.35,
+    "noodleThicknessPct" : 0.9,
+    "numNoodles" : 90,
+    "graphics" : [
+        { "head" : "heads/frown.svg", "joiners": ["join.svg","twistJoin.svg"]},
+        { "head" : "heads/happy.svg", "joiners": ["join.svg","twistJoin.svg"]},
+        { "head" : "heads/hat.svg", "joiners": ["join.svg","twistJoin.svg"]},
+        { "head" : "heads/mad.svg", "joiners": ["join.svg","twistJoin.svg"]},
+        { "head" : "heads/smiling.svg", "joiners": ["join.svg","twistJoin.svg"]},
+
+    ] ,
+    "randomizeEnds" : true
+}

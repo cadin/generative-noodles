@@ -87,7 +87,7 @@ class Editor {
 		numNoodlesControl = cp5.addNumberbox("Noodles")
 			.setPosition(100,400)
 			.setSize(100,20)
-			.setRange(1,100)
+			.setRange(1,150)
 			.setMultiplier(1) // set the sensitifity of the numberbox
 			.setDirection(Controller.HORIZONTAL) // change the control direction to left/right
 			.setValue(penSizeMM)

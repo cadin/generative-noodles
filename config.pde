@@ -8,7 +8,7 @@ void reloadCurrentData() {
 }
 
 void onConfigSelected(File config) {
-	// shiftIsDown = false;
+	shiftIsDown = false;
 	if(config == null) return;
 	
 	String filePath = config.getAbsolutePath();
@@ -22,6 +22,7 @@ void onConfigSelected(File config) {
 		loadConfigFile(relativePath, fileName);
 		configPath = relativePath;
 		updateSettingsFile();
+		reset();
 	}
 }
 
