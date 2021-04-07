@@ -60,7 +60,6 @@ GraphicSet[] graphicSets;
 boolean randomizeEnds = false;
 boolean allowOverlap = true;
 
-
 ImageSaver imgSaver = new ImageSaver();
 String fileNameToSave = "";
 

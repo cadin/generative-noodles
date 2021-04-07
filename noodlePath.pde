@@ -236,9 +236,9 @@ int getIndexOfCell(int x, int y, Point[] path){
 
 Point[] cycleCellType(int x, int y, Point[] path){
 	int i = getIndexOfCell(x, y, path);
-	path[i].type++;
-	if(path[i].type >= NUM_JOIN_TYPES){
-		path[i].type = 0;
+	path[i].joinType++;
+	if(path[i].joinType >= NUM_JOIN_TYPES){
+		path[i].joinType = 0;
 	}
 	
 	return path;
