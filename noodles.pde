@@ -81,16 +81,6 @@ void settings() {
 
 void setup() {
 	editor = new Editor(this);
-	// ends = new PShape[4];
-	// ends[0] = loadShape("hand.svg");
-	// ends[1] = loadShape("hand2.svg");
-	// ends[2] = loadShape("ghostHead.svg");
-	// ends[3] = loadShape("ghostTail.svg");
-
-	// joiners = new PShape[1];
-	// joiners[0] = loadShape("join.svg");
-	// joiners[0].disableStyle();
-	
 	frameRate(12);
 
 	loadSettings(SETTINGS_PATH);
@@ -211,8 +201,6 @@ void updateKeyDimensions() {
 }
 
 color getColorForCellType(int cellType) {
-	
-
 	color[] colors = { 
 		color(0, 5),
 		color(0, 255, 0, 100),

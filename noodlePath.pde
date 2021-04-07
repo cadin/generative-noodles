@@ -1,20 +1,7 @@
-int NUM_CELL_TYPES = 5;
+int NUM_JOIN_TYPES = 5;
 
 boolean cellIsEmpty(int px, int py) {
 	return cells[px][py] == CellType.EMPTY;
-
-
-	// boolean nextIsClear = cells[prev.x][prev.y - 1] < 1;
-	// boolean afterNextIsClear = false;
-	// if(cells[next.x][next.y] == CellType.HORIZONTAL){
-	// 	if(next.y > 0){
-	// 		if(cells[next.x][next.y - 1] < 1){
-	// 			afterNextIsClear = true;
-	// 		}
-	// 	}
-	// }
-
-	// return nextIsClear || afterNextIsClear;
 }
 
 boolean cellIsInBounds(Point p) {
@@ -71,7 +58,6 @@ boolean canCrossCell(Point prev, String dir) {
 }
 
 void markCellTypeWithPathAndIndex(Point[] path, int i) {
-
 	Point current = path[i];
 	if(cells != null && current != null){
 		if(i > 1){ 
@@ -108,17 +94,7 @@ void addCrossToPathAtCell(Point cell, Point[] path, String dir){
 	}
 }
 
-Point[] createNoodlePath(int[][] cells){
-
-	int minLength = 20;
-	int maxLength = 200;
-	
-	int len = maxLength; //int(random(minLength, maxLength));
-	int cols = cells.length;
-	int rows = cells[0].length;
-		
-	Point[] path = new Point[len];
-	
+Point findStartPoint(int[][] cells) {
 	int posX, posY;
 	int numTries = 0;
 	do {
@@ -131,34 +107,61 @@ Point[] createNoodlePath(int[][] cells){
 		}
 	} while (cells[posX][posY] > 0);
 
-	path[0] = new Point(posX, posY);
-	cells[posX][posY] = CellType.OCCUPIED;
+	return new Point(posX, posY);
+}
+
+ArrayList<String> findAvailableDirections(Point prev) {
+	int cols = cells.length;
+	int rows = cells[0].length;
+
+	boolean up = prev.y > 0 && (cellIsEmpty(prev.x, prev.y - 1) || canCrossCell(prev, "up"));
+	boolean down = prev.y < rows-1 && (cellIsEmpty(prev.x, prev.y + 1) || canCrossCell(prev, "down"));
+	boolean left = prev.x > 0 && (cellIsEmpty(prev.x - 1, prev.y) || canCrossCell(prev, "left"));
+	boolean right = prev.x < cols-1 && (cellIsEmpty(prev.x + 1, prev.y) || canCrossCell(prev, "right" ));
+	
+	ArrayList<String> avail = new ArrayList<String>();
+	if(up) avail.add("up");
+	if(down) avail.add("down");
+	if(left) avail.add("left");
+	if(right) avail.add("right");
+
+	return avail;
+}
+
+Point getNextPointForDirection(Point prev, String dir) {
+	Point p = null;
+	if(dir == "up") p = (new Point(prev.x, prev.y -1));
+	if(dir == "down") p = (new Point(prev.x, prev.y +1));
+	if(dir == "right") p = (new Point(prev.x + 1, prev.y));
+	if(dir == "left") p = ( new Point(prev.x -1, prev.y));
+	return p;
+}
+
+Point[] createNoodlePath(int[][] cells){
+	int minLength = 20;
+	int maxLength = 200;
+	
+	int len = maxLength; //int(random(minLength, maxLength));
+		
+	Point[] path = new Point[len];
+	
+	Point start = findStartPoint(cells);
+	if(start == null) return null;
+
+	path[0] = start;
+	cells[start.x][start.y] = CellType.OCCUPIED;
 	
 	int count = 1;
 	for(int i=1; i < len; i++){
 		
 		Point prev = path[count-1];
-		boolean up = prev.y > 0 && (cellIsEmpty(prev.x, prev.y - 1) || canCrossCell(prev, "up"));
-		boolean down = prev.y < rows-1 && (cellIsEmpty(prev.x, prev.y + 1) || canCrossCell(prev, "down"));
-		boolean left = prev.x > 0 && (cellIsEmpty(prev.x - 1, prev.y) || canCrossCell(prev, "left"));
-		boolean right = prev.x < cols-1 && (cellIsEmpty(prev.x + 1, prev.y) || canCrossCell(prev, "right" ));
-		
-		ArrayList<String> avail = new ArrayList<String>();
-		if(up) avail.add("up");
-		if(down) avail.add("down");
-		if(left) avail.add("left");
-		if(right) avail.add("right");
+		ArrayList<String> avail = findAvailableDirections(prev);
 		
 		if(avail.size() > 0){
 			int index = floor(random(0, avail.size()));
 			String dir = avail.get(index);
-			
-			Point p = null;
-			if(dir == "up") p = (new Point(prev.x, prev.y -1));
-			if(dir == "down") p = (new Point(prev.x, prev.y +1));
-			if(dir == "right") p = (new Point(prev.x + 1, prev.y));
-			if(dir == "left") p = ( new Point(prev.x -1, prev.y));
-			
+
+			Point p = getNextPointForDirection(prev, dir);
 			if(p != null){
 				if(!cellIsEmpty(p.x, p.y)) {
 					boolean didAdd = addCrossAtCell(p, dir);
@@ -167,7 +170,7 @@ Point[] createNoodlePath(int[][] cells){
 					}
 				}
 
-				p.type = floor(random(0, NUM_CELL_TYPES));				
+				p.type = floor(random(0, NUM_JOIN_TYPES));				
 				path[count] = p;
 				markCellTypeWithPathAndIndex(path, count);
 				count++;
@@ -234,7 +237,7 @@ int getIndexOfCell(int x, int y, Point[] path){
 Point[] cycleCellType(int x, int y, Point[] path){
 	int i = getIndexOfCell(x, y, path);
 	path[i].type++;
-	if(path[i].type >= NUM_CELL_TYPES){
+	if(path[i].type >= NUM_JOIN_TYPES){
 		path[i].type = 0;
 	}
 	

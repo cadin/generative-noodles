@@ -214,7 +214,6 @@ class Editor {
 		if(controlsVisible && !cp5.isVisible()){
 			cp5.show();
 		} 
-
 	}
 
 	boolean printSizeDidChange() {
