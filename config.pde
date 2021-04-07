@@ -76,6 +76,12 @@ void parseConfigObject(JSONObject obj) {
     if(!obj.isNull("numNoodles")){
         numNoodles = obj.getInt("numNoodles");
     }
+	if(!obj.isNull("minLength")){
+		minLength = obj.getInt("minLength");
+	}
+	if(!obj.isNull("maxLength")){
+		maxLength = obj.getInt("maxLength");
+	}
 	if(!obj.isNull("graphics")){
 		JSONArray gfx = obj.getJSONArray("graphics");
 		graphicSets = new GraphicSet[gfx.size()];

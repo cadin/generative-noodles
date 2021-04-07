@@ -10,7 +10,9 @@ class Editor {
 	          rowsControl,
 	          penSizeControl,
 	          numNoodlesControl,
-	          thicknessControl;
+	          thicknessControl,
+			  minLengthControl,
+			  maxLengthControl;
 
 	Toggle twistControl,
 	       joinControl,
@@ -104,9 +106,32 @@ class Editor {
 			.setDecimalPrecision(2)
 			.setId(7)
 			;
+
+		minLengthControl = cp5.addNumberbox("Min Length")
+			.setPosition(100,500)
+			.setSize(100,20)
+			.setRange(2,400)
+			.setMultiplier(1) // set the sensitifity of the numberbox
+			.setDirection(Controller.HORIZONTAL) // change the control direction to left/right
+			.setValue(penSizeMM)
+			.setDecimalPrecision(0)
+			.setId(8)
+			;
+
+		maxLengthControl = cp5.addNumberbox("Max Length")
+			.setPosition(100,550)
+			.setSize(100,20)
+			.setRange(2,400)
+			.setMultiplier(1) // set the sensitifity of the numberbox
+			.setDirection(Controller.HORIZONTAL) // change the control direction to left/right
+			.setValue(penSizeMM)
+			.setDecimalPrecision(0)
+			.setId(9)
+			;
+
 		
 		penSizeControl = cp5.addNumberbox("Pen Size")
-			.setPosition(100,525)
+			.setPosition(100,625)
 			.setSize(100,20)
 			.setRange(0.10,2)
 			.setMultiplier(0.05) // set the sensitifity of the numberbox
@@ -177,6 +202,8 @@ class Editor {
 		marginControl.setValue(MARGIN_INCHES);
 		colsControl.setValue(GRID_W);
 		rowsControl.setValue(GRID_H);
+		minLengthControl.setValue(minLength);
+		maxLengthControl.setValue(maxLength);
 		penSizeControl.setValue(penSizeMM);
 		twistControl.setValue(useTwists);
 		joinControl.setValue(useJoiners);
@@ -237,6 +264,8 @@ class Editor {
 			GRID_H = int(rowsControl.getValue());
 			penSizeMM = penSizeControl.getValue();
 			strokeSize = calculateStrokeSize();
+			minLength = int(minLengthControl.getValue());
+			maxLength = int(maxLengthControl.getValue());
 
 			useTwists = twistControl.getState();
 			useJoiners = joinControl.getState();
@@ -244,6 +273,7 @@ class Editor {
 			numNoodles = int(numNoodlesControl.getValue());
 			noodleThicknessPct = thicknessControl.getValue();
 			randomizeEnds = randomizeEndsControl.getState();
+
 
 			if(updateSizes){
 				updateKeyDimensions();

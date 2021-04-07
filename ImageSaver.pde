@@ -97,6 +97,8 @@ class ImageSaver {
 		obj.setBoolean("allowOverlap", allowOverlap);
 		obj.setFloat("noodleThicknessPct", noodleThicknessPct);
 		obj.setInt("numNoodles", numNoodles);
+		obj.setInt("minLength", minLength);
+		obj.setInt("maxLength", maxLength);
 		obj.setJSONArray("graphics", graphicsArray);
 		obj.setBoolean("randomizeEnds", randomizeEnds);
 		saveJSONObject(obj, "output/" + filename + ".json");

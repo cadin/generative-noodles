@@ -137,11 +137,8 @@ Point getNextPointForDirection(Point prev, String dir) {
 	return p;
 }
 
-Point[] createNoodlePath(int[][] cells){
-	int minLength = 20;
-	int maxLength = 200;
-	
-	int len = maxLength; //int(random(minLength, maxLength));
+Point[] createNoodlePath(int[][] cells){	
+	int len =  int(random(minLength, maxLength));
 	Point[] path = new Point[len];
 	
 	Point start = findStartPoint(cells);
