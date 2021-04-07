@@ -41,8 +41,12 @@ class GraphicSet {
         if(joinerPaths != null && joinerPaths.length > 0){
             joiners = new PShape[joinerPaths.length];
             for(int i = 0; i < joinerPaths.length; i++){
-                joiners[i] = loadShape(joinerPaths[i]);
-                joiners[i].disableStyle();
+                try {
+                    joiners[i] = loadShape(joinerPaths[i]);
+                    joiners[i].disableStyle();
+                } catch(Exception e) {
+                    println("Joiner shape not found: " + joinerPaths[i]);
+                }
             }
         }
     }

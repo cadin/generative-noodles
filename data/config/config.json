@@ -5,7 +5,7 @@
     "gridWidth": 8,
     "gridHeight": 5,
     "marginInches": 0.5,
-    "useTwists": false,
+    "useTwists": true,
     "useJoiners": true,
     "useCurves": true,
     "penSizeMM": 0.35,
@@ -14,11 +14,11 @@
     "graphics": [
         {
             "head": "finger.svg",
-            "joiners": ["knuckleJoin.svg", "twistJoin.svg"]
+            "joiners": ["knuckleJoin.svg"]
         },
         {
             "head": "finger2.svg",
-            "joiners": ["knuckleJoin.svg", "twistJoin.svg"]
+            "joiners": ["knuckleJoin.svg"]
         }
     ],
     "randomizeEnds": true

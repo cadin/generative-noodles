@@ -11,6 +11,7 @@ class Noodle {
 	
 	PShape head, tail;
 	PShape[] joiners;
+	PShape twist;
 	
 	void calculateSizes(int tileW, float pct) {
 		tileSize = tileW;
@@ -20,7 +21,7 @@ class Noodle {
 		margin = (tileSize - thickness) / 2;
 	}
 
-	Noodle(Point[] p, int tileW, PShape h, PShape t, PShape[] j) {
+	Noodle(Point[] p, int tileW, PShape h, PShape t, PShape[] j, PShape tw) {
 		calculateSizes(tileW, thicknessPct);
 		head = h;
 		tail = t;
@@ -28,7 +29,7 @@ class Noodle {
 		head.disableStyle();
 		tail.disableStyle();
 		joiners = j;
-
+		twist = tw;
 		path = p;
 	}
 
@@ -54,8 +55,8 @@ class Noodle {
 		strokeWeight(strokeSize);
 		popMatrix();
 	}
-	
-	void verticalJoin(int type) {
+
+	void verticalShape(PShape shape) {
 		float scale = (float)thickness / (float)headWidth;
 		float distToGfx = (tileSize - headWidth * scale)/2;
 		line(margin, 0, margin, distToGfx);
@@ -67,13 +68,20 @@ class Noodle {
 			translate(tileSize / 2, tileSize/2);
 			scale(scale);
 			strokeWeight(strokeSize / scale);
-			shape(joiners[type - 1], headWidth/-2 , headWidth/-2);
+			shape(shape, headWidth/-2 , headWidth/-2);
 			strokeWeight(strokeSize);
-			
 		popMatrix();
 	}
+
+	void verticalTwist() {
+		verticalShape(twist);
+	}
 	
-	void horizontalJoin(int type) {
+	void verticalJoin(int type) {
+		verticalShape(joiners[type -1]);
+	}
+
+	void horizontalShape(PShape shape) {
 		float scale = (float)thickness / (float)headWidth;
 		float distToGfx = (tileSize - headWidth * scale)/2;
 		line(0, margin, distToGfx, margin);
@@ -86,10 +94,17 @@ class Noodle {
 			scale(scale);
 			rotate(HALF_PI);
 			strokeWeight(strokeSize / scale);
-			shape(joiners[type -1], headWidth/-2 , headWidth/-2);
+			shape(shape, headWidth/-2 , headWidth/-2);
 			strokeWeight(strokeSize);
-			
 		popMatrix();
+	}
+
+	void horizontalTwist() {
+		horizontalShape(twist);
+	}
+	
+	void horizontalJoin(int type) {
+		horizontalShape(joiners[type-1]);
 	}
 	
 	void drawNoodle(boolean useTwists) {
@@ -116,16 +131,20 @@ class Noodle {
 				if(top && bottom ){
 					if(p.type == CellType.V_CROSSED){
 						verticalCrossed();
-					} else if(useJoiners && joiners != null && p.type > 0 && p.type <= joiners.length) {
-						verticalJoin(p.type);
+					} else if (useTwists && p.joinType == 0){
+						verticalTwist();
+					}  else if(useJoiners && joiners != null && p.joinType > 0 && p.joinType <= joiners.length) {
+						verticalJoin(p.joinType);
 					} else {
 						vertical();
 					}
 				} else if(left && right){
 					if(p.type == CellType.H_CROSSED){
 						horizontalCrossed();
-					} else if(useJoiners && joiners != null && p.type > 0 && p.type <= joiners.length){
-						horizontalJoin(p.type);
+					} else if (useTwists && p.joinType == 0){
+						horizontalTwist();
+					} else if(useJoiners && joiners != null && p.joinType > 0 && p.joinType <= joiners.length){
+						horizontalJoin(p.joinType);
 					} else {
 						horizontal();
 					}
@@ -224,11 +243,11 @@ class Noodle {
 		
 	}
 	
-	void verticalTwist() {
-		float twistDepth = tileSize / 2;
-		bezier(margin, 0, margin,   twistDepth, tileSize - margin,   tileSize - twistDepth, tileSize-margin, tileSize);
-		bezier( tileSize - margin, 0,    tileSize - margin, twistDepth,     margin, tileSize - twistDepth,    margin, tileSize);
-	}
+	// void verticalTwist() {
+	// 	float twistDepth = tileSize / 2;
+	// 	bezier(margin, 0, margin,   twistDepth, tileSize - margin,   tileSize - twistDepth, tileSize-margin, tileSize);
+	// 	bezier( tileSize - margin, 0,    tileSize - margin, twistDepth,     margin, tileSize - twistDepth,    margin, tileSize);
+	// }
 	
 	
 	
@@ -237,9 +256,9 @@ class Noodle {
 		line(0, tileSize - margin, tileSize, tileSize - margin);
 	}
 	
-	void horizontalTwist() {
-		float twistDepth = tileSize / 2;
-		bezier( 0, margin, twistDepth,margin, tileSize - (twistDepth),   tileSize-margin,   tileSize , tileSize - margin);
-		bezier( 0, tileSize - margin, twistDepth, tileSize-margin, tileSize -twistDepth, margin,      tileSize, margin);
-	}
+// 	void horizontalTwist() {
+// 		float twistDepth = tileSize / 2;
+// 		bezier( 0, margin, twistDepth,margin, tileSize - (twistDepth),   tileSize-margin,   tileSize , tileSize - margin);
+// 		bezier( 0, tileSize - margin, twistDepth, tileSize-margin, tileSize -twistDepth, margin,      tileSize, margin);
+// 	}
 }

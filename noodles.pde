@@ -43,12 +43,14 @@ Noodle noodle2;
 int numNoodles = 3;
 Noodle[] noodles;
 
+PShape twist;
+
 Point[][] paths;
 int[][] cells;
 
 // SETTINGS
 boolean showGrid = false;
-boolean useTwists = false;
+boolean useTwists = true;
 boolean useJoiners = true;
 boolean useCurves = true;
 float penSizeMM = 0.35;
@@ -85,6 +87,9 @@ void setup() {
 
 	loadSettings(SETTINGS_PATH);
 	loadConfigFile(configPath, "");
+
+	twist = loadShape("twist.svg");
+	twist.disableStyle();
 	reset();
 }
 
@@ -243,7 +248,7 @@ void reset() {
 				tail = graphicSets[tailIndex].head;
 			}
 			
-			noodles[noodleCount] = new Noodle(p, TILE_SIZE, head, tail, gfx.joiners);
+			noodles[noodleCount] = new Noodle(p, TILE_SIZE, head, tail, gfx.joiners, twist);
 			noodleCount++;
 		}
 	}

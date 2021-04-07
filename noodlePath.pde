@@ -142,7 +142,6 @@ Point[] createNoodlePath(int[][] cells){
 	int maxLength = 200;
 	
 	int len = maxLength; //int(random(minLength, maxLength));
-		
 	Point[] path = new Point[len];
 	
 	Point start = findStartPoint(cells);
@@ -170,7 +169,8 @@ Point[] createNoodlePath(int[][] cells){
 					}
 				}
 
-				p.type = floor(random(0, NUM_JOIN_TYPES));				
+				p.joinType = floor(random(0, NUM_JOIN_TYPES));
+				p.type = CellType.OCCUPIED;		
 				path[count] = p;
 				markCellTypeWithPathAndIndex(path, count);
 				count++;
