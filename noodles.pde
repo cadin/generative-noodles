@@ -56,6 +56,7 @@ float strokeSize = calculateStrokeSize();
 float noodleThicknessPct = 0.5;
 GraphicSet[] graphicSets;
 boolean randomizeEnds = false;
+boolean allowOverlap = true;
 
 
 ImageSaver imgSaver = new ImageSaver();

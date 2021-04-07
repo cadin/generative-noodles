@@ -25,6 +25,8 @@ boolean cellIsInBounds(Point p) {
 }
 
 boolean canCrossCell(Point prev, String dir) {
+	if(!allowOverlap) return false;
+
 	boolean result = false;
 
 	int perpCellType = -1;
@@ -40,6 +42,18 @@ boolean canCrossCell(Point prev, String dir) {
 			perpCellType = CellType.HORIZONTAL;
 			nextCell = new Point(prev.x, prev.y + 1);
 			afterCell = new Point(prev.x, prev.y + 2);
+		break;
+
+		case "left":
+			perpCellType = CellType.VERTICAL;
+			nextCell = new Point(prev.x - 1, prev.y);
+			afterCell = new Point(prev.x - 2, prev.y);
+		break;
+
+		case "right": 
+			perpCellType = CellType.VERTICAL;
+			nextCell = new Point(prev.x + 1, prev.y);
+			afterCell = new Point(prev.x + 2, prev.y);
 		break;
 
 	}
@@ -89,20 +103,23 @@ void markCellTypes(Point[] path) {
 	println(" ]");
 }
 
-boolean addCrossToPathAtCell(Point cell, String dir) {
+boolean addCrossAtCell(Point cell, String dir) {
 	int noodleNum = findNoodleWithCell(cell.x, cell.y);
 	if(noodleNum >= 0){
 		Noodle n = noodles[noodleNum];
-		int index = getIndexOfCell(cell.x, cell.y, n.path);
-
-		if(dir == "up" || dir == "down" ){
-			n.path[index].type = CellType.H_CROSSED;
-		}else {
-			n.path[index].type = CellType.V_CROSSED;
-		}
+		addCrossToPathAtCell(cell, n.path, dir);
 		return true;
 	}
 	return false;
+}
+
+void addCrossToPathAtCell(Point cell, Point[] path, String dir){
+	int index = getIndexOfCell(cell.x, cell.y, path);
+	if(dir == "up" || dir == "down" ){
+		path[index].type = CellType.H_CROSSED;
+	}else {
+		path[index].type = CellType.V_CROSSED;
+	}
 }
 
 Point[] createNoodlePath(int[][] cells){
@@ -135,16 +152,10 @@ Point[] createNoodlePath(int[][] cells){
 	for(int i=1; i < len; i++){
 		
 		Point prev = path[count-1];
-		// boolean up = prev.y > 0 && cells[prev.x][prev.y - 1] < 1;
 		boolean up = prev.y > 0 && (cellIsEmpty(prev.x, prev.y - 1) || canCrossCell(prev, "up"));
-
-
-
-		// boolean down = prev.y < rows-1 && cells[prev.x][prev.y + 1] < 1;
 		boolean down = prev.y < rows-1 && (cellIsEmpty(prev.x, prev.y + 1) || canCrossCell(prev, "down"));
-		boolean left = prev.x > 0 && cells[prev.x - 1][prev.y] < 1;
-		boolean right = prev.x < cols-1 && cells[prev.x + 1][prev.y] < 1;
-		
+		boolean left = prev.x > 0 && (cellIsEmpty(prev.x - 1, prev.y) || canCrossCell(prev, "left"));
+		boolean right = prev.x < cols-1 && (cellIsEmpty(prev.x + 1, prev.y) || canCrossCell(prev, "right" ));
 		
 		ArrayList<String> avail = new ArrayList<String>();
 		if(up) avail.add("up");
@@ -163,16 +174,10 @@ Point[] createNoodlePath(int[][] cells){
 			if(dir == "left") p = ( new Point(prev.x -1, prev.y));
 			
 			if(p != null){
-
 				if(!cellIsEmpty(p.x, p.y)) {
-					boolean didAdd = addCrossToPathAtCell(p, dir);
+					boolean didAdd = addCrossAtCell(p, dir);
 					if(!didAdd) {
-						int crossedIndex = getIndexOfCell(p.x, p.y, path);
-						if(dir == "up" || dir == "down"){
-							path[crossedIndex].type = CellType.H_CROSSED;
-						} else {
-							path[crossedIndex].type = CellType.V_CROSSED;
-						}
+						addCrossToPathAtCell(p, path, dir);
 					}
 				}
 
@@ -186,11 +191,9 @@ Point[] createNoodlePath(int[][] cells){
 	
 	if(count > 2){
 		Point[] finalPath = (Point[]) subset(path, 0, count);
-		// markCellTypes(finalPath);
 		return finalPath;
 	} else {
 		clearCells(cells, (Point[]) subset(path, 0, count));
-		// return createNoodlePath(cells);
 		return null;
 	}
 
