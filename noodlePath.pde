@@ -89,6 +89,22 @@ void markCellTypes(Point[] path) {
 	println(" ]");
 }
 
+boolean addCrossToPathAtCell(Point cell, String dir) {
+	int noodleNum = findNoodleWithCell(cell.x, cell.y);
+	if(noodleNum >= 0){
+		Noodle n = noodles[noodleNum];
+		int index = getIndexOfCell(cell.x, cell.y, n.path);
+
+		if(dir == "up" || dir == "down" ){
+			n.path[index].type = CellType.H_CROSSED;
+		}else {
+			n.path[index].type = CellType.V_CROSSED;
+		}
+		return true;
+	}
+	return false;
+}
+
 Point[] createNoodlePath(int[][] cells){
 
 	int minLength = 20;
@@ -147,9 +163,20 @@ Point[] createNoodlePath(int[][] cells){
 			if(dir == "left") p = ( new Point(prev.x -1, prev.y));
 			
 			if(p != null){
-				p.type = floor(random(0, NUM_CELL_TYPES));
-				// cells[p.x][p.y] = CellType.OCCUPIED;
-				
+
+				if(!cellIsEmpty(p.x, p.y)) {
+					boolean didAdd = addCrossToPathAtCell(p, dir);
+					if(!didAdd) {
+						int crossedIndex = getIndexOfCell(p.x, p.y, path);
+						if(dir == "up" || dir == "down"){
+							path[crossedIndex].type = CellType.H_CROSSED;
+						} else {
+							path[crossedIndex].type = CellType.V_CROSSED;
+						}
+					}
+				}
+
+				p.type = floor(random(0, NUM_CELL_TYPES));				
 				path[count] = p;
 				markCellTypeWithPathAndIndex(path, count);
 				count++;
@@ -264,9 +291,11 @@ Point[] removeCellFromPath(int cellX, int cellY, Point[] path) {
 int findNoodleWithCell(int cellX, int cellY) {
 	int index = 0;
 	for(Noodle n : noodles){
-		for(Point p : n.path){
-			if(p.x == cellX && p.y == cellY){
-				return index;
+		if(n != null && n.path != null){
+			for(Point p : n.path){
+				if(p.x == cellX && p.y == cellY){
+					return index;
+				}
 			}
 		}
 		index++;

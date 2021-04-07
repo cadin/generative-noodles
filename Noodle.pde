@@ -114,16 +114,16 @@ class Noodle {
 				boolean bottom = prev.y > p.y || next.y > p.y;
 				
 				if(top && bottom ){
-					if(useTwists && p.type == 0){
-						verticalTwist();
+					if(p.type == CellType.V_CROSSED){
+						verticalCrossed();
 					} else if(useJoiners && joiners != null && p.type > 0 && p.type <= joiners.length) {
 						verticalJoin(p.type);
 					} else {
 						vertical();
 					}
 				} else if(left && right){
-					if(useTwists && p.type == 0){
-						horizontalTwist();
+					if(p.type == CellType.H_CROSSED){
+						horizontalCrossed();
 					} else if(useJoiners && joiners != null && p.type > 0 && p.type <= joiners.length){
 						horizontalJoin(p.type);
 					} else {
@@ -158,6 +158,21 @@ class Noodle {
 		popMatrix();
 	}
 
+	void verticalCrossed() {
+		line(margin, 0, margin, margin);
+		line(margin, tileSize - margin, margin, tileSize );
+
+		line(tileSize - margin, 0, tileSize - margin, margin);
+		line(tileSize - margin, tileSize - margin, tileSize - margin, tileSize);
+	}
+
+	void horizontalCrossed() {
+		line(0, margin, margin, margin);
+		line(tileSize - margin, margin, tileSize, margin);
+
+		line(0, tileSize - margin, margin, tileSize - margin);
+		line(tileSize - margin, tileSize - margin, tileSize, tileSize - margin);
+	}
 	
 	void cornerTL() {
 		if(useCurves){

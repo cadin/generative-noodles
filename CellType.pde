@@ -12,8 +12,8 @@ static class CellType {
     static int JOIN_V = 7;
     static int JOIN_H = 8;
 
-    static int CROSS_V = 9;
-    static int CROSS_H = 10;
+    static int V_CROSSED = 9;
+    static int H_CROSSED = 10;
 
     static int OCCUPIED = 11;
 }
