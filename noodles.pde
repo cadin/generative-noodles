@@ -30,6 +30,7 @@ int canvasY = 0;
 
 boolean EDIT_MODE = false;
 boolean BLACKOUT_MODE = false;
+boolean CELLTYPE_MODE = false;
 boolean PATH_EDIT_MODE = false;
 int editingNoodle = 0;
 int[][] blackoutCells;
@@ -74,6 +75,7 @@ void settings() {
 		pixelDensity(displayDensity());
 	}
 	
+	println(CellType.EMPTY);
 }
 
 void setup() {
@@ -207,6 +209,30 @@ void updateKeyDimensions() {
 	calculateTileSize();
 }
 
+color getColorForCellType(int cellType) {
+	
+
+	color[] colors = { 
+		color(0, 5),
+		color(0, 255, 0, 100),
+		color(0, 0, 255, 100),
+
+		color(255, 0, 0, 100),
+		color(255, 0, 0, 100),
+		color(255, 0, 0, 100),
+		color(255, 0, 0, 100),
+
+		color(255, 255, 0, 100),
+		color(255, 255, 0, 100),
+
+		color(0),
+		color(0),
+
+		color(255, 0, 255, 100)};
+
+	return colors[cellType];
+}
+
 void reset() {
 	updateKeyDimensions();
 
@@ -312,6 +338,10 @@ void keyPressed() {
 		case 'l' :
 			selectConfigFile();
 		break;
+
+		case 'c' :
+			CELLTYPE_MODE = !CELLTYPE_MODE;
+			break;
 	}
 }
 
@@ -393,7 +423,9 @@ void drawGrid() {
 				fill(0,25);
 			} else if(PATH_EDIT_MODE && pathContainsCell(noodles[editingNoodle].path, col, row)) {
 				fill(0, 255, 0, 25);
-			} else {
+			} else if(CELLTYPE_MODE){
+				fill(getColorForCellType(cells[col][row]));
+			}else {
 				noFill();
 			}
 			rect(col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE);

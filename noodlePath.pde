@@ -1,6 +1,96 @@
 int NUM_CELL_TYPES = 5;
 
+boolean cellIsEmpty(int px, int py) {
+	return cells[px][py] == CellType.EMPTY;
+
+
+	// boolean nextIsClear = cells[prev.x][prev.y - 1] < 1;
+	// boolean afterNextIsClear = false;
+	// if(cells[next.x][next.y] == CellType.HORIZONTAL){
+	// 	if(next.y > 0){
+	// 		if(cells[next.x][next.y - 1] < 1){
+	// 			afterNextIsClear = true;
+	// 		}
+	// 	}
+	// }
+
+	// return nextIsClear || afterNextIsClear;
+}
+
+boolean cellIsInBounds(Point p) {
+	boolean overMin = p.x >= 0 && p.y >= 0; 
+	boolean underMax = p.x < cells.length && p.y < cells[0].length;
+
+	return overMin && underMax;
+}
+
+boolean canCrossCell(Point prev, String dir) {
+	boolean result = false;
+
+	int perpCellType = -1;
+	Point nextCell = null;
+	Point afterCell = null;
+	switch (dir) {
+		case "up":
+			perpCellType = CellType.HORIZONTAL;
+			nextCell = new Point(prev.x, prev.y - 1);
+			afterCell = new Point(prev.x, prev.y - 2);
+		break;
+		case "down":
+			perpCellType = CellType.HORIZONTAL;
+			nextCell = new Point(prev.x, prev.y + 1);
+			afterCell = new Point(prev.x, prev.y + 2);
+		break;
+
+	}
+
+	if(nextCell != null && cellIsInBounds(nextCell) && cellIsInBounds(afterCell)){
+		
+		if(cells[nextCell.x][nextCell.y] == perpCellType){
+			if(cells[afterCell.x][afterCell.y] == CellType.EMPTY) {
+				result = true;
+			}
+		}
+	}
+
+	return result;
+}
+
+void markCellTypeWithPathAndIndex(Point[] path, int i) {
+
+	Point current = path[i];
+	if(cells != null && current != null){
+		if(i > 1){ 
+			Point prev = path[i - 1];
+			Point twoBack = path[i-2];
+
+			if(twoBack.x == current.x){
+				cells[prev.x][prev.y] = CellType.VERTICAL;
+			} else if(twoBack.y == current.y){
+				cells[prev.x][prev.y] = CellType.HORIZONTAL;
+			}
+		} 
+	
+		cells[current.x][current.y] = CellType.OCCUPIED;
+	}
+}
+
+void markCellTypes(Point[] path) {
+
+	for(int i = 1; i < path.length; i++){
+		markCellTypeWithPathAndIndex(path, i);
+	}
+
+	print("[ ");
+	for(int j=0; j < path.length; j++){
+		
+		print(cells[path[j].x][path[j].y] + ", " );
+	}
+	println(" ]");
+}
+
 Point[] createNoodlePath(int[][] cells){
+
 	int minLength = 20;
 	int maxLength = 200;
 	
@@ -23,14 +113,19 @@ Point[] createNoodlePath(int[][] cells){
 	} while (cells[posX][posY] > 0);
 
 	path[0] = new Point(posX, posY);
-	cells[posX][posY] = 1;
+	cells[posX][posY] = CellType.OCCUPIED;
 	
 	int count = 1;
 	for(int i=1; i < len; i++){
 		
 		Point prev = path[count-1];
-		boolean up = prev.y > 0 && cells[prev.x][prev.y - 1] < 1;
-		boolean down = prev.y < rows-1 && cells[prev.x][prev.y + 1] < 1;
+		// boolean up = prev.y > 0 && cells[prev.x][prev.y - 1] < 1;
+		boolean up = prev.y > 0 && (cellIsEmpty(prev.x, prev.y - 1) || canCrossCell(prev, "up"));
+
+
+
+		// boolean down = prev.y < rows-1 && cells[prev.x][prev.y + 1] < 1;
+		boolean down = prev.y < rows-1 && (cellIsEmpty(prev.x, prev.y + 1) || canCrossCell(prev, "down"));
 		boolean left = prev.x > 0 && cells[prev.x - 1][prev.y] < 1;
 		boolean right = prev.x < cols-1 && cells[prev.x + 1][prev.y] < 1;
 		
@@ -53,15 +148,19 @@ Point[] createNoodlePath(int[][] cells){
 			
 			if(p != null){
 				p.type = floor(random(0, NUM_CELL_TYPES));
-				cells[p.x][p.y] = 1;
+				// cells[p.x][p.y] = CellType.OCCUPIED;
+				
 				path[count] = p;
+				markCellTypeWithPathAndIndex(path, count);
 				count++;
 			}
 		}
 	}
 	
 	if(count > 2){
-		return (Point[]) subset(path, 0, count);
+		Point[] finalPath = (Point[]) subset(path, 0, count);
+		// markCellTypes(finalPath);
+		return finalPath;
 	} else {
 		clearCells(cells, (Point[]) subset(path, 0, count));
 		// return createNoodlePath(cells);
@@ -73,7 +172,7 @@ Point[] createNoodlePath(int[][] cells){
 void clearCells(int[][] cells, Point[] path){
 	for(int i=0; i< path.length; i++){
 		Point p = path[i];
-		cells[p.x][p.y] = 0;
+		cells[p.x][p.y] = CellType.EMPTY;
 	}
 }
 
