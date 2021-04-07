@@ -89,20 +89,6 @@ void markCellTypeWithPathAndIndex(Point[] path, int i) {
 	}
 }
 
-void markCellTypes(Point[] path) {
-
-	for(int i = 1; i < path.length; i++){
-		markCellTypeWithPathAndIndex(path, i);
-	}
-
-	print("[ ");
-	for(int j=0; j < path.length; j++){
-		
-		print(cells[path[j].x][path[j].y] + ", " );
-	}
-	println(" ]");
-}
-
 boolean addCrossAtCell(Point cell, String dir) {
 	int noodleNum = findNoodleWithCell(cell.x, cell.y);
 	if(noodleNum >= 0){

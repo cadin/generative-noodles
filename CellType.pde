@@ -9,8 +9,7 @@ static class CellType {
     static int CORNER_BR = 5;
     static int CORNER_BL = 6;
 
-    static int JOIN_V = 7;
-    static int JOIN_H = 8;
+    static int JOIN = 7;
 
     static int V_CROSSED = 9;
     static int H_CROSSED = 10;

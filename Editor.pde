@@ -14,7 +14,7 @@ class Editor {
 
 	Toggle twistControl,
 	       joinControl,
-	       curvesControl,
+	       overlapControl,
 		   randomizeEndsControl;
 	
 	boolean controlsVisible = false;
@@ -140,13 +140,13 @@ class Editor {
 			.setPaddingX(10)
 			;
 			
-		curvesControl = cp5.addToggle("Use Curves")
+		overlapControl = cp5.addToggle("Allow Overlaps")
 			.setPosition(250,200)
 			.setSize(20,20)
-			.setValue(useCurves)
+			.setValue(allowOverlap)
 			;
 		
-		curvesControl
+		overlapControl
 			.getCaptionLabel()
 			.align(ControlP5.RIGHT_OUTSIDE, ControlP5.CENTER)
 			.setPaddingX(10)
@@ -180,7 +180,7 @@ class Editor {
 		penSizeControl.setValue(penSizeMM);
 		twistControl.setValue(useTwists);
 		joinControl.setValue(useJoiners);
-		curvesControl.setValue(useCurves);
+		overlapControl.setValue(useCurves);
 		numNoodlesControl.setValue(numNoodles);
 		thicknessControl.setValue(noodleThicknessPct);
 		randomizeEndsControl.setValue(randomizeEnds);
@@ -199,7 +199,7 @@ class Editor {
 
 		useTwists = twistControl.getState();
 		useJoiners = joinControl.getState();
-		useCurves = curvesControl.getState();
+		allowOverlap = overlapControl.getState();
 
 		controlsVisible = false;
 		cp5.hide();
@@ -241,7 +241,7 @@ class Editor {
 
 			useTwists = twistControl.getState();
 			useJoiners = joinControl.getState();
-			useCurves = curvesControl.getState();
+			allowOverlap = overlapControl.getState();
 			numNoodles = int(numNoodlesControl.getValue());
 			noodleThicknessPct = thicknessControl.getValue();
 			randomizeEnds = randomizeEndsControl.getState();
