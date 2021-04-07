@@ -94,6 +94,7 @@ class ImageSaver {
 		obj.setFloat("marginInches", MARGIN_INCHES);
 		obj.setBoolean("useTwists", useTwists);
 		obj.setBoolean("useJoiners", useJoiners);
+		obj.setBoolean("allowOverlap", allowOverlap);
 		obj.setFloat("noodleThicknessPct", noodleThicknessPct);
 		obj.setInt("numNoodles", numNoodles);
 		obj.setJSONArray("graphics", graphicsArray);

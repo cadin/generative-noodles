@@ -209,7 +209,7 @@ class Editor {
 	void draw() {
 		fill(50, 150);
 		noStroke();
-		rect(50, 50, 350, 650, 8);
+		rect(50, 50, 400, 650, 8);
 		
 		if(controlsVisible && !cp5.isVisible()){
 			cp5.show();

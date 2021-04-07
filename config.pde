@@ -1,4 +1,13 @@
 // ### SELECT & LOAD CONFIG ###
+
+
+// TODO: 
+// - save & load maxLength setting
+// - add maxLength setting to Editor
+
+
+
+
 void selectConfigFile() {
 	selectInput("Load config file", "onConfigSelected", dataFile("config"));
 }
@@ -50,6 +59,9 @@ void parseConfigObject(JSONObject obj) {
 	}
 	if(!obj.isNull("useJoiners")){
 		useJoiners = obj.getBoolean("useJoiners");
+	}
+	if(!obj.isNull("allowOverlap")){
+		allowOverlap = obj.getBoolean("allowOverlap");
 	}
 	if(!obj.isNull("useCurves")){
 		useCurves = obj.getBoolean("useCurves");
