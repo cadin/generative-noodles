@@ -74,7 +74,8 @@ boolean shiftIsDown = false;
 
 void settings() {
 	
-	size(displayWidth, displayHeight - 45);
+	// size(displayWidth, displayHeight - 45);
+	size(1920, 1080);
 	// fullScreen();
 	if(USE_RETINA){
 		pixelDensity(displayDensity());
@@ -86,12 +87,15 @@ void settings() {
 void setup() {
 	editor = new Editor(this);
 	frameRate(12);
+	setupController();
 
 	loadSettings(SETTINGS_PATH);
 	loadConfigFile(configPath, "");
 
 	twist = loadShape("twist.svg");
 	twist.disableStyle();
+
+	
 	reset();
 }
 
@@ -171,7 +175,9 @@ void draw() {
 		if(showGrid){ drawGrid();}
 		
 		for(int i=0; i < noodles.length; i++){
-			noodles[i].draw(TILE_SIZE, noodleThicknessPct, useTwists);
+			if(noodles[i] != null){
+				noodles[i].draw(TILE_SIZE, noodleThicknessPct, useTwists);
+			}
 		}	
 		
 		if(imgSaver.state == SaveState.SAVING) { endRecord(); }
