@@ -1,4 +1,19 @@
-class XTButton {
+static class Utils {
+
+    static float roundToInterval(float val, float precision, int decimals) {
+        int integer = round(val * pow(10, decimals));
+        int intPrecision = round(precision * pow(10, decimals));
+
+        int intResult = round(integer / intPrecision) * intPrecision;
+        return (float) (intResult / Math.pow(10, decimals));
+    }
+
+    static int roundToInterval(int val, float precision) {
+        int intResult = round((val / precision) * precision);
+        return intResult;
+    }
+
+}class XTButton {
 
 	static final int MODE_MOMENTARY = 0;
 	static final int MODE_TOGGLE = 1;
@@ -87,6 +102,10 @@ class XTButtonGroup {
 	float value = 0;
 	float rangeMin = 0, rangeMax = 127;
 
+	float roundingMultiplier = 1;
+	int roundingDecimals = 0;
+	boolean roundValues = false;
+
 	XTFader() {}
 
 	void setRange(float min, float max) {
@@ -94,6 +113,20 @@ class XTButtonGroup {
 		rangeMax = max;
 
 		setRawValue(rawValue);
+	}
+
+	void setRoundingConstraints(float multiplier, int decimals) {
+		roundingMultiplier = multiplier;
+		roundingDecimals = decimals;
+		roundValues = true;
+	}
+
+	void setRoundingConstraints(int multiplier) {
+		this.setRoundingConstraints(multiplier, 0);
+	}
+
+	void clearRoundingConstraints() {
+		roundValues = false;
 	}
 
 	int getRawValue() {
@@ -108,6 +141,10 @@ class XTButtonGroup {
 		float oldValue = value;
 		rawValue = val;
 		value = map(val, 0, 127, rangeMin, rangeMax);
+
+		if(roundValues){
+			value = Utils.roundToInterval(value, roundingMultiplier, roundingDecimals);
+		}
 
 		faderDidChange(oldValue, this.value);
 	}
@@ -125,6 +162,11 @@ class XTKnob {
 	float rangeMin = 0, rangeMax = 127;
 	int number = 0;
 
+	float roundingMultiplier = 1;
+	int roundingDecimals = 0;
+	boolean roundValues = false; 
+
+
 	XTKnob(int id, float value, float rangeMin, float rangeMax) {
 		this.id = id;
 		this.rangeMin = rangeMin;
@@ -136,6 +178,20 @@ class XTKnob {
 	XTKnob(int id, int number) {
 		this.id = id;
 		this.number = number;
+	}
+
+	void setRoundingConstraints(float multiplier, int decimals) {
+		roundingMultiplier = multiplier;
+		roundingDecimals = decimals;
+		roundValues = true;
+	}
+
+	void setRoundingConstraints(int multiplier) {
+		this.setRoundingConstraints(multiplier, 0);
+	}
+
+	void clearRoundingConstraints() {
+		roundValues = false;
 	}
 
 	void setRange(float min, float max) {
@@ -157,6 +213,9 @@ class XTKnob {
 		float oldValue = value;
 		rawValue = val;
 		value = map(val, 0, 127, rangeMin, rangeMax);
+		if(roundValues){
+			value = Utils.roundToInterval(value, roundingMultiplier, roundingDecimals);
+		}
 
 		knobDidChange(this, oldValue, this.value);
 	}
@@ -267,7 +326,7 @@ public class XTouchMini {
 		return fader;
 	}
 
-	void setRangeForFader(int min, int max) {
+	void setRangeForFader(float min, float max) {
 		fader.setRange(min, max);
 	}
 
@@ -276,11 +335,11 @@ public class XTouchMini {
 		return _knobs[id-1];
 	}
 
-	void setRangeForKnob(int min, int max, int knobID) {
+	void setRangeForKnob(float min, float max, int knobID) {
 		setRangeForKnob(min, max, getKnob(knobID));
 	}
 
-	void setRangeForKnob(int min, int max, XTKnob knob) {
+	void setRangeForKnob(float min, float max, XTKnob knob) {
 		knob.setRange(min, max);
 	}
 
@@ -301,6 +360,33 @@ public class XTouchMini {
 		int val = knob.getRawValue(value);
 		midiBus.sendControllerChange(CHANNEL, knob.number, val);
 		knob.setValue(value);
+	}
+
+	void setRoundingConstraintsForKnob(float multiplier, int decimals, int knobID) {
+		XTKnob k = getKnob(knobID);
+		setRoundingConstraintsForKnob(multiplier, decimals, k);
+	}
+
+	void setRoundingConstraintsForKnob(float multiplier, int decimals, XTKnob knob) {
+		knob.setRoundingConstraints(multiplier, decimals);
+	}
+
+	void setRoundingConstraintsForKnob(int multiplier, int knobID) {
+		XTKnob k = getKnob(knobID);
+		setRoundingConstraintsForKnob(multiplier, k);
+	}
+
+	void setRoundingConstraintsForKnob(int multiplier, XTKnob knob) {
+		knob.setRoundingConstraints(multiplier, 0);
+	}
+
+	void clearRoundingConstraintsForKnob(int knobID){
+		XTKnob k = getKnob(knobID);
+		clearRoundingConstraintsForKnob(k);
+	}
+
+	void clearRoundingConstraintsForKnob(XTKnob knob){
+		knob.clearRoundingConstraints();
 	}
 
 	void resetKnob(int knobID){
