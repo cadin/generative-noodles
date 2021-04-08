@@ -186,10 +186,6 @@ class XTKnob {
 		roundValues = true;
 	}
 
-	void setRoundingConstraints(int multiplier) {
-		this.setRoundingConstraints(multiplier, 0);
-	}
-
 	void clearRoundingConstraints() {
 		roundValues = false;
 	}
@@ -212,9 +208,9 @@ class XTKnob {
 	void setRawValue(int val) {
 		float oldValue = value;
 		rawValue = val;
-		value = map(val, 0, 127, rangeMin, rangeMax);
+		this.value = map(val, 0, 127, rangeMin, rangeMax);
 		if(roundValues){
-			value = Utils.roundToInterval(value, roundingMultiplier, roundingDecimals);
+			this.value = Utils.roundToInterval(value, roundingMultiplier, roundingDecimals);
 		}
 
 		knobDidChange(this, oldValue, this.value);
