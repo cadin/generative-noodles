@@ -42,22 +42,27 @@ void setupController() {
     xTouch.setModeForButton(XTButton.MODE_MOMENTARY, ID.RESET);
 
     xTouch.setRangeForKnob(3, 200, ID.NOODLES);
-    xTouch.setRangeForKnob(1, 100, ID.THICKNESS);
-    xTouch.setRangeForKnob(10, 200, ID.PEN_SIZE);
+    xTouch.setRangeForKnob(0.1, 1, ID.THICKNESS);
+    xTouch.setRoundingConstraintsForKnob(0.01, 2, ID.THICKNESS);
+    xTouch.setRangeForKnob(0.1, 2.0, ID.PEN_SIZE);
+    xTouch.setRoundingConstraintsForKnob(0.05, 2, ID.PEN_SIZE);
     xTouch.setRangeForKnob(3, 400, ID.MIN_LEN);
     xTouch.setRangeForKnob(3, 400, ID.MAX_LEN);
 
     xTouch.setRangeForKnob(5, 24, ID.PAGEW);
+    xTouch.setRoundingConstraintsForKnob(0.125, 3, ID.PAGEW);
     xTouch.setRangeForKnob(5, 24, ID.PAGEH);
+    xTouch.setRoundingConstraintsForKnob(0.125, 3, ID.PAGEH);
     xTouch.setRangeForKnob(0, 5, ID.MARGIN);
+    xTouch.setRoundingConstraintsForKnob(0.125, 3, ID.MARGIN);
     xTouch.setRangeForKnob(1, 60, ID.COLS);
     xTouch.setRangeForKnob(1, 60, ID.ROWS);
 }
 
 void updateControllerValues() {
     xTouch.setValueForKnob(numNoodles, ID.NOODLES);
-    xTouch.setValueForKnob(int(noodleThicknessPct * 100), ID.THICKNESS);
-    xTouch.setValueForKnob(int(penSizeMM * 100), ID.PEN_SIZE);
+    xTouch.setValueForKnob(noodleThicknessPct, ID.THICKNESS);
+    xTouch.setValueForKnob(penSizeMM, ID.PEN_SIZE);
     xTouch.setValueForKnob(minLength, ID.MIN_LEN);
     xTouch.setValueForKnob(maxLength, ID.MAX_LEN);
     
@@ -136,12 +141,11 @@ void knobDidChange(XTKnob knob, float oldValue, float newValue) {
             numNoodles = int(newValue);
         break;
         case ID.THICKNESS:
-            noodleThicknessPct = newValue / 100;
+            noodleThicknessPct = newValue;
         break;
 
         case ID.PEN_SIZE:
-            float val = newValue / 100;
-            penSizeMM = val;
+            penSizeMM = newValue;
             strokeSize =  calculateStrokeSize();
         break;
         case ID.MIN_LEN:
@@ -188,13 +192,13 @@ void knobDidPress(XTKnob knob) {
 
     switch(knob.id){
         case ID.PEN_SIZE:
-            int val = 0;
+            float val = 0.15;
             if(penSizeMM < 0.9){
-                val = 100;
+                val = 1.0;
             } else if(penSizeMM < 1.9){
-                val = 200;
+                val = 2.0;
             } else {
-                val = 15;
+                val = 0.15;
             }
 
             xTouch.setValueForKnob(val, knob.id);
