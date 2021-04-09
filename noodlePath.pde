@@ -110,14 +110,14 @@ Point findStartPoint(int[][] cells) {
 	return new Point(posX, posY);
 }
 
-ArrayList<String> findAvailableDirections(Point prev) {
+ArrayList<String> findAvailableDirections(Point prev, boolean isLastCell) {
 	int cols = cells.length;
 	int rows = cells[0].length;
 
-	boolean up = prev.y > 0 && (cellIsEmpty(prev.x, prev.y - 1) || canCrossCell(prev, "up"));
-	boolean down = prev.y < rows-1 && (cellIsEmpty(prev.x, prev.y + 1) || canCrossCell(prev, "down"));
-	boolean left = prev.x > 0 && (cellIsEmpty(prev.x - 1, prev.y) || canCrossCell(prev, "left"));
-	boolean right = prev.x < cols-1 && (cellIsEmpty(prev.x + 1, prev.y) || canCrossCell(prev, "right" ));
+	boolean up = prev.y > 0 && (cellIsEmpty(prev.x, prev.y - 1) || (!isLastCell && canCrossCell(prev, "up")));
+	boolean down = prev.y < rows-1 && (cellIsEmpty(prev.x, prev.y + 1) || (!isLastCell && canCrossCell(prev, "down")));
+	boolean left = prev.x > 0 && (cellIsEmpty(prev.x - 1, prev.y) || (!isLastCell && canCrossCell(prev, "left")));
+	boolean right = prev.x < cols-1 && (cellIsEmpty(prev.x + 1, prev.y) || (!isLastCell && canCrossCell(prev, "right" )));
 	
 	ArrayList<String> avail = new ArrayList<String>();
 	if(up) avail.add("up");
@@ -151,7 +151,7 @@ Point[] createNoodlePath(int[][] cells){
 	for(int i=1; i < len; i++){
 		
 		Point prev = path[count-1];
-		ArrayList<String> avail = findAvailableDirections(prev);
+		ArrayList<String> avail = findAvailableDirections(prev, i == len -1);
 		
 		if(avail.size() > 0){
 			int index = floor(random(0, avail.size()));
