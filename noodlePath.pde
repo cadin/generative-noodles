@@ -222,8 +222,9 @@ boolean cellIsEndOfPath(int x, int y, Point[] path){
 }
 
 int getIndexOfCell(int x, int y, Point[] path){
+	if(path == null) return -1;
 	for(int i = 0; i < path.length; i++){
-		if(path[i].x == x && path[i].y == y){
+		if(path[i] != null && path[i].x == x && path[i].y == y){
 			return i;
 		}
 	}

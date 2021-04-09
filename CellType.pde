@@ -16,4 +16,5 @@ static class CellType {
     static int H_CROSSED = 10;
 
     static int OCCUPIED = 11;
+    static int BLACKOUT = 12;
 }

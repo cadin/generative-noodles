@@ -201,7 +201,7 @@ int[][] copyBlackoutCells() {
 		cells[col] = new int[GRID_H];
 		for(int row = 0; row < GRID_H; row++){
 			if(blackoutCells[col][row] > 0){
-				cells[col][row] = blackoutCells[col][row];
+				cells[col][row] = CellType.BLACKOUT;
 			}
 		}
 	}
@@ -361,7 +361,7 @@ void mouseDragged() {
 		Point cell = getCellForMouse(mouseX, mouseY);
 		if(cell.x >= 0 && cell.y >= 0 && cell.x < blackoutCells.length && cell.y < blackoutCells[0].length){
 			if(isDrawing){
-				blackoutCells[cell.x][cell.y] = 1;
+				blackoutCells[cell.x][cell.y] = CellType.BLACKOUT;
 			} else {
 				blackoutCells[cell.x][cell.y] = 0;
 			}
@@ -380,7 +380,7 @@ void mousePressed() {
 				blackoutCells[cell.x][cell.y] = 0;
 			} else {
 				isDrawing = true;
-				blackoutCells[cell.x][cell.y] = 1;
+				blackoutCells[cell.x][cell.y] = CellType.BLACKOUT;
 			}
 		} 
 	} else if(PATH_EDIT_MODE){
