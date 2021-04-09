@@ -83,14 +83,12 @@ void settings() {
 	if(USE_RETINA){
 		pixelDensity(displayDensity());
 	}
-	
-	println(CellType.EMPTY);
 }
 
 void setup() {
 	editor = new Editor(this);
 	frameRate(12);
-	setupController();
+	// setupController();
 	menloFont = createFont("Menlo", 12);
 
 	loadSettings(SETTINGS_PATH);
@@ -99,13 +97,13 @@ void setup() {
 	twist = loadShape("twist.svg");
 	twist.disableStyle();
 
-	
 	reset();
 }
 
 
 float calculateStrokeSize() {
-	return (penSizeMM * 0.03937008) * PRINT_RESOLUTION * SCREEN_SCALE;
+	float size = (penSizeMM * 0.03937008) * PRINT_RESOLUTION * SCREEN_SCALE; 
+	return size;
 }
 
 void calculateScreenScale() {
@@ -220,6 +218,7 @@ void updateKeyDimensions() {
 	updateBlackoutCells();
 	calculateScreenScale();
 	calculateTileSize();
+	strokeSize = calculateStrokeSize();
 }
 
 color getColorForCellType(int cellType) {

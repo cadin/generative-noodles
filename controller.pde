@@ -61,6 +61,7 @@ void setupController() {
 }
 
 void updateControllerValues() {
+    if(xTouch == null) return;
     xTouch.setValueForKnob(numNoodles, ID.NOODLES);
     xTouch.setValueForKnob(noodleThicknessPct, ID.THICKNESS);
     xTouch.setValueForKnob(penSizeMM, ID.PEN_SIZE);

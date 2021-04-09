@@ -22,6 +22,7 @@ void onConfigSelected(File config) {
 		loadConfigFile(relativePath, fileName);
 		configPath = relativePath;
 		updateSettingsFile();
+		updateControllerValues();
 		reset();
 	}
 }
@@ -125,6 +126,7 @@ void loadConfigFile(String filePath, String fileName) {
 	// numLayers = layerData.size();
 	// createLayersWithData(layerData, loadImagePositions);
 
+	updateKeyDimensions();
 	updateControllerValues();
 }
 
