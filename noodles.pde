@@ -60,6 +60,7 @@ GraphicSet[] graphicSets;
 boolean randomizeEnds = false;
 boolean allowOverlap = true;
 boolean showInfoPanel = false;
+boolean useRoughLines = false;
 
 int minLength = 200;
 int maxLength = 200;
@@ -264,7 +265,7 @@ void reset() {
 				tail = graphicSets[tailIndex].head;
 			}
 			
-			noodles[noodleCount] = new Noodle(p, TILE_SIZE, head, tail, gfx.joiners, twist);
+			noodles[noodleCount] = new Noodle(p, TILE_SIZE, head, tail, gfx.joiners, twist, millis());
 			noodleCount++;
 		}
 	}

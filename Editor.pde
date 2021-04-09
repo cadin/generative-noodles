@@ -17,7 +17,8 @@ class Editor {
 	Toggle twistControl,
 	       joinControl,
 	       overlapControl,
-		   randomizeEndsControl;
+		   randomizeEndsControl,
+		   roughLinesControl;
 	
 	boolean controlsVisible = false;
 		
@@ -189,6 +190,17 @@ class Editor {
 			.setPaddingX(10)
 			;
 		
+		roughLinesControl = cp5.addToggle("Rough Lines")
+			.setPosition(250,300)
+			.setSize(20,20)
+			.setValue(useRoughLines)
+			;
+		
+		roughLinesControl
+			.getCaptionLabel()
+			.align(ControlP5.RIGHT_OUTSIDE, ControlP5.CENTER)
+			.setPaddingX(10)
+			;
 		
 		
 		hide();
@@ -209,6 +221,7 @@ class Editor {
 		numNoodlesControl.setValue(numNoodles);
 		thicknessControl.setValue(noodleThicknessPct);
 		randomizeEndsControl.setValue(randomizeEnds);
+		roughLinesControl.setValue(useRoughLines);
 	}
 	
 	
@@ -228,6 +241,7 @@ class Editor {
 		useTwists = twistControl.getState();
 		useJoiners = joinControl.getState();
 		allowOverlap = overlapControl.getState();
+		useRoughLines = roughLinesControl.getState();
 
 		controlsVisible = false;
 		cp5.hide();
@@ -274,6 +288,7 @@ class Editor {
 			numNoodles = int(numNoodlesControl.getValue());
 			noodleThicknessPct = thicknessControl.getValue();
 			randomizeEnds = randomizeEndsControl.getState();
+			useRoughLines = roughLinesControl.getState();
 
 
 			if(updateSizes){

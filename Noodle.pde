@@ -6,6 +6,8 @@ class Noodle {
 	int tileSize = 0;
 	
 	int headWidth = 100;
+
+	int seed = 0;
 	
 	Point[] path;
 	
@@ -21,7 +23,7 @@ class Noodle {
 		margin = (tileSize - thickness) / 2;
 	}
 
-	Noodle(Point[] p, int tileW, PShape h, PShape t, PShape[] j, PShape tw) {
+	Noodle(Point[] p, int tileW, PShape h, PShape t, PShape[] j, PShape tw, int rs) {
 		calculateSizes(tileW, thicknessPct);
 		head = h;
 		tail = t;
@@ -31,6 +33,8 @@ class Noodle {
 		joiners = j;
 		twist = tw;
 		path = p;
+
+		seed = rs;
 	}
 
 	
@@ -108,7 +112,8 @@ class Noodle {
 	}
 	
 	void drawNoodle(boolean useTwists) {
-	
+		randomSeed(seed);
+
 		for(int i = 0; i < path.length; i++){
 			Point p = path[i];
 			
@@ -238,9 +243,13 @@ class Noodle {
 	}
 	
 	void vertical() {
-		line(margin, 0, margin, tileSize);
-		line(tileSize - margin, 0, tileSize - margin, tileSize);
-		
+		if(useRoughLines){
+			roughLineV(margin, 0, tileSize);
+			roughLineV(tileSize - margin, 0, tileSize);
+		} else {
+			line(margin, 0, margin, tileSize);
+			line(tileSize - margin, 0, tileSize - margin, tileSize);
+		}		
 	}
 	
 	// void verticalTwist() {
@@ -252,8 +261,13 @@ class Noodle {
 	
 	
 	void horizontal() {
-		line(0, margin, tileSize, margin);
-		line(0, tileSize - margin, tileSize, tileSize - margin);
+		if(useRoughLines){
+			roughLineH(0, margin, tileSize);
+			roughLineH(0, tileSize - margin, tileSize);
+		} else {
+			line(0, margin, tileSize, margin);
+			line(0, tileSize - margin, tileSize, tileSize - margin);
+		}
 	}
 	
 // 	void horizontalTwist() {
