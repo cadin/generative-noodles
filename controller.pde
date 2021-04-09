@@ -51,9 +51,9 @@ void setupController() {
     xTouch.setRangeForKnob(3, 400, ID.MAX_LEN);
 
     xTouch.setRangeForKnob(5, 24, ID.PAGEW);
-    xTouch.setRoundingConstraintsForKnob(0.125, 3, ID.PAGEW);
+    xTouch.setRoundingConstraintsForKnob(0.25, 3, ID.PAGEW);
     xTouch.setRangeForKnob(5, 24, ID.PAGEH);
-    xTouch.setRoundingConstraintsForKnob(0.125, 3, ID.PAGEH);
+    xTouch.setRoundingConstraintsForKnob(0.25, 3, ID.PAGEH);
     xTouch.setRangeForKnob(0, 5, ID.MARGIN);
     xTouch.setRoundingConstraintsForKnob(0.125, 3, ID.MARGIN);
     xTouch.setRangeForKnob(1, 60, ID.COLS);
@@ -126,11 +126,13 @@ void buttonDidChange(XTButton button, boolean value) {
         break;
 
         case ID.LOAD:
-            selectConfigFile();
+            if(value) selectConfigFile();
         break;
         case ID.SAVE:
-            fileNameToSave = getFileName();
-			imgSaver.begin(fileNameToSave);
+            if(value){
+                fileNameToSave = getFileName();
+	    		imgSaver.begin(fileNameToSave);
+            }
         break;
     }
     editor.update();
