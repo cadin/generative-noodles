@@ -8,9 +8,10 @@ static final int RANDOMIZE_ENDS = 4;
 
 static final int RESET = 8;
 
-static final int GRID = 9;
-static final int BLACKOUT = 10;
-static final int PATH_EDIT = 11;
+static final int INFO = 9;
+static final int GRID = 10;
+static final int BLACKOUT = 11;
+static final int PATH_EDIT = 12;
 
 static final int LOAD = 15;
 static final int SAVE = 16;
@@ -36,7 +37,7 @@ void setupController() {
 
     xTouch = new XTouchMini();
 
-    for(int i = 1; i <= 11; i++){
+    for(int i = 1; i <= 12; i++){
         xTouch.setModeForButton(XTButton.MODE_TOGGLE, i);
     }
     xTouch.setModeForButton(XTButton.MODE_MOMENTARY, ID.RESET);
@@ -99,6 +100,9 @@ void buttonDidChange(XTButton button, boolean value) {
             if(value) reset();
         break;
 
+        case ID.INFO:
+            showInfoPanel = value;
+        break;
         case ID.GRID:
             showGrid = value;
             if(!showGrid){
@@ -129,7 +133,7 @@ void buttonDidChange(XTButton button, boolean value) {
 			imgSaver.begin(fileNameToSave);
         break;
     }
-
+    editor.update();
 }
 
 
@@ -181,9 +185,9 @@ void knobDidChange(XTKnob knob, float oldValue, float newValue) {
             GRID_H = int(newValue);
             updateKeyDimensions();
         break;
-
-
     }
+
+    editor.update();
 
 }
 
@@ -204,6 +208,7 @@ void knobDidPress(XTKnob knob) {
             xTouch.setValueForKnob(val, knob.id);
         break;
     }
+    editor.update();
 }
 
 void knobDidRelease(XTKnob knob) {

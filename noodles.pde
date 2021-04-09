@@ -59,6 +59,7 @@ float noodleThicknessPct = 0.5;
 GraphicSet[] graphicSets;
 boolean randomizeEnds = false;
 boolean allowOverlap = true;
+boolean showInfoPanel = false;
 
 int minLength = 200;
 int maxLength = 200;
@@ -68,9 +69,11 @@ String fileNameToSave = "";
 
 Editor editor;
 
+
 boolean shiftIsDown = false;
 
 
+PFont menloFont;
 
 void settings() {
 	
@@ -88,6 +91,7 @@ void setup() {
 	editor = new Editor(this);
 	frameRate(12);
 	setupController();
+	menloFont = createFont("Menlo", 12);
 
 	loadSettings(SETTINGS_PATH);
 	loadConfigFile(configPath, "");
@@ -156,17 +160,22 @@ void drawBG() {
 	background(100);
 	if(imgSaver.isBusy()){ drawSaveIndicator();}
 	drawPaperBG();
-	translate(canvasX, canvasY);
+	
 }
 
 void draw() {
 	
 	pushMatrix();
 		drawBG();
+		if(showInfoPanel) drawInfoPanel();
+		
+		translate(canvasX, canvasY);
 		if(imgSaver.state == SaveState.SAVING){
 			beginRecord(SVG, "output/" + fileNameToSave + ".svg");
 			rect(0, 0, canvasW, canvasH);
 		}
+
+		
 
 		// float matW = MAT_W_INCHES * PRINT_RESOLUTION * SCREEN_SCALE;
 		// float matH = MAT_H_INCHES * PRINT_RESOLUTION * SCREEN_SCALE;

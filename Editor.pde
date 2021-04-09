@@ -193,10 +193,8 @@ class Editor {
 		
 		hide();
 	}
-	
-	
-	void show() {
-		println("show");
+
+	void update() {
 		widthControl.setValue(PRINT_W_INCHES);
 		heightControl.setValue(PRINT_H_INCHES);
 		marginControl.setValue(MARGIN_INCHES);
@@ -211,12 +209,15 @@ class Editor {
 		numNoodlesControl.setValue(numNoodles);
 		thicknessControl.setValue(noodleThicknessPct);
 		randomizeEndsControl.setValue(randomizeEnds);
-		
+	}
+	
+	
+	void show() {
+		update();
 		controlsVisible = true;
 	}
 	
 	void hide() {
-		println("hide");
 		PRINT_W_INCHES = widthControl.getValue();
 		PRINT_H_INCHES = heightControl.getValue();
 		GRID_W = int(colsControl.getValue());
