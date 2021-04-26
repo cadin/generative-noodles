@@ -18,7 +18,8 @@ class Editor {
 	       joinControl,
 	       overlapControl,
 		   randomizeEndsControl,
-		   roughLinesControl;
+		   roughLinesControl,
+		   useFillsControl;
 	
 	boolean controlsVisible = false;
 		
@@ -134,7 +135,7 @@ class Editor {
 		penSizeControl = cp5.addNumberbox("Pen Size")
 			.setPosition(100,625)
 			.setSize(100,20)
-			.setRange(0.10,2)
+			.setRange(0.10,5)
 			.setMultiplier(0.05) // set the sensitifity of the numberbox
 			.setDirection(Controller.HORIZONTAL) // change the control direction to left/right
 			.setValue(penSizeMM)
@@ -201,6 +202,18 @@ class Editor {
 			.align(ControlP5.RIGHT_OUTSIDE, ControlP5.CENTER)
 			.setPaddingX(10)
 			;
+			
+		useFillsControl = cp5.addToggle("Use Fills")
+			.setPosition(250,350)
+			.setSize(20,20)
+			.setValue(useRoughLines)
+			;
+		
+		useFillsControl
+			.getCaptionLabel()
+			.align(ControlP5.RIGHT_OUTSIDE, ControlP5.CENTER)
+			.setPaddingX(10)
+			;
 		
 		
 		hide();
@@ -222,6 +235,7 @@ class Editor {
 		thicknessControl.setValue(noodleThicknessPct);
 		randomizeEndsControl.setValue(randomizeEnds);
 		roughLinesControl.setValue(useRoughLines);
+		useFillsControl.setValue(useFills);
 	}
 	
 	
@@ -242,6 +256,7 @@ class Editor {
 		useJoiners = joinControl.getState();
 		allowOverlap = overlapControl.getState();
 		useRoughLines = roughLinesControl.getState();
+		useFills = useFillsControl.getState();
 
 		controlsVisible = false;
 		cp5.hide();
@@ -289,7 +304,7 @@ class Editor {
 			noodleThicknessPct = thicknessControl.getValue();
 			randomizeEnds = randomizeEndsControl.getState();
 			useRoughLines = roughLinesControl.getState();
-
+			useFills = useFillsControl.getState();
 
 			if(updateSizes){
 				updateKeyDimensions();

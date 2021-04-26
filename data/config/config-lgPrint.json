@@ -1,0 +1,15 @@
+{
+    "printResolution": 300,
+    "printWidthInches": 36,
+    "printHeightInches": 24,
+    "gridWidth": 5,
+    "gridHeight": 4,
+    "marginInches": 2.5,
+    "useTwists": false,
+    "useJoiners": true,
+    "useCurves": true,
+    "penSizeMM": 5,
+    "noodleThicknessPct": 0.9,
+    "numNoodles": 90,
+    "graphics": [{ "head": "hand.svg" }, {"head": "hand2.svg"}]
+}
