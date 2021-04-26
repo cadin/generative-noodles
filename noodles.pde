@@ -44,6 +44,7 @@ int numNoodles = 3;
 Noodle[] noodles;
 
 PShape twist;
+PShape twistFill;
 
 Point[][] paths;
 int[][] cells;
@@ -61,6 +62,7 @@ boolean randomizeEnds = false;
 boolean allowOverlap = true;
 boolean showInfoPanel = false;
 boolean useRoughLines = false;
+boolean useFills = true;
 
 int minLength = 200;
 int maxLength = 200;
@@ -97,7 +99,10 @@ void setup() {
 
 	twist = loadShape("twist.svg");
 	twist.disableStyle();
-
+	twistFill = loadShape("twistFill.svg");
+	twistFill.disableStyle();
+	
+	colorMode(HSB, 360, 100, 100);
 	reset();
 }
 
@@ -163,6 +168,7 @@ void drawBG() {
 }
 
 void draw() {
+	colorMode(RGB, 255,255,255);
 	
 	pushMatrix();
 		drawBG();
@@ -182,11 +188,13 @@ void draw() {
 		translate(PRINT_X, PRINT_Y);
 		if(showGrid){ drawGrid();}
 		
+		colorMode(HSB, 360, 100, 100);
 		for(int i=0; i < noodles.length; i++){
 			if(noodles[i] != null){
 				noodles[i].draw(TILE_SIZE, noodleThicknessPct, useTwists);
 			}
 		}	
+		
 		
 		if(imgSaver.state == SaveState.SAVING) { endRecord(); }
 		imgSaver.update();
@@ -250,6 +258,10 @@ void reset() {
 	cells = copyBlackoutCells();
 	noodles = new Noodle[numNoodles];
 	
+	int hueRange = 200;//floor(random(0, 310));
+	// int sat = floor(random(60, 80));
+	// int brt = floor(random(80, 100));
+	
 	int noodleCount = 0;
 	for(int i=0; i < numNoodles; i++){
 		Point[] p = createNoodlePath(cells);
@@ -265,7 +277,13 @@ void reset() {
 				tail = graphicSets[tailIndex].head;
 			}
 			
-			noodles[noodleCount] = new Noodle(p, TILE_SIZE, head, tail, gfx.joiners, twist, millis());
+			
+			int hue = floor(random(hueRange, hueRange + 50));
+			// int hue = (hueRange + noodleCount * 3) % 360;
+			int sat = 70; //floor(random(60, 80));
+			int brt = 90; //floor(random(80, 100));
+			color fillColor = color(hue, sat, brt);
+			noodles[noodleCount] = new Noodle(p, TILE_SIZE, head, tail, gfx.joiners, twist, twistFill, fillColor, millis());
 			noodleCount++;
 		}
 	}
