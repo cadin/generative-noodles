@@ -6,6 +6,9 @@ class ImageSaver {
 	SaveState state = SaveState.NONE;
 	String filenameToSave;
 
+	float printW, printH;
+	int canvasW, canvasH;
+
 	ImageSaver() {
 		
 	}
@@ -21,7 +24,7 @@ class ImageSaver {
 			break;
 			case SAVING:
 				saveImageData(fileNameToSave);
-				resizeSVG(fileNameToSave, canvasW, canvasH);
+				resizeSVG(fileNameToSave, printW, printH, canvasW, canvasH);
 				state = SaveState.COMPLETE;
 			break;
 			case RENDERING:
@@ -41,9 +44,15 @@ class ImageSaver {
 		       state == SaveState.RENDERING;
 	}
 	
-	void begin(String filename) {
+	void begin(float _printW, float _printH, int _canvasW, int _canvasH, String filename) {
 		filenameToSave = filename;
 		state = SaveState.BEGAN;
+
+		printW = _printW;
+		printH = _printH;
+
+		canvasW = _canvasW;
+		canvasH = _canvasH;
 	}
 
 	JSONArray getBlackoutCellArray() {
@@ -106,30 +115,24 @@ class ImageSaver {
 		println("done.");
 	}
 	
-	void resizeSVG(String filename, int w, int h){
+	void resizeSVG(String filename, float wInches, float hInches, int wPx, int hPx){
+		print("- resizing SVG... ");
 		String[] lines = loadStrings("output/" + filename + ".svg");
-		String pattern = "width=\"([0-9]+)\" height=\"([0-9]+)\"";
-		
-		int dd = displayDensity();
-		if(USE_RETINA){
-			w *= dd;
-			h *= dd;
-		}
 		
 		for(int i=0; i < lines.length; i++){
 			String l = lines[i];
 			if(l.length() > 4 && l.substring(0, 4).equals("<svg")){
-				println("found SVG tag");
+				print(" found SVG tag... ");
 				Pattern p = Pattern.compile("width=\"([0-9]+)\"");
 		        Matcher m = p.matcher(l);
-		        l = m.replaceAll("width=\"" + w + "\"");
+		        l = m.replaceAll("width=\"" + wInches + "in\"");
 		        
 		        Pattern p2 = Pattern.compile("height=\"([0-9]+)\"");
 		        Matcher m2 = p2.matcher(l);
-		        lines[i] = m2.replaceAll("height=\"" + h + "\"");
+		        lines[i] = m2.replaceAll("height=\"" + hInches + "in\" viewBox=\"0 0 " + wPx + " " + hPx + "\"");
 			}
 		}
-		
 		saveStrings("output/" + filename + ".svg", lines);
+		println("done!");
 	}
 }

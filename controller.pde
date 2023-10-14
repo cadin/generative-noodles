@@ -130,10 +130,10 @@ void buttonDidChange(XTButton button, boolean value) {
             if(value) selectConfigFile();
         break;
         case ID.SAVE:
-            if(value){
-                fileNameToSave = getFileName();
-	    		imgSaver.begin(fileNameToSave);
-            }
+            // if(value){
+            //     fileNameToSave = getFileName();
+	    	// 	imgSaver.begin(fileNameToSave);
+            // }
         break;
     }
     editor.update();

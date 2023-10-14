@@ -151,6 +151,7 @@ void calculateTileSize() {
 	PRINT_X =  (canvasW - (TILE_SIZE * GRID_W)) / 2;
 	PRINT_Y = (canvasH - (TILE_SIZE * GRID_H)) / 2;
 		
+	println(marginPx, printAreaW, printAreaH, TILE_SIZE, PRINT_X, PRINT_Y);
 }
 
 void drawPaperBG() {
@@ -177,7 +178,7 @@ void draw() {
 		translate(canvasX, canvasY);
 		if(imgSaver.state == SaveState.SAVING){
 			beginRecord(SVG, "output/" + fileNameToSave + ".svg");
-			rect(0, 0, canvasW, canvasH);
+			// rect(0, 0, canvasW, canvasH);
 		}
 
 		
@@ -327,7 +328,14 @@ void keyPressed() {
 	switch(key) {
 		case 's' :
 			fileNameToSave = getFileName();
-			imgSaver.begin(fileNameToSave);
+			int _plotW = int(PRINT_W_INCHES * PRINT_RESOLUTION * SCREEN_SCALE);
+			int _plotH = int(PRINT_H_INCHES * PRINT_RESOLUTION * SCREEN_SCALE);
+			if(USE_RETINA){
+				_plotW = _plotW * 2;
+				_plotH = _plotH * 2;
+			}
+
+			imgSaver.begin(PRINT_W_INCHES, PRINT_H_INCHES, _plotW, _plotH, fileNameToSave);
 		break;
 		case 'g':
 			showGrid = !showGrid;
