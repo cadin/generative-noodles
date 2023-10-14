@@ -21,7 +21,18 @@ void processMaskData() {
     mask = createGraphics(GRID_W, GRID_H);
     mask.beginDraw();
     mask.background(0);
-    mask.image(maskImage, 0, 0, GRID_W, GRID_H);
+
+    // scale and center
+    float scale = float(GRID_W) / float(maskImage.width);
+    if(scale * maskImage.height > GRID_H) {
+        scale = float(GRID_H) / float(maskImage.height);
+    }
+    float w = maskImage.width * scale;
+    float h = maskImage.height * scale;
+    float xPos = (GRID_W - w) / 2;
+    float yPos = (GRID_H - h) / 2;
+
+    mask.image(maskImage, xPos, yPos, w, h);
     mask.endDraw();
 
     mask.loadPixels();

@@ -383,7 +383,7 @@ void keyPressed() {
 			importMaskImage();
 			break;
 		case 'I' :
-			if(maskImage){
+			if(maskImage != null){
 				processMaskData();
 			} else {
 				importMaskImage();
