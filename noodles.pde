@@ -379,6 +379,16 @@ void keyPressed() {
 		case 'c' :
 			CELLTYPE_MODE = !CELLTYPE_MODE;
 			break;
+		case 'i' :
+			importMaskImage();
+			break;
+		case 'I' :
+			if(maskImage){
+				processMaskData();
+			} else {
+				importMaskImage();
+			}
+			break;
 	}
 }
 
@@ -469,6 +479,10 @@ void drawGrid() {
 		}
 	}
 	popMatrix();
+
+	if(mask != null){
+		image(mask, 0, 0);
+	}
 }
 
 String getFileName() {
