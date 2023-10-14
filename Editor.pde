@@ -68,7 +68,7 @@ class Editor {
 		colsControl = cp5.addNumberbox("Columns")
 			.setPosition(100,275)
 			.setSize(100,20)
-			.setRange(1,200)
+			.setRange(1,400)
 			.setMultiplier(1) // set the sensitifity of the numberbox
 			.setDirection(Controller.HORIZONTAL) // change the control direction to left/right
 			.setValue(GRID_W)
@@ -79,7 +79,7 @@ class Editor {
 		rowsControl = cp5.addNumberbox("Rows")
 			.setPosition(100,325)
 			.setSize(100,20)
-			.setRange(1,200)
+			.setRange(1,400)
 			.setMultiplier(1) // set the sensitifity of the numberbox
 			.setDirection(Controller.HORIZONTAL) // change the control direction to left/right
 			.setValue(GRID_H)
@@ -91,7 +91,7 @@ class Editor {
 		numNoodlesControl = cp5.addNumberbox("Noodles")
 			.setPosition(100,400)
 			.setSize(100,20)
-			.setRange(1,500)
+			.setRange(1,800)
 			.setMultiplier(1) // set the sensitifity of the numberbox
 			.setDirection(Controller.HORIZONTAL) // change the control direction to left/right
 			.setValue(penSizeMM)

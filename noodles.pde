@@ -150,8 +150,6 @@ void calculateTileSize() {
 	
 	PRINT_X =  (canvasW - (TILE_SIZE * GRID_W)) / 2;
 	PRINT_Y = (canvasH - (TILE_SIZE * GRID_H)) / 2;
-		
-	println(marginPx, printAreaW, printAreaH, TILE_SIZE, PRINT_X, PRINT_Y);
 }
 
 void drawPaperBG() {
@@ -459,10 +457,12 @@ boolean pathContainsCell(Point[] path, int col, int row) {
 	return false;
 }
 
-void drawGrid() {
+void drawCellTypes() {
 	pushMatrix();
-	stroke(200);
 	noFill();
+	// noStroke();
+
+	stroke(200);
 	strokeWeight(1);
 	for(int row = 0; row < GRID_H; row++){
 		for(int col = 0; col < GRID_W; col++){
@@ -472,17 +472,43 @@ void drawGrid() {
 				fill(0, 255, 0, 25);
 			} else if(CELLTYPE_MODE){
 				fill(getColorForCellType(cells[col][row]));
-			}else {
+			} else {
 				noFill();
 			}
 			rect(col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE);
 		}
 	}
 	popMatrix();
-
-	if(mask != null){
-		image(mask, 0, 0);
+}
+void drawGridLines() {
+	pushMatrix();
+	stroke(200);
+	strokeWeight(1);
+	for(int row = 0; row <= GRID_H; row++){
+		line(0, row * TILE_SIZE, GRID_W * TILE_SIZE, row * TILE_SIZE);
 	}
+
+	for(int col = 0; col <= GRID_W; col++){
+		line(col * TILE_SIZE, 0, col * TILE_SIZE, GRID_H * TILE_SIZE);
+	}
+	popMatrix();
+}
+
+void drawGrid() {
+
+	if(BLACKOUT_MODE || PATH_EDIT_MODE || CELLTYPE_MODE){
+		if(imgSaver.state != SaveState.SAVING){
+			drawCellTypes();
+		}
+	} 
+	
+	drawGridLines();
+
+
+
+	// if(mask != null){
+	// 	image(mask, 0, 0);
+	// }
 }
 
 String getFileName() {
