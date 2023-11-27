@@ -2,8 +2,8 @@ import controlP5.*;
 import processing.svg.*;
 
 Boolean USE_RETINA = true;
-String SETTINGS_PATH = "config/settings.json";
-String configPath = "config/config.json";
+String SETTINGS_PATH = "settings.json";
+String configPath = "config.json";
 
 float MAX_SCREEN_SCALE = 0.182 * 2; // % - (0.2456 == macbook 1:1) (0.182 == LG Screen)
 float SCREEN_SCALE = 0.182 * 2; 
@@ -177,14 +177,8 @@ void draw() {
 		translate(canvasX, canvasY);
 		if(imgSaver.state == SaveState.SAVING){
 			beginRecord(SVG, "output/" + fileNameToSave + ".svg");
-			// rect(0, 0, canvasW, canvasH);
 		}
 
-		
-
-		// float matW = MAT_W_INCHES * PRINT_RESOLUTION * SCREEN_SCALE;
-		// float matH = MAT_H_INCHES * PRINT_RESOLUTION * SCREEN_SCALE;
-		// rect((canvasW - matW) / 2, (canvasH - matH) / 2, matW, matH);
 		translate(PRINT_X, PRINT_Y);
 		if(showGrid){ drawGrid();}
 		
@@ -355,7 +349,6 @@ void keyPressed() {
 				editor.show();
 			} else {
 				editor.hide();
-				
 				// reset();
 			}
 		break;
@@ -461,8 +454,6 @@ boolean pathContainsCell(Point[] path, int col, int row) {
 void drawCellTypes() {
 	pushMatrix();
 	noFill();
-	// noStroke();
-
 	stroke(200);
 	strokeWeight(1);
 	for(int row = 0; row < GRID_H; row++){
@@ -504,8 +495,6 @@ void drawGrid() {
 	} 
 	
 	drawGridLines();
-
-
 
 	// if(mask != null){
 	// 	image(mask, 0, 0);
