@@ -152,8 +152,9 @@ void calculateTileSize() {
 	PRINT_Y = (canvasH - (TILE_SIZE * GRID_H)) / 2;
 }
 
+color paperColor = color(255);
 void drawPaperBG() {
-	fill(255);
+	fill(paperColor);
 	stroke(80);
 	strokeWeight(1);
 	rect(canvasX, canvasY, canvasW, canvasH);

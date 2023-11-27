@@ -257,25 +257,25 @@ class Noodle {
 	
 	void cornerTL(boolean isFill) {
 		arc(tileSize, tileSize, (thickness + margin)*2, (thickness + margin)*2, PI, PI + HALF_PI);
-		if(isFill) fill(0, 0, 100);;
+		if(isFill) fill(paperColor);
 		arc(tileSize, tileSize, margin * 2, margin * 2, PI, PI + HALF_PI);
 	}
 	
 	void cornerTR(boolean isFill) {
 		arc(0, tileSize, (thickness + margin)*2 , (thickness + margin)*2,-HALF_PI, 0);
-		if(isFill) fill(0, 0, 100);;
+		if(isFill) fill(paperColor);
 		arc(0, tileSize, margin * 2, margin *2, -HALF_PI, 0);
 	}
 	
 	void cornerBR(boolean isFill) {
 		arc(0, 0, (thickness + margin)*2, (thickness + margin)*2, 0, HALF_PI);
-		if(isFill) fill(0, 0, 100);;
+		if(isFill) fill(paperColor);
 		arc(0, 0, margin * 2, margin * 2, 0, HALF_PI);
 	}
 	
 	void cornerBL(boolean isFill) {
 		arc(tileSize, 0, (thickness + margin)*2, (thickness + margin)*2, HALF_PI, PI);
-		if(isFill) fill(0, 0, 100);;
+		if(isFill) fill(paperColor);
 		arc(tileSize, 0, margin * 2, margin * 2, HALF_PI, PI);
 		
 	}
