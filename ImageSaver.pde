@@ -97,7 +97,6 @@ class ImageSaver {
 		obj.setJSONArray("blackoutCells", cellArray);
 		obj.setFloat("printWidthInches", PRINT_W_INCHES);
 		obj.setFloat("printHeightInches", PRINT_H_INCHES);
-		obj.setInt("printResolution", PRINT_RESOLUTION);
 		obj.setInt("gridWidth", GRID_W);
 		obj.setInt("gridHeight", GRID_H);
 		obj.setFloat("marginInches", MARGIN_INCHES);

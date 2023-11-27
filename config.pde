@@ -102,8 +102,6 @@ void parseConfigObject(JSONObject obj) {
 }
 
 void loadConfigFile(String filePath, String fileName) {
-	// removeLayers();
-
 	JSONObject obj = null;
 	JSONArray layerData = null;
 	
@@ -115,16 +113,7 @@ void loadConfigFile(String filePath, String fileName) {
 	
 	if(obj != null) {
 		parseConfigObject(obj);
-		// layerData = obj.getJSONArray("layers");
-	} else {
-		// layerData = loadJSONArray(filePath);
-	}
-	
-	// updateCanvas();
-	//reset();
-	
-	// numLayers = layerData.size();
-	// createLayersWithData(layerData, loadImagePositions);
+	} 
 
 	updateKeyDimensions();
 	updateControllerValues();
