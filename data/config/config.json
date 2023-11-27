@@ -12,7 +12,7 @@
   "numNoodles": 90,
   "graphics": [
     {
-      "head": "roundEnd.svg"
+      "head": "graphics/roundEnd.svg"
     }
   ],
   "randomizeEnds": true

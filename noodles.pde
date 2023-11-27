@@ -2,8 +2,10 @@ import controlP5.*;
 import processing.svg.*;
 
 Boolean USE_RETINA = true;
-String SETTINGS_PATH = "settings.json";
-String configPath = "config.json";
+String SETTINGS_PATH = "config/settings.json";
+String configPath = "config/config.json";
+String TWIST_PATH = "graphics/twist.svg";
+String TWIST_FILL_PATH = "graphics/twistFill.svg";
 
 float MAX_SCREEN_SCALE = 0.182 * 2; // % - (0.2456 == macbook 1:1) (0.182 == LG Screen)
 float SCREEN_SCALE = 0.182 * 2; 
@@ -97,9 +99,9 @@ void setup() {
 	loadSettings(SETTINGS_PATH);
 	loadConfigFile(configPath, "");
 
-	twist = loadShape("twist.svg");
+	twist = loadShape(TWIST_PATH);
 	twist.disableStyle();
-	twistFill = loadShape("twistFill.svg");
+	twistFill = loadShape(TWIST_FILL_PATH);
 	twistFill.disableStyle();
 	
 	colorMode(HSB, 360, 100, 100);
