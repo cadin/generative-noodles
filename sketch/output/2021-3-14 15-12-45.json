@@ -1,0 +1,55 @@
+{
+  "gridHeight": 4,
+  "useJoiners": false,
+  "printHeightInches": 11,
+  "useTwists": false,
+  "graphics": [
+    {
+      "head": "hand2.svg",
+      "joiners": ["twistJoin.svg"]
+    },
+    {
+      "head": "hand.svg",
+      "joiners": ["twistJoin.svg"]
+    }
+  ],
+  "printWidthInches": 14,
+  "numNoodles": 1,
+  "printResolution": 300,
+  "blackoutCells": [
+    [
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0
+    ]
+  ],
+  "marginInches": 0.5,
+  "noodleThicknessPct": 0.6800002455711365,
+  "gridWidth": 5,
+  "randomizeEnds": false
+}

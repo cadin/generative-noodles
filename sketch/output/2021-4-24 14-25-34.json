@@ -1,0 +1,127 @@
+{
+  "gridHeight": 7,
+  "useJoiners": false,
+  "minLength": 200,
+  "printHeightInches": 12,
+  "useTwists": true,
+  "graphics": [{"head": "roundEnd.svg"}],
+  "printWidthInches": 18,
+  "numNoodles": 150,
+  "printResolution": 300,
+  "blackoutCells": [
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  ],
+  "allowOverlap": true,
+  "marginInches": 0.75,
+  "noodleThicknessPct": 0.8799999952316284,
+  "gridWidth": 12,
+  "maxLength": 400,
+  "randomizeEnds": true
+}

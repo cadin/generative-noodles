@@ -1,0 +1,19 @@
+{
+  "printWidthInches": 16,
+  "printHeightInches": 11,
+  "gridWidth": 8,
+  "gridHeight": 5,
+  "marginInches": 0.5,
+  "useTwists": true,
+  "useJoiners": true,
+  "useCurves": false,
+  "penSizeMM": 0.35,
+  "noodleThicknessPct": 0.9,
+  "numNoodles": 90,
+  "graphics": [
+    {
+      "head": "graphics/roundEnd.svg"
+    }
+  ],
+  "randomizeEnds": true
+}
