@@ -43,7 +43,7 @@ These SVGs should be drawn vertically and sized so they will intercept noodle ed
 
 ## Usage
 
-### [Video Walkthrough]()
+<!-- ### [Video Walkthrough]() -->
 
 ### Key Commands
 
@@ -178,7 +178,8 @@ Blackout cells can be edited in the sketch (press `X` to enter blackout mode). T
 
 ## Support
 
-This is a personal project and is mostly unsupported. That being said, I'm happy to hear feedback or answer questions.
+This is a personal project and is mostly unsupported.  
+That being said, I'm happy to hear feedback or answer questions.
 
 ## License
 
