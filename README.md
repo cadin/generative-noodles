@@ -10,7 +10,7 @@ This software squirts bendy noodle segments into a predefined grid. SVG output i
 
 ### Requirements
 
--   [Processing 4](https://processing.org)
+- [Processing 4](https://processing.org)
 
 ### Config
 
@@ -43,7 +43,7 @@ These SVGs should be drawn vertically and sized so they will intercept noodle ed
 
 ## Usage
 
-<!-- ### [Video Walkthrough]() -->
+### [Video Walkthrough](https://www.youtube.com/watch?v=1q7dORuGe6I)
 
 ### Key Commands
 
@@ -156,14 +156,14 @@ Whether or not to allow noodles to overlap.
 **`graphics`** (array of objects)
 Each object in this array defines a set of graphics to be used for one noodle type. This lets you have multiple types of noodles with graphics that are consistent per noodle.
 
--   **`head`** (string)
-    Path to the graphic that represents a noodle end. Required.
+- **`head`** (string)
+  Path to the graphic that represents a noodle end. Required.
 
--   **`tail`** (string)
-    Optional path to the graphic that represents the opposite end of the noodle. If this is omitted, the head graphic will be used for both ends. If `randomized` ends is set to true, then head graphics from a random graphic set will be used instead of the tail.
+- **`tail`** (string)
+  Optional path to the graphic that represents the opposite end of the noodle. If this is omitted, the head graphic will be used for both ends. If `randomized` ends is set to true, then head graphics from a random graphic set will be used instead of the tail.
 
--   **`joiners`** (array of strings)
-    Array of paths to joiner graphics (a straight section that connects to other segments). Your noodle will randomly choose graphics from this array. Optional.
+- **`joiners`** (array of strings)
+  Array of paths to joiner graphics (a straight section that connects to other segments). Your noodle will randomly choose graphics from this array. Optional.
 
 **`randomizeEnds`** (boolean)
 When set to `true`, noodles will choose random end caps from the `head` graphics in the `graphics` array.
