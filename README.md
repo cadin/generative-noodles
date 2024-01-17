@@ -11,6 +11,7 @@ This software squirts bendy noodle segments into a predefined grid. SVG output i
 ### Requirements
 
 - [Processing 4](https://processing.org)
+- [ControlP5](https://sojamo.de/libraries/controlP5/) UI library
 
 ### Config
 
