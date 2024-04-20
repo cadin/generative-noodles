@@ -6,12 +6,19 @@ Create generative art for pen plotters in Processing.
 
 This software squirts bendy noodle segments into a predefined grid. SVG output is ready for printing or plotting.
 
+## MIDI-Controlled Branch
+
+This branch contains some code to control your sketch using a MIDI controller (specifically the [Behringer X-Touch Mini](https://www.behringer.com/product.html?modelCode=0808-AAF)). If you don't need that functionality, use the `main` branch.
+
 ## Getting Started
 
 ### Requirements
 
-- [Processing 4](https://processing.org)
-- [ControlP5](https://sojamo.de/libraries/controlP5/) UI library
+-   [Processing 4](https://processing.org)
+-   [ControlP5](https://sojamo.de/libraries/controlP5/) UI library
+-   [The Midibus](http://smallbutdigital.com/projects/themidibus/) Midi control library
+
+Install the required Processing libraries using the [Library Manager](https://processing.org/environment/#adding-libraries-tools-and-modes).
 
 ### Config
 
@@ -157,14 +164,14 @@ Whether or not to allow noodles to overlap.
 **`graphics`** (array of objects)
 Each object in this array defines a set of graphics to be used for one noodle type. This lets you have multiple types of noodles with graphics that are consistent per noodle.
 
-- **`head`** (string)
-  Path to the graphic that represents a noodle end. Required.
+-   **`head`** (string)
+    Path to the graphic that represents a noodle end. Required.
 
-- **`tail`** (string)
-  Optional path to the graphic that represents the opposite end of the noodle. If this is omitted, the head graphic will be used for both ends. If `randomized` ends is set to true, then head graphics from a random graphic set will be used instead of the tail.
+-   **`tail`** (string)
+    Optional path to the graphic that represents the opposite end of the noodle. If this is omitted, the head graphic will be used for both ends. If `randomized` ends is set to true, then head graphics from a random graphic set will be used instead of the tail.
 
-- **`joiners`** (array of strings)
-  Array of paths to joiner graphics (a straight section that connects to other segments). Your noodle will randomly choose graphics from this array. Optional.
+-   **`joiners`** (array of strings)
+    Array of paths to joiner graphics (a straight section that connects to other segments). Your noodle will randomly choose graphics from this array. Optional.
 
 **`randomizeEnds`** (boolean)
 When set to `true`, noodles will choose random end caps from the `head` graphics in the `graphics` array.
