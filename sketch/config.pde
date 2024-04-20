@@ -22,7 +22,6 @@ void onConfigSelected(File config) {
 		loadConfigFile(relativePath, fileName);
 		configPath = relativePath;
 		updateSettingsFile();
-		updateControllerValues();
 		reset();
 	}
 }
@@ -116,7 +115,6 @@ void loadConfigFile(String filePath, String fileName) {
 	} 
 
 	updateKeyDimensions();
-	updateControllerValues();
 }
 
 void updateSettingsFile() {

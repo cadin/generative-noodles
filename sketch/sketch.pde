@@ -95,7 +95,6 @@ void settings() {
 void setup() {
 	editor = new Editor(this);
 	frameRate(12);
-	// setupController();
 	menloFont = createFont("Menlo", 12);
 
 	loadSettings(SETTINGS_PATH);
