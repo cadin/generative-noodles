@@ -85,8 +85,8 @@ PFont menloFont;
 void settings() {
 	
 	// size(displayWidth, displayHeight - 45);
-	size(1920, 1080);
-	// fullScreen();
+	//size(1920, 1080);
+	fullScreen();
 	if(USE_RETINA){
 		pixelDensity(displayDensity());
 	}
